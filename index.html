@@ -266,7 +266,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .track{display:flex;width:max-content}
 .marq::-webkit-scrollbar{display:none}
 /* 슬라이드 버튼 */
-.carousel{position:relative}
+.carousel{position:relative;width:100%;min-width:0}
+.work{min-width:0}
+.marq{width:100%;max-width:100%}
 .cbtn{position:absolute;top:50%;z-index:3;width:46px;height:46px;margin-top:-23px;border-radius:50%;display:grid;place-items:center;
   border:1px solid var(--line);background:rgba(12,12,14,.82);backdrop-filter:blur(6px);color:var(--acc);font-size:12px;line-height:1;
   transition:border-color .2s,box-shadow .2s,background .2s}
