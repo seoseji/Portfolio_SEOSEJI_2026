@@ -67,7 +67,13 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
 
 /* ---------- 화면 레이어 ---------- */
 .layer{position:absolute;inset:0}
-#pix{width:100%;height:100%;image-rendering:pixelated;opacity:0}
+#pix{width:100%;height:100%;image-rendering:pixelated}
+#pixwrap{opacity:0}#pixwrap.on{opacity:1}
+/* 작은 문구는 선명한 픽셀 글꼴로 따로 올림 (어떤 화면 크기에서도 또렷하게) */
+.pixtag{position:absolute;left:5.5%;bottom:6.5%;display:flex;align-items:center;gap:.7em;font-family:"Silkscreen",monospace;font-size:clamp(11px,2.7cqw,20px);letter-spacing:.14em;line-height:1;color:#5B6BFF;
+  text-shadow:0 0 .4em rgba(61,77,255,.85);opacity:0;transition:opacity .15s steps(2)}
+.pixtag i{width:.55em;height:.55em;background:currentColor;box-shadow:0 0 .4em rgba(61,77,255,.85)}
+#pixwrap.on .pixtag{opacity:1;transition-delay:.5s}
 .fx{position:absolute;inset:0;pointer-events:none;z-index:5}
 .scan{background:repeating-linear-gradient(to bottom,rgba(0,0,0,.35) 0 1px,transparent 1px 3px)}
 .vig{box-shadow:inset 0 0 70px 16px rgba(0,0,0,.9);border-radius:inherit}
@@ -250,7 +256,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <div class="tv" id="tv">
       <div class="bezel"><div class="screen" id="screen">
         <div class="crt" id="crt">
-          <canvas id="pix" class="layer" width="160" height="120" aria-hidden="true"></canvas>
+          <div id="pixwrap" class="layer"><canvas id="pix" class="layer" width="160" height="120" aria-hidden="true"></canvas><div class="pixtag"><i></i>WHERE THE EYE LANDS</div></div>
 
           <div class="term" id="term">
             <div class="p menu" data-step="0"><i class="box"></i>
@@ -403,7 +409,7 @@ let noiseLevel=0,lastN=0;
 })(0);
 
 /* ---------- ① 파란 픽셀 인트로 (디더링) ---------- */
-const pix=document.getElementById('pix'),pctx=pix.getContext('2d');
+const pix=document.getElementById('pix'),pctx=pix.getContext('2d'),pixwrap=document.getElementById('pixwrap');
 const PW=160,PH=120;
 const off=document.createElement('canvas');off.width=PW;off.height=PH;const octx=off.getContext('2d',{willReadFrequently:true});
 const BAYER=[0,8,2,10,12,4,14,6,3,11,1,9,15,7,13,5];
@@ -441,7 +447,7 @@ function buildTextMask(){
   for(let i=0;i<PW*PH;i++)txtMask[i]=d[i*4+3]>110?1:0;
 }
 function renderPix(t){
-  drawSource(t);if(!txtMask)buildTextMask();
+  drawSource(t);
   const src=octx.getImageData(0,0,PW,PH),d=src.data;
   const reveal=Math.min(1,t/.55)*PH;                   /* 위에서 아래로 스캔되며 나타남 */
   const glitchRow=Math.random()<.35?(Math.random()*PH|0):-1;
@@ -451,7 +457,7 @@ function renderPix(t){
     for(let x=0;x<PW;x++){
       const sx=Math.min(PW-1,Math.max(0,x+shift)),i=(y*PW+sx)*4,j=(y*PW+x)*4;
       const lum=d[i]/255,th=(BAYER[(y&3)*4+(x&3)]+.5)/16;
-      const on=y<reveal&&(lum>th||txtMask[y*PW+sx]===1);
+      const on=y<reveal&&lum>th;
       const c=on?BLUE:NAVY;
       o[j]=c[0];o[j+1]=c[1];o[j+2]=c[2];o[j+3]=255;
     }
@@ -460,7 +466,7 @@ function renderPix(t){
 }
 async function playPixel(id){
   try{await Promise.race([document.fonts.load('700 16px Silkscreen'),new Promise(r=>setTimeout(r,1200))])}catch(e){}
-  pix.style.opacity=1;const t0=performance.now();
+  pixwrap.classList.add('on');const t0=performance.now();
   await new Promise(res=>{
     (function loop(now){
       if(id!==runId)return res();
@@ -497,13 +503,13 @@ function resetTerminal(){
 
 /* ---------- 전체 시퀀스 ---------- */
 async function powerOn(fast){
-  const id=++runId;resetTerminal();pix.style.opacity=0;
+  const id=++runId;resetTerminal();pixwrap.classList.remove('on');
   tv.classList.remove('on','off');void tv.offsetWidth;tv.classList.add('on');
   if(fast||reduce){noiseLevel=.04;return bootTerminal(id,true)}
   noiseLevel=.5;await wait(450);noiseLevel=.08;           /* CRT 켜짐 */
   await playPixel(id);if(id!==runId)return;                  /* 파란 픽셀 인트로 */
   crt.classList.add('flick');noiseLevel=.6;await wait(220);  /* 신호 전환 */
-  crt.classList.remove('flick');pix.style.opacity=0;noiseLevel=.05;
+  crt.classList.remove('flick');pixwrap.classList.remove('on');noiseLevel=.05;
   await bootTerminal(id,false);                              /* 주황 터미널 */
 }
 document.getElementById('skip').onclick=()=>powerOn(true);
