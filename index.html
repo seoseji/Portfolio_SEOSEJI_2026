@@ -251,6 +251,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 /* 양면 윈드배너 */
 .wb{width:14%;margin-bottom:3%}
 .wb .flag{display:block;width:100%;aspect-ratio:385/1154;object-fit:cover;clip-path:url(#flagClip);transform-origin:100% 50%;animation:flap 3.4s ease-in-out infinite alternate}
+.wb:nth-child(4) .flag{clip-path:url(#flagClipB)}
 .wb:nth-child(2) .flag{animation-delay:-.9s}.wb:nth-child(3) .flag{animation-delay:-1.7s}.wb:nth-child(4) .flag{animation-delay:-2.4s}
 @keyframes flap{from{transform:perspective(700px) rotateY(0) skewY(0)}to{transform:perspective(700px) rotateY(-16deg) skewY(-1.2deg)}}
 .wb .pole{position:absolute;right:-2%;top:-1.5%;width:4%;min-width:2px;height:111%;border-radius:2px;background:linear-gradient(90deg,#85888d,#e4e6e9,#85888d)}
@@ -359,7 +360,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 <section class="part" id="archive" hidden></section>
 <section class="part" id="ailab" hidden></section>
 <div id="lb" hidden role="dialog" aria-modal="true" aria-label="작업물 크게 보기"><img alt=""><button class="mono" id="lb-close">닫기 ✕</button></div>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><clipPath id="flagClip" clipPathUnits="objectBoundingBox"><path d="M0,.21 C0,.075 .5,0 1,0 L1,.835 C.6,.835 .2,.9 0,1 Z"/></clipPath></defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><clipPath id="flagClip" clipPathUnits="objectBoundingBox"><path d="M.014,.415 C.014,.19 .44,.01 .99,.01 L.99,.852 C.62,.858 .24,.89 .014,.958 Z"/></clipPath><clipPath id="flagClipB" clipPathUnits="objectBoundingBox"><path d="M.014,.355 C.014,.16 .42,.01 .975,.01 L.975,.84 C.6,.848 .22,.885 .014,.952 Z"/></clipPath></defs></svg>
 
 <script>
 /* ---------- 데이터 (TOOL·TIME은 예시) ---------- */
