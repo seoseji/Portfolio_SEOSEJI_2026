@@ -231,6 +231,39 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .player .tr::before{content:"";position:absolute;inset:0 58% 0 0;background:var(--acc)}
 .frame{background:#F1F0EC;padding:12px;box-shadow:0 30px 60px rgba(0,0,0,.5)}
 
+/* ---------- 옥외배너 실물 목업 (매장 앞 거리) ---------- */
+.work.wide .stage2{padding:0;min-height:0;overflow:hidden;display:block}
+.ob{position:relative;width:100%;aspect-ratio:16/9;display:flex;justify-content:center;align-items:flex-end;gap:4%;padding:0 6% 6.5%;
+  background:radial-gradient(ellipse 55% 45% at 50% 28%,rgba(255,214,160,.10),transparent 70%),
+    linear-gradient(#1C2026 0,#2A2E35 64%,#4A4C50 64%,#4A4C50 64.5%,#2B2C2F 64.5%,#1C1D20 100%)}
+.ob::before{content:"";position:absolute;left:0;right:0;bottom:0;height:35.5%;pointer-events:none;
+  background:repeating-linear-gradient(90deg,transparent 0 9%,rgba(255,255,255,.035) 9% 9.25%)}
+.ob::after{content:"";position:absolute;left:8%;right:8%;top:8%;height:46%;border:1px solid rgba(255,255,255,.04);background:linear-gradient(rgba(255,255,255,.025),transparent);pointer-events:none}
+.ob .unit{position:relative;z-index:1;flex:0 0 auto;cursor:zoom-in;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.ob .unit:hover,.ob .unit:focus-visible{transform:translateY(-6px)}
+.ob .unit::after{content:"";position:absolute;left:-10%;right:-10%;bottom:-3%;height:6%;border-radius:50%;background:radial-gradient(rgba(0,0,0,.55),transparent 70%);z-index:-1}
+/* 물통 X배너 */
+.xb{width:14.5%;display:flex;flex-direction:column;align-items:center}
+.xb .rod{width:108%;height:clamp(3px,.45vw,6px);border-radius:3px;background:linear-gradient(#6a6d72,#1a1b1e)}
+.xb img{width:100%;display:block;box-shadow:0 14px 28px rgba(0,0,0,.55)}
+.xb .pole{width:6%;height:clamp(8px,1.6vw,20px);background:linear-gradient(90deg,#6d7076,#c9ccd1,#6d7076)}
+.xb .tank{width:80%;height:clamp(10px,2.2vw,26px);border-radius:45% 45% 6px 6px/70% 70% 6px 6px;background:linear-gradient(#4a4d53,#1b1c1f);box-shadow:inset 0 1px 0 rgba(255,255,255,.15)}
+/* 양면 윈드배너 */
+.wb{width:14%;margin-bottom:3%}
+.wb .flag{display:block;width:100%;aspect-ratio:385/1154;object-fit:cover;clip-path:url(#flagClip);transform-origin:100% 50%;animation:flap 3.4s ease-in-out infinite alternate}
+.wb:nth-child(2) .flag{animation-delay:-.9s}.wb:nth-child(3) .flag{animation-delay:-1.7s}.wb:nth-child(4) .flag{animation-delay:-2.4s}
+@keyframes flap{from{transform:perspective(700px) rotateY(0) skewY(0)}to{transform:perspective(700px) rotateY(-16deg) skewY(-1.2deg)}}
+.wb .pole{position:absolute;right:-2%;top:-1.5%;width:4%;min-width:2px;height:111%;border-radius:2px;background:linear-gradient(90deg,#85888d,#e4e6e9,#85888d)}
+.wb .base{position:absolute;right:-24%;bottom:-11%;width:50%;height:clamp(7px,1.4vw,16px);border-radius:50% 50% 4px 4px/80% 80% 4px 4px;background:linear-gradient(#4a4d53,#1b1c1f)}
+.wb::after{bottom:-12%!important}
+.work .sub{margin:-8px 0 12px;color:var(--mute);font-size:13px}
+.ob-hint{position:absolute;right:12px;bottom:10px;z-index:2;color:var(--dim)}
+/* 크게 보기 */
+#lb{position:fixed;inset:0;z-index:60;background:rgba(5,5,6,.93);display:grid;place-items:center;cursor:zoom-out;
+  padding:calc(56px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+#lb img{max-height:calc(100vh - 100px);max-width:100%;object-fit:contain;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+#lb button{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));color:var(--fg);padding:8px 14px;border:1px solid var(--line);border-radius:99px;background:rgba(20,20,22,.85)}
+
 @media (max-width:700px){
   #home{min-height:100svh}
   .scene{justify-content:center;padding-block:0 8px}
@@ -245,6 +278,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .foot .ty{white-space:normal}
   .p-head p{margin:0;text-align:left}
   .works{grid-template-columns:minmax(0,1fr)}
+  .ob{aspect-ratio:auto;flex-wrap:wrap;row-gap:9%;padding:10% 10% 12%;background:linear-gradient(#22262C,#1C1D20)}
+  .ob::before,.ob::after{display:none}
+  .xb{width:36%;margin-bottom:6%}
+  .wb{width:30%;margin:0 6% 14% 0}
+  .ob-hint{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-iteration-count:1!important;transition-duration:.01s!important;transition-delay:0s!important}}
 </style>
@@ -320,6 +358,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 <section class="part" id="archive" hidden></section>
 <section class="part" id="ailab" hidden></section>
+<div id="lb" hidden role="dialog" aria-modal="true" aria-label="작업물 크게 보기"><img alt=""><button class="mono" id="lb-close">닫기 ✕</button></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><clipPath id="flagClip" clipPathUnits="objectBoundingBox"><path d="M0,.21 C0,.075 .5,0 1,0 L1,.835 C.6,.835 .2,.9 0,1 Z"/></clipPath></defs></svg>
 
 <script>
 /* ---------- 데이터 (TOOL·TIME은 예시) ---------- */
@@ -337,7 +377,12 @@ const PARTS={
   archive:{ch:'CH 01',k:'CH 01 · Client Work',name:'실무 프로젝트',lead:'실제 클라이언트와 진행해 집행된 작업입니다.<br>작업물이 실제로 놓이는 환경에 넣어 보여드립니다.',
     order:['outdoor','banner','flyer','insta','blog','detail'],
     items:[
-      {m:'outdoor',title:'프로젝트명',h:35,tool:'Illustrator, Photoshop',time:'3일',point:'20m 거리에서도 읽히는 글자 크기와 단 하나의 메시지'},
+      {m:'outdoor',kind:'xbanner',title:'노모어피자 물통 X배너',sub:'건대점 · 종합운동장역점 / 4종',
+        imgs:['assets/outdoor/xbanner-01.jpg','assets/outdoor/xbanner-02.jpg','assets/outdoor/xbanner-03.jpg','assets/outdoor/xbanner-04.jpg'],
+        tool:'Illustrator, Photoshop',time:'건당 1일',point:'지나가는 사람이 먼저 보는 지점명·층수·혜택을 크게 올리고, 브랜드 컨러 대비로 멀리서도 읽히게 구성'},
+      {m:'outdoor',kind:'wind',title:'노모어피자 양면 윈드배너',sub:'소형 650×1950 / 4종',
+        imgs:['assets/outdoor/wind-01.jpg','assets/outdoor/wind-02.jpg','assets/outdoor/wind-03.jpg','assets/outdoor/wind-04.jpg'],
+        tool:'Illustrator, Photoshop',time:'건당 1일',point:'펄럭여도 읽히도록 핵심 문구를 상단에 모으고, 앞뒷면이 대칭되는 양면 구성'},
       {m:'banner',title:'프로젝트명',h:28,tool:'Photoshop',time:'4시간',point:'여러 사이즈로 리사이징해도 무너지지 않는 레이아웃'},
       {m:'banner',title:'프로젝트명',h:20,tool:'Photoshop',time:'3시간',point:'CTA 버튼까지 이어지는 시선 동선'},
       {m:'flyer',title:'프로젝트명',h:42,tool:'InDesign, Illustrator',time:'2일',point:'혜택 → 정보 → 위치 순서로 읽히는 정보 위계'},
@@ -361,7 +406,10 @@ const PARTS={
 const tile=(h,r,label='작업물',extra='')=>`<div class="t" style="--h:${h};aspect-ratio:${r};${extra}">${label}</div>`;
 function mock(it){
   switch(it.m){
-    case 'outdoor':return `<div class="mk street"><div class="bd a"></div><div class="bd b"></div><div class="pole"></div><div class="bb">${tile(it.h,'auto')}</div></div>`;
+    case 'outdoor':
+      if(it.kind==='xbanner')return `<div class="ob">${it.imgs.map((s,i)=>`<button class="unit xb" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><i class="rod"></i><img src="${s}" alt="${it.title} ${i+1}" loading="lazy"><i class="rod"></i><i class="pole"></i><i class="tank"></i></button>`).join('')}<span class="ob-hint mono">클릭하면 크게 보기</span></div>`;
+      if(it.kind==='wind')return `<div class="ob">${it.imgs.map((s,i)=>`<button class="unit wb" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><img class="flag" src="${s}" alt="${it.title} ${i+1}" loading="lazy"><i class="pole"></i><i class="base"></i></button>`).join('')}<span class="ob-hint mono">클릭하면 크게 보기</span></div>`;
+      return `<div class="mk street"><div class="bd a"></div><div class="bd b"></div><div class="pole"></div><div class="bb">${tile(it.h,'auto')}</div></div>`;
     case 'banner':return `<div class="mk browser"><div class="top"><i></i><i></i><i></i></div><div class="body"><div class="ln" style="width:35%"></div>${tile(it.h,'728/220','작업물','border-radius:4px')}<div class="ln"></div><div class="ln" style="width:70%"></div></div></div>`;
     case 'flyer':return `<div class="mk desk"><div class="paper back"></div><div class="paper">${tile(it.h,'auto')}</div></div>`;
     case 'insta':return `<div class="phone"><div class="notch"><i></i></div><div class="igh"><i></i>brand_official</div>${tile(it.h,'4/5')}<div class="igf"><span style="width:45%"></span><span></span><span style="width:75%"></span></div></div>`;
@@ -382,8 +430,8 @@ function renderPart(key){
     ${P.order.map(m=>{const list=P.items.filter(i=>i.m===m);return `
       <section class="medium" id="${key}-${m}">
         <div class="m-head"><div><div class="k mono">${MEDIA[m].en}</div><h3>${MEDIA[m].ko}</h3></div><p>${MEDIA[m].desc}</p></div>
-        <div class="works ${list.length===1?'one':''}">${list.map(it=>`
-          <article class="work"><div class="stage2">${mock(it)}</div><h4>${it.title}</h4>
+        <div class="works ${list.length===1||m==='outdoor'?'one':''}">${list.map(it=>`
+          <article class="work ${it.imgs?'wide':''}"><div class="stage2">${mock(it)}</div><h4>${it.title}</h4>${it.sub?`<p class="sub">${it.sub}</p>`:''}
             <dl class="spec"><dt class="mono">Tool</dt><dd>${it.tool}<span class="ex">예시</span></dd>
             <dt class="mono">Time</dt><dd>${it.time}<span class="ex">예시</span></dd>
             <dt class="mono">Point</dt><dd>${it.point}</dd></dl></article>`).join('')}</div>
@@ -393,6 +441,14 @@ function renderPart(key){
   el.querySelectorAll('[data-to]').forEach(b=>b.onclick=()=>document.getElementById(b.dataset.to).scrollIntoView({behavior:'smooth'}));
 }
 renderPart('archive');renderPart('ailab');
+/* 작업물 크게 보기 */
+const lb=document.getElementById('lb'),lbImg=lb.querySelector('img');let lbFrom=null;
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-full]');
+  if(b){lbFrom=b;lbImg.src=b.dataset.full;lbImg.alt=b.getAttribute('aria-label')||'';lb.hidden=false;document.getElementById('lb-close').focus();return}
+  if(!lb.hidden&&(e.target===lb||e.target===lbImg||e.target.id==='lb-close')){lb.hidden=true;lbFrom&&lbFrom.focus()}
+});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden){lb.hidden=true;lbFrom&&lbFrom.focus()}});
 
 /* ---------- 공통 ---------- */
 const home=document.getElementById('home'),tv=document.getElementById('tv'),crt=document.getElementById('crt');
