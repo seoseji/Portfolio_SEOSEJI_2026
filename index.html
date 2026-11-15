@@ -450,8 +450,8 @@ function buildTextMask(){
 function renderPix(t){
   drawSource(t);
   const src=octx.getImageData(0,0,PW,PH),d=src.data;
-  const reveal=Math.min(1,t/.55)*PH;                   /* 위에서 아래로 스캔되며 나타남 */
-  const glitchRow=Math.random()<.35?(Math.random()*PH|0):-1;
+  const reveal=reduce?PH:Math.min(1,t/.55)*PH;                   /* 위에서 아래로 스캔되며 나타남 */
+  const glitchRow=!reduce&&Math.random()<.35?(Math.random()*PH|0):-1;
   const out=pctx.createImageData(PW,PH),o=out.data;
   for(let y=0;y<PH;y++){
     const shift=(glitchRow>=0&&Math.abs(y-glitchRow)<4)?(Math.random()*10-5|0):0;
@@ -506,11 +506,12 @@ function resetTerminal(){
 async function powerOn(fast){
   const id=++runId;resetTerminal();pixwrap.classList.remove('on');
   tv.classList.remove('on','off');void tv.offsetWidth;tv.classList.add('on');
-  if(fast||reduce){noiseLevel=.04;return bootTerminal(id,true)}
-  noiseLevel=.5;await wait(450);noiseLevel=.08;           /* CRT 켜짐 */
+  if(fast){noiseLevel=.04;return bootTerminal(id,true)}
+  /* '움직임 줄이기' 설정이 켜져 있어도 오프닝은 항상 보여줌 (노이즈·흔들림만 빼고) */
+  noiseLevel=reduce?0:.5;await wait(450);noiseLevel=reduce?0:.08;           /* CRT 켜짐 */
   await playPixel(id);if(id!==runId)return;                  /* 파란 픽셀 인트로 */
-  crt.classList.add('flick');noiseLevel=.6;await wait(220);  /* 신호 전환 */
-  crt.classList.remove('flick');pixwrap.classList.remove('on');noiseLevel=.05;
+  if(!reduce)crt.classList.add('flick');noiseLevel=reduce?0:.6;await wait(220);  /* 신호 전환 */
+  crt.classList.remove('flick');pixwrap.classList.remove('on');noiseLevel=reduce?0:.05;
   await bootTerminal(id,false);                              /* 주황 터미널 */
 }
 document.getElementById('skip').onclick=()=>powerOn(true);
