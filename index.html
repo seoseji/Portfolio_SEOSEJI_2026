@@ -6,7 +6,7 @@
 <style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
-<title>SEOSEJI Portfolio · TV 시안</title>
+<title>SEOSEJI Portfolio</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=VT323&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
@@ -458,7 +458,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .track{animation:none!important}.marq{overflow-x:auto}}
 </style>
 
-<div class="draft mono">DRAFT · 시안</div>
 
 <main id="home">
   <div class="wrap room-top mono"><span>Portfolio 2026</span><span>Visual Designer · SEOSEJI</span></div>
@@ -474,7 +473,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
             <button class="p ch c1" data-step="2" data-go="archive" aria-label="CH 01 실무 프로젝트 보기">
               <i class="box"></i>
-              <span class="hd"><span>CH 01 · Archive</span><span>10</span></span>
+              <span class="hd"><span>CH 01 · Archive</span><span>01</span></span>
               <svg class="wire" viewBox="0 0 200 110" aria-hidden="true">
                 <rect class="w" style="--d:0" x="18" y="14" width="86" height="42" pathLength="1"/>
                 <path class="w" style="--d:.1" d="M58 56V96M64 56V96M8 96H196M18 28H104M18 42H104M47 14V56M75 14V56" pathLength="1" stroke-opacity=".55"/>
@@ -492,7 +491,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
             <button class="p ch c2" data-step="3" data-go="ailab" aria-label="CH 02 AI 개인 프로젝트 보기">
               <i class="box"></i>
-              <span class="hd"><span>CH 02 · AI Lab</span><span>05</span></span>
+              <span class="hd"><span>CH 02 · AI Lab</span><span>02</span></span>
               <svg class="wire" viewBox="0 0 200 110" aria-hidden="true">
                 <rect class="w" style="--d:0" x="16" y="18" width="112" height="64" pathLength="1"/>
                 <path class="w" style="--d:.1" d="M16 26H128M16 74H128M24 18V26M36 18V26M48 18V26M60 18V26M72 18V26M84 18V26M96 18V26M108 18V26M120 18V26M24 74V82M36 74V82M48 74V82M60 74V82M72 74V82M84 74V82M96 74V82M108 74V82M120 74V82" pathLength="1" stroke-opacity=".5"/>
@@ -533,7 +532,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><clipPath id="flagClip" clipPathUnits="objectBoundingBox"><path d="M.014,.415 C.014,.19 .44,.01 .99,.01 L.99,.852 C.62,.858 .24,.89 .014,.958 Z"/></clipPath><linearGradient id="tankG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4d52"/><stop offset=".22" stop-color="#1d1e21"/><stop offset="1" stop-color="#050506"/></linearGradient><linearGradient id="drumG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#060607"/><stop offset=".28" stop-color="#3e4045"/><stop offset=".55" stop-color="#151619"/><stop offset="1" stop-color="#040405"/></linearGradient><clipPath id="flagClipB" clipPathUnits="objectBoundingBox"><path d="M.014,.355 C.014,.16 .42,.01 .975,.01 L.975,.84 C.6,.848 .22,.885 .014,.952 Z"/></clipPath></defs></svg>
 
 <script>
-/* ---------- 데이터 (TOOL·TIME은 예시) ---------- */
+/* ---------- 데이터 ---------- */
 const MEDIA={
   outdoor:{ko:'옥외배너',en:'On the street',desc:'멀리서, 몇 초 안에 읽혀야 하는 매체.'},
   banner:{ko:'배너',en:'On the web',desc:'페이지의 정체성이나 핵심 메시지를 직관적으로 알려 주는 시각적 매체.'},
@@ -688,8 +687,8 @@ function renderPart(key){
         <div class="m-head"><div><div class="k mono">${MEDIA[m].en}</div><h3>${MEDIA[m].ko}</h3></div><p>${MEDIA[m].desc}</p></div>
         <div class="works ${list.length===1||list.some(i=>i.kind)?'one':''}">${list.map(it=>`
           <article class="work ${it.kind&&it.kind!=='stand'||it.units?'wide':''}"><div class="stage2">${mock(it)}</div><h4>${it.title}</h4>${it.sub?`<p class="sub">${it.sub}</p>`:''}
-            <dl class="spec"><dt class="mono">Tool</dt><dd>${it.tool}<span class="ex">예시</span></dd>
-            <dt class="mono">Time</dt><dd>${it.time}<span class="ex">예시</span></dd>
+            <dl class="spec"><dt class="mono">Tool</dt><dd>${it.tool}</dd>
+            <dt class="mono">Time</dt><dd>${it.time}</dd>
             <dt class="mono">Point</dt><dd>${it.point}</dd></dl></article>`).join('')}</div>
       </section>`}).join('')}
     <div class="next"><a href="#"><span class="ar">◀</span>TV</a><a href="#${other}">${PARTS[other].ch} ${PARTS[other].name}<span class="ar">▶</span></a></div>
