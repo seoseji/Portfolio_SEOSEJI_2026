@@ -275,13 +275,34 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .cbtn:hover,.cbtn:focus-visible{border-color:var(--acc);background:rgba(12,12,14,.95);box-shadow:0 0 16px color-mix(in srgb,var(--acc) 45%,transparent);outline:none}
 .cbtn.c-prev{left:16px}.cbtn.c-next{right:16px}
 .sw svg path{stroke-linejoin:round}
+/* ---------- 현수막: 아일렛(쇠고리) + 끈으로 건 모습 ---------- */
+.hangwall{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:56px 64px;padding:16px clamp(36px,6vw,80px) 4px}
+.hb{margin:0;min-width:0;display:flex;flex-direction:column;gap:14px}
+.hb.long{grid-column:1/-1;padding:0 3%}
+.hb figcaption{color:var(--dim);text-align:right}
+.hbtn{position:relative;display:block;width:100%;aspect-ratio:var(--r);cursor:zoom-in}
+.hbtn img{display:block;width:100%;height:100%;object-fit:cover;box-shadow:0 18px 36px rgba(0,0,0,.5);transition:filter .25s}
+.hbtn:hover img,.hbtn:focus-visible img{filter:brightness(1.07)}
+.hbtn::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(0,0,0,.12),transparent 10%,rgba(255,255,255,.07) 24%,transparent 36%,rgba(0,0,0,.09) 52%,transparent 64%,rgba(255,255,255,.06) 79%,transparent 90%,rgba(0,0,0,.12)),
+    linear-gradient(rgba(255,255,255,.06),transparent 25%,transparent 78%,rgba(0,0,0,.14))}
+.hbtn .g{position:absolute;z-index:2;width:12px;height:12px;border-radius:50%;
+  background:radial-gradient(circle,#0c0c0e 0 32%,#eceef1 36%,#a2a6ac 58%,#55595e 76%,transparent 80%);filter:drop-shadow(0 1px 1px rgba(0,0,0,.6))}
+.long .hbtn .g{width:9px;height:9px}
+.g.tl{left:7px;top:7px}.g.tr{right:7px;top:7px}.g.bl{left:7px;bottom:7px}.g.br{right:7px;bottom:7px}
+.long .g.tl,.long .g.tr{top:4px}.long .g.bl,.long .g.br{bottom:4px}
+.hbtn .rope{position:absolute;z-index:1;width:clamp(26px,3.4vw,46px);height:2px;border-radius:1px;transform-origin:0 50%;
+  background:linear-gradient(90deg,#e4dfd3,#9d9686);box-shadow:0 1px 1px rgba(0,0,0,.4)}
+.rope.tl{left:13px;top:13px;transform:rotate(-140deg)}.rope.tr{left:calc(100% - 13px);top:13px;transform:rotate(-40deg)}
+.rope.bl{left:13px;top:calc(100% - 13px);transform:rotate(140deg)}.rope.br{left:calc(100% - 13px);top:calc(100% - 13px);transform:rotate(40deg)}
+.long .rope.tl,.long .rope.tr{top:8px}.long .rope.bl,.long .rope.br{top:calc(100% - 8px)}
 .set{display:flex;align-items:flex-end;gap:clamp(40px,5vw,80px);padding-right:clamp(40px,5vw,80px)}
 .su{position:relative;isolation:isolate;flex:0 0 auto;display:flex;flex-direction:column;align-items:center;cursor:zoom-in;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 .su img{transition:filter .25s}
 .su:hover img,.su:focus-visible img{filter:brightness(1.08)}
 .su .shadow{position:absolute;bottom:-8px;left:50%;width:170%;height:18px;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(0,0,0,.65),transparent);z-index:-1}
 /* 물통 X배너 */
-.sx{--h:calc(var(--H)*.82);width:calc(var(--h)/2.993)}
+.sx{--h:calc(var(--H)*.82*var(--k,1));width:calc(var(--h)*var(--r,.3341))}
 .sx img{display:block;width:100%;height:var(--h);object-fit:cover;box-shadow:0 12px 24px rgba(0,0,0,.45)}
 .sx .bar{position:relative;z-index:1;width:calc(100% + 12px);height:6px;border-radius:3px;background:linear-gradient(#f6f7f9,#b3b7bc 40%,#5b5f64 60%,#cfd2d6)}
 .sx .bar::before,.sx .bar::after{content:"";position:absolute;top:-1px;width:7px;height:8px;border-radius:2px;background:#141517}
@@ -322,6 +343,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .wb{width:30%;margin:0 6% 14% 0}
   .ob-hint{display:none}
   .marq{--H:300px}
+  .hangwall{grid-template-columns:minmax(0,1fr);gap:40px;padding:8px 28px 0}
+  .hb.long{padding:0}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-iteration-count:1!important;transition-duration:.01s!important;transition-delay:0s!important}
   .track{animation:none!important}.marq{overflow-x:auto}}
@@ -421,6 +444,13 @@ const PARTS={
         units:[['x','assets/outdoor/xbanner-01.jpg'],['x','assets/outdoor/xbanner-02.jpg'],['x','assets/outdoor/xbanner-03.jpg'],['x','assets/outdoor/xbanner-04.jpg'],
                ['w','assets/outdoor/wind-01.jpg'],['w','assets/outdoor/wind-02.jpg'],['w','assets/outdoor/wind-03.jpg'],['w','assets/outdoor/wind-04.jpg']],
         tool:'Illustrator, Photoshop',time:'건당 1일',point:'세워 두는 매체라 멀리서 먼저 보이는 상단에 지점명·층수·혜택을 모으고, 브랜드 컨러 대비로 가독성을 확보. 윈드배너는 앞뒷면이 대칭되는 양면 구성'},
+      {m:'outdoor',kind:'stand',title:'봉천동매운떡볶이 물통 X배너',sub:'건대점 실외 X배너 3종 · 휴먼배너 1종 — 실제 크기 비율대로 세웠어요',
+        units:[['x','assets/outdoor/bm-xbanner-01.jpg',.3341,.75],['x','assets/outdoor/bm-xbanner-02.jpg',.3341,.75],['x','assets/outdoor/bm-xbanner-03.jpg',.3341,.75],['x','assets/outdoor/bm-xbanner-04.jpg',.4167,1]],
+        tool:'Illustrator, Photoshop',time:'건당 1일',point:'오픈 · 유튜버 추천 · 베스트 메뉴 · 반값 이벤트로 역할을 나눠, 매장 앞에 나란히 세웠을 때 하나의 흐름으로 읽히게 구성'},
+      {m:'outdoor',kind:'hang',title:'봉천동매운떡볶이 현수막',sub:'대형 현수막 2종(3600×1940) · 서울대 가로형 현수막 2종',
+        hangs:[{s:'assets/outdoor/bm-banner-01.jpg',r:1.8556,big:1,label:'대형 현수막 · 3600×1940'},{s:'assets/outdoor/bm-banner-02.jpg',r:1.8556,big:1,label:'대형 현수막 · 3600×1940'},
+               {s:'assets/outdoor/bm-banner-03.jpg',r:6.645,label:'서울대 가로형 현수막'},{s:'assets/outdoor/bm-banner-04.jpg',r:6.667,label:'서울대 가로형 현수막'}],
+        tool:'Illustrator, Photoshop',time:'건당 1일',point:'길고 넓은 매체라 시선이 왼쪽에서 오른쪽으로 흐르도록 메뉴 사진 → 핵심 혜택 → 연락처 순서로 배치'},
       {m:'banner',title:'프로젝트명',h:28,tool:'Photoshop',time:'4시간',point:'여러 사이즈로 리사이징해도 무너지지 않는 레이아웃'},
       {m:'banner',title:'프로젝트명',h:20,tool:'Photoshop',time:'3시간',point:'CTA 버튼까지 이어지는 시선 동선'},
       {m:'flyer',title:'프로젝트명',h:42,tool:'InDesign, Illustrator',time:'2일',point:'혜택 → 정보 → 위치 순서로 읽히는 정보 위계'},
@@ -446,11 +476,15 @@ function mock(it){
   switch(it.m){
     case 'outdoor':
       if(it.kind==='stand'){
-        const X=(s,c)=>`<button class="su sx" data-full="${s}" ${c?'tabindex="-1" aria-hidden="true"':'aria-label="물통 X배너 크게 보기"'}><span class="bar"></span><img src="${s}" alt="" loading="lazy"><span class="bar"></span><span class="pole"></span><svg class="tank" viewBox="0 0 140 40" aria-hidden="true"><path d="M10,40 Q2,40 3.5,32 L12,11 Q15,5 23,5 L117,5 Q125,5 128,11 L136.5,32 Q138,40 130,40 Z" fill="url(#tankG)"/><path d="M15,10 L125,10" stroke="rgba(255,255,255,.2)" stroke-width="1.2"/><path d="M8,33 L132,33" stroke="rgba(255,255,255,.06)" stroke-width="1"/><ellipse cx="70" cy="6.5" rx="6" ry="1.8" fill="#000"/><ellipse cx="106" cy="7.5" rx="8" ry="2.2" fill="#26282c" stroke="#55585d" stroke-width=".7"/></svg><span class="shadow"></span></button>`;
+        const X=(s,c,r,f)=>`<button class="su sx" style="--r:${r||.3341};--k:${f||1}" data-full="${s}" ${c?'tabindex="-1" aria-hidden="true"':'aria-label="물통 X배너 크게 보기"'}><span class="bar"></span><img src="${s}" alt="" loading="lazy"><span class="bar"></span><span class="pole"></span><svg class="tank" viewBox="0 0 140 40" aria-hidden="true"><path d="M10,40 Q2,40 3.5,32 L12,11 Q15,5 23,5 L117,5 Q125,5 128,11 L136.5,32 Q138,40 130,40 Z" fill="url(#tankG)"/><path d="M15,10 L125,10" stroke="rgba(255,255,255,.2)" stroke-width="1.2"/><path d="M8,33 L132,33" stroke="rgba(255,255,255,.06)" stroke-width="1"/><ellipse cx="70" cy="6.5" rx="6" ry="1.8" fill="#000"/><ellipse cx="106" cy="7.5" rx="8" ry="2.2" fill="#26282c" stroke="#55585d" stroke-width=".7"/></svg><span class="shadow"></span></button>`;
         const W=(s,b,c)=>{const px=99,d='M99,322 L99,3 Q99,.8 91,.8 L58.5,6 L43.5,12 L33.5,18 L26.5,24 L20.5,30 L16.5,36 L12.5,42 L9.5,48 L7,54 L4.8,60 L3.3,66 L1.8,72 L.8,80';
           return `<button class="su sw ${b?'b':''}" data-full="${s}" ${c?'tabindex="-1" aria-hidden="true"':'aria-label="양면 윈드배너 크게 보기"'}><span class="fw"><img class="flag" src="${s}" alt="" loading="lazy"><svg viewBox="0 0 100 340" preserveAspectRatio="none" aria-hidden="true"><path d="${d}" fill="none" stroke="#4d5055" stroke-width="3.6" stroke-linecap="round"/><path d="${d}" fill="none" stroke="#eef0f2" stroke-width="1.4" stroke-linecap="round"/><path d="M${px-21},322 L${px-21},336 Q${px-21},341 ${px},341 Q${px+21},341 ${px+21},336 L${px+21},322 Z" fill="url(#drumG)"/><ellipse cx="${px}" cy="322" rx="21" ry="4.5" fill="#2c2e32" stroke="#4a4d52" stroke-width=".6"/><ellipse cx="${px}" cy="321.6" rx="3" ry="1" fill="#000"/><ellipse cx="${px+11}" cy="322" rx="4" ry="1.2" fill="#1a1b1e" stroke="#5a5d62" stroke-width=".5"/></svg></span><span class="shadow"></span></button>`};
-        const set=c=>`<div class="set" ${c?'aria-hidden="true"':''}>${it.units.map(([k,s])=>k==='x'?X(s,c):W(s,k==='wb',c)).join('')}</div>`;
+        const set=c=>`<div class="set" ${c?'aria-hidden="true"':''}>${it.units.map(([k,s,r,f])=>k==='x'?X(s,c,r,f):W(s,k==='wb',c)).join('')}</div>`;
         return `<div class="carousel"><button class="cbtn c-prev" aria-label="이전 배너">◀</button><div class="marq" tabindex="0" aria-label="스탠드 배너 목록, 좌우로 넘겨 볼 수 있어요"><div class="track">${set(false)}${set(true)}</div></div><button class="cbtn c-next" aria-label="다음 배너">▶</button></div>`;
+      }
+      if(it.kind==='hang'){
+        const g=['tl','tr','bl','br'];
+        return `<div class="hangwall">${it.hangs.map(h=>`<figure class="hb ${h.big?'big':'long'}" style="--r:${h.r}"><button class="hbtn" data-full="${h.s}" aria-label="${h.label} 크게 보기"><img src="${h.s}" alt="" loading="lazy">${g.map(p=>`<i class="g ${p}"></i><i class="rope ${p}"></i>`).join('')}</button><figcaption class="mono">${h.label}</figcaption></figure>`).join('')}</div>`;
       }
       if(it.kind==='xbanner')return `<div class="ob">${it.imgs.map((s,i)=>`<button class="unit xb" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><i class="rod"></i><img src="${s}" alt="${it.title} ${i+1}" loading="lazy"><i class="rod"></i><i class="pole"></i><i class="tank"></i></button>`).join('')}<span class="ob-hint mono">클릭하면 크게 보기</span></div>`;
       if(it.kind==='wind')return `<div class="ob">${it.imgs.map((s,i)=>`<button class="unit wb" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><img class="flag" src="${s}" alt="${it.title} ${i+1}" loading="lazy"><i class="pole"></i><i class="base"></i></button>`).join('')}<span class="ob-hint mono">클릭하면 크게 보기</span></div>`;
@@ -476,7 +510,7 @@ function renderPart(key){
       <section class="medium" id="${key}-${m}">
         <div class="m-head"><div><div class="k mono">${MEDIA[m].en}</div><h3>${MEDIA[m].ko}</h3></div><p>${MEDIA[m].desc}</p></div>
         <div class="works ${list.length===1||m==='outdoor'?'one':''}">${list.map(it=>`
-          <article class="work ${it.units?'wide':''}"><div class="stage2">${mock(it)}</div><h4>${it.title}</h4>${it.sub?`<p class="sub">${it.sub}</p>`:''}
+          <article class="work ${it.units||it.hangs?'wide':''}"><div class="stage2">${mock(it)}</div><h4>${it.title}</h4>${it.sub?`<p class="sub">${it.sub}</p>`:''}
             <dl class="spec"><dt class="mono">Tool</dt><dd>${it.tool}<span class="ex">예시</span></dd>
             <dt class="mono">Time</dt><dd>${it.time}<span class="ex">예시</span></dd>
             <dt class="mono">Point</dt><dd>${it.point}</dd></dl></article>`).join('')}</div>
