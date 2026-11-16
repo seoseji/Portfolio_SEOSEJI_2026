@@ -285,14 +285,14 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .avid-in{width:min(820px,100%);border-radius:14px;overflow:hidden;background:#000;box-shadow:0 0 0 1px #2a2f3a,0 30px 70px rgba(0,0,0,.55)}
 .avid.vert .avid-in{width:min(300px,78vw);border:7px solid #050506;border-radius:34px;box-shadow:0 0 0 1px #333,0 30px 70px rgba(0,0,0,.55)}
 .avid video{display:block;width:100%;height:auto;background:#000}
-.aphone{width:min(330px,100%);margin:0 auto;border:8px solid #050506;border-radius:36px;background:#fff;overflow:hidden;box-shadow:0 0 0 1px #333,0 30px 60px rgba(0,0,0,.55)}
+.aphone{width:min(430px,100%);margin:0 auto;border:8px solid #050506;border-radius:36px;background:#fff;overflow:hidden;box-shadow:0 0 0 1px #333,0 30px 60px rgba(0,0,0,.55)}
 .anotch{height:22px;display:flex;justify-content:center;align-items:center;background:#fff}
 .anotch i{width:68px;height:6px;border-radius:9px;background:#111}
-.ascroll{height:min(600px,72vh);overflow-y:auto;overflow-x:hidden;background:#fff;overscroll-behavior:contain;scrollbar-width:thin}
+.ascroll{height:min(780px,86vh);overflow-y:auto;overflow-x:hidden;background:#fff;overscroll-behavior:contain;scrollbar-width:thin}
 .ascroll img{display:block;width:100%;height:auto}
 .ascroll iframe{display:block;width:100%;height:100%;border:0;background:#fff}
-.agal{width:100%;display:flex;flex-wrap:wrap;gap:clamp(14px,2vw,24px);align-items:flex-end;padding:clamp(20px,3.4vw,44px)}
-.agal figure{margin:0;min-width:0;display:flex;flex-direction:column;gap:10px}
+.agal{--H:clamp(170px,24vw,300px);width:100%;display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(14px,2vw,24px);align-items:flex-end;padding:clamp(20px,3.4vw,44px)}
+.agal figure{margin:0;min-width:0;max-width:100%;flex:none;display:flex;flex-direction:column;gap:10px}
 .ag{display:block;cursor:zoom-in;border-radius:10px;overflow:hidden;box-shadow:0 14px 30px rgba(0,0,0,.45)}
 .ag img{display:block;width:100%;height:auto;transition:transform .35s}
 .ag:hover img,.ag:focus-visible img{transform:scale(1.03)}
@@ -566,6 +566,9 @@ const MEDIA={
   blog:{ko:'네이버 블로그 썸네일',en:'In search',desc:'검색 결과 목록에서 옆 글과 비교되는 매체.'},
   detail:{ko:'상세페이지',en:'Before buying',desc:'구매 직전, 끝까지 읽혀야 하는 매체.'},
   video:{ko:'광고영상',en:'On screen',desc:'짧은 시간 안에 제품을 기억시키는 영상 광고.'},
+  padding:{ko:'신소재 패딩 광고',en:'Project 01',desc:'에어로젤 소재를 앞세운 겨울 패딩의 영상 · 상세페이지 · 이미지 작업.'},
+  still:{ko:'STILL. 남성 올인원 로션 광고',en:'Project 02',desc:'남성 올인원 스킨 로션의 영상 · 상세페이지 · 이미지 작업.'},
+  fizz:{ko:'피즈캣 오렌지 음료 광고',en:'Project 03',desc:'직접 디자인한 캐릭터와 라벨로 만든 오렌지 음료의 영상 · 이미지 작업.'},
   image:{ko:'광고 이미지',en:'Key visual',desc:'하나의 콘셉트를 여러 장의 광고 컷으로 확장한 작업.'}
 };
 const PARTS={
@@ -631,32 +634,33 @@ const PARTS={
         tool:'Illustrator, Photoshop',time:'건당 3시간',point:'오픈 반값 · 학생 혜택 · 수능 이벤트처럼 대상에 맞춘 카피와 일러스트로, 매장 안에서 바로 혜택이 읽히게 구성'}
     ]},
   ailab:{ch:'CH 02',k:'CH 02 · AI Lab',name:'AI 개인 프로젝트',lead:'AI 도구를 다룬 개인 작업입니다.<br>사용한 도구와 생성 과정의 핵심을 함께 기록했습니다.',
-    order:['video','detail','image'],
+    order:['padding','still','fizz'],
     items:[
-      {m:'video',kind:'avideo',title:'신소재 패딩 광고',sub:'가로형 영상 · 13초',src:'assets/ai/video/padding.mp4',poster:'assets/ai/video/padding.jpg',ratio:'16/9',
-        tool:'Higgsfield',point:'레퍼런스 컷과 모델 시트로 패딩의 형태와 색, 인물을 먼저 정해 두고 장면을 만들어, 컷이 바뀌어도 제품이 같은 모습으로 보이게 구성'},
-      {m:'video',kind:'avideo',title:'STILL. 남성 올인원 로션 광고',sub:'가로형 영상 · 11초',src:'assets/ai/video/still.mp4',poster:'assets/ai/video/still.jpg',ratio:'16/9',
-        tool:'Higgsfield',point:'제품 레퍼런스 컷과 장면별 이미지를 기준으로 영상을 만들어, 같은 모델과 같은 제품이 처음부터 끝까지 이어지게 구성'},
-      {m:'video',kind:'avideo',title:'피즈캣 오렌지 음료 광고',sub:'세로형 영상 · 10초',src:'assets/ai/video/fizzcat.mp4',poster:'assets/ai/video/fizzcat.jpg',ratio:'9/16',
-        tool:'Higgsfield',point:'캐릭터와 라벨을 직접 디자인한 뒤 영상으로 확장해, 라벨 속 캐릭터가 광고 안에서도 같은 모습으로 움직이게 구성'},
-      {m:'detail',kind:'adetail',title:'신소재 패딩 상세페이지',sub:'기술 설명부터 제품 정보까지 한 장으로 이어지는 구성 — 폰 화면을 위아래로 넘겨 보세요',img:'assets/ai/img/padding-detail.jpg',
-        tool:'Higgsfield',point:'에어로젤 기술을 첫 화면에서 한 문장으로 전달하고, 기술 설명 → 착용 장면 → 디테일 → 제품 정보 순서로 스크롤 흐름을 구성'},
-      {m:'detail',kind:'adetail',title:'STILL. 올인원 스킨 로션 상세페이지',sub:'실제 웹페이지 그대로 — 폰 화면을 위아래로 넘겨 보세요',page:'assets/ai/still-detail/index.html',
-        tool:'Higgsfield',point:'제품 사진과 흡수 장면 GIF로 사용감을 보여 주고, 화면 폭에 맞춰 레이아웃이 바뀌는 반응형 웹페이지로 구성'},
-      {m:'image',kind:'agal',title:'신소재 패딩',sub:'레퍼런스 컷 · 모델 시트',
+      {m:'padding',kind:'avideo',title:'광고영상',sub:'가로형 영상 · 13초',src:'assets/ai/video/padding.mp4',poster:'assets/ai/video/padding.jpg',ratio:'16/9',
+        tool:'힉스필드, 포토샵',point:'레퍼런스 컷과 모델 시트로 패딩의 형태와 색, 인물을 먼저 정해 두고 장면을 만들어, 컷이 바뀌어도 제품이 같은 모습으로 보이게 구성'},
+      {m:'padding',kind:'adetail',title:'상세페이지',sub:'기술 설명부터 제품 정보까지 한 장으로 이어지는 구성 — 폰 화면을 위아래로 넘겨 보세요',img:'assets/ai/img/padding-detail.jpg',
+        tool:'힉스필드, 포토샵',point:'에어로젤 기술을 첫 화면에서 한 문장으로 전달하고, 기술 설명 → 착용 장면 → 디테일 → 제품 정보 순서로 스크롤 흐름을 구성'},
+      {m:'padding',kind:'agal',title:'광고 이미지',sub:'레퍼런스 컷 · 모델 시트',
         imgs:[['assets/ai/img/padding-ref.jpg','레퍼런스 컷',690/640],['assets/ai/img/padding-sheet.jpg','모델 시트',1800/1012]],
-        tool:'Higgsfield',point:'앞·뒤 레퍼런스 컷과 정면·측면·후면 모델 시트로 소재감과 실루엣을 기록해 이후 장면의 기준으로 사용'},
-      {m:'image',kind:'agal',title:'STILL. 남성 올인원 로션',sub:'레퍼런스 컷 · 장면 컷 3종',
+        tool:'힉스필드, 포토샵',point:'앞·뒤 레퍼런스 컷과 정면·측면·후면 모델 시트로 소재감과 실루엣을 기록해 이후 장면의 기준으로 사용'},
+      {m:'still',kind:'avideo',title:'광고영상',sub:'가로형 영상 · 11초',src:'assets/ai/video/still.mp4',poster:'assets/ai/video/still.jpg',ratio:'16/9',
+        tool:'힉스필드, 수노, 포토샵',point:'제품 레퍼런스 컷과 장면별 이미지를 기준으로 영상을 만들어, 같은 모델과 같은 제품이 처음부터 끝까지 이어지게 구성'},
+      {m:'still',kind:'adetail',title:'상세페이지',sub:'실제 웹페이지 그대로 — 폰 화면을 위아래로 넘겨 보세요',page:'assets/ai/still-detail/index.html',
+        tool:'힉스필드, 수노, 포토샵',point:'제품 사진과 흡수 장면 GIF로 사용감을 보여 주고, 화면 폭에 맞춰 레이아웃이 바뀌는 반응형 웹페이지로 구성'},
+      {m:'still',kind:'agal',title:'광고 이미지',sub:'레퍼런스 컷 · 장면 컷 3종',
         imgs:[['assets/ai/img/still-ref.jpg','레퍼런스 컷',1000/1334],['assets/ai/img/still-scene-1.jpg','장면 컷 1',1400/782],['assets/ai/img/still-scene-2.jpg','장면 컷 2',1400/782],['assets/ai/img/still-scene-3.jpg','장면 컷 3',1400/782]],
-        tool:'Higgsfield',point:'제품 레퍼런스 컷을 기준으로 같은 모델의 의상과 표정만 바꿔 세 가지 장면으로 확장'},
-      {m:'image',kind:'agal',title:'피즈캣 오렌지 음료',sub:'캐릭터 디자인 · 라벨 디자인 · 연출 컷',
-        imgs:[['assets/ai/img/fizz-character.jpg','캐릭터 디자인',1200/1152],['assets/ai/img/fizz-label.jpg','라벨 디자인',1400/1052],['assets/ai/img/fizz-scene.jpg','연출 컷',1],],
-        tool:'Higgsfield',point:'캐릭터 → 라벨 → 병 연출 컷 순서로 이어, 직접 만든 캐릭터가 라벨에서 실물 연출까지 같은 모습으로 나오게 구성'}
+        tool:'힉스필드, 수노, 포토샵',point:'제품 레퍼런스 컷을 기준으로 같은 모델의 의상과 표정만 바꿔 세 가지 장면으로 확장'},
+      {m:'fizz',kind:'avideo',title:'광고영상',sub:'세로형 영상 · 10초',src:'assets/ai/video/fizzcat.mp4',poster:'assets/ai/video/fizzcat.jpg',ratio:'9/16',
+        tool:'힉스필드, 수노, 포토샵',point:'캐릭터와 라벨을 직접 디자인한 뒤 영상으로 확장해, 라벨 속 캐릭터가 광고 안에서도 같은 모습으로 움직이게 구성'},
+      {m:'fizz',kind:'agal',title:'광고 이미지',sub:'캐릭터 디자인 · 라벨 디자인 · 연출 컷',
+        imgs:[['assets/ai/img/fizz-character.jpg','캐릭터 디자인',1200/1152],['assets/ai/img/fizz-label.jpg','라벨 디자인',1400/1052],['assets/ai/img/fizz-scene.jpg','연출 컷',1]],
+        tool:'힉스필드, 수노, 포토샵',point:'캐릭터 → 라벨 → 병 연출 컷 순서로 이어, 직접 만든 캐릭터가 라벨에서 실물 연출까지 같은 모습으로 나오게 구성'}
     ]}
 };
 const tile=(h,r,label='작업물',extra='')=>`<div class="t" style="--h:${h};aspect-ratio:${r};${extra}">${label}</div>`;
 function mock(it){
-  switch(it.m){
+  const t=it.kind==='avideo'?'video':it.kind==='adetail'?'detail':it.kind==='agal'?'image':it.m;
+  switch(t){
     case 'outdoor':
       if(it.kind==='stand'){
         const X=(s,c,r,f)=>`<button class="su sx" style="--r:${r||.3341};--k:${f||1}" data-full="${s}" ${c?'tabindex="-1" aria-hidden="true"':'aria-label="물통 X배너 크게 보기"'}><span class="bar"></span><img src="${s}" alt="" loading="lazy"><span class="bar"></span><span class="pole"></span><svg class="tank" viewBox="0 0 140 40" aria-hidden="true"><path d="M10,40 Q2,40 3.5,32 L12,11 Q15,5 23,5 L117,5 Q125,5 128,11 L136.5,32 Q138,40 130,40 Z" fill="url(#tankG)"/><path d="M15,10 L125,10" stroke="rgba(255,255,255,.2)" stroke-width="1.2"/><path d="M8,33 L132,33" stroke="rgba(255,255,255,.06)" stroke-width="1"/><ellipse cx="70" cy="6.5" rx="6" ry="1.8" fill="#000"/><ellipse cx="106" cy="7.5" rx="8" ry="2.2" fill="#26282c" stroke="#55585d" stroke-width=".7"/></svg><span class="shadow"></span></button>`;
@@ -715,7 +719,7 @@ function mock(it){
         return `<div class="avid ${v?'vert':''}"><div class="avid-in"><video controls playsinline preload="metadata" poster="${it.poster}" aria-label="${it.title}"><source src="${it.src}" type="video/mp4"></video></div></div>`}
       {const v=it.fmt==='9:16';return `<div class="mk player" style="${v?'max-width:240px':''}"><div class="v">${tile(it.h,v?'9/16':'16/9')}<span class="play">▶</span></div><div class="ctl mono">0:09<div class="tr"></div>0:15</div></div>`;}
     case 'image':
-      if(it.kind==='agal')return `<div class="agal">${it.imgs.map(([s,l,r])=>`<figure style="flex:${r.toFixed(3)} 1 ${Math.round(r*300)}px"><button class="ag" data-full="${s}" aria-label="${it.title} ${l} 크게 보기"><img src="${s}" alt="" loading="lazy"></button><figcaption class="mono">${l}</figcaption></figure>`).join('')}</div>`;
+      if(it.kind==='agal')return `<div class="agal">${it.imgs.map(([s,l,r])=>`<figure style="width:calc(var(--H)*${r.toFixed(3)})"><button class="ag" data-full="${s}" aria-label="${it.title} ${l} 크게 보기"><img src="${s}" alt="" loading="lazy"></button><figcaption class="mono">${l}</figcaption></figure>`).join('')}</div>`;
       return `<div class="mk frame" style="max-width:320px">${tile(it.h,it.r)}</div>`;
   }
 }
