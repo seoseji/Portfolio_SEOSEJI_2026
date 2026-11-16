@@ -280,6 +280,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .hb{margin:0;min-width:0;display:flex;flex-direction:column;gap:14px}
 .hb.long{grid-column:1/-1;padding:0 3%}
 .hangwall.mix{grid-template-columns:minmax(0,.8fr) minmax(0,1fr);align-items:center}
+/* ---------- 포스터: 벽에 붙인 종이 ---------- */
+.posters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(18px,3vw,40px);padding:clamp(24px,4vw,52px)}
+.pst{position:relative;display:block;aspect-ratio:900/1270;transform:rotate(var(--tilt));cursor:zoom-in;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.pst:hover,.pst:focus-visible{transform:rotate(0) scale(1.03)}
+.pst img{display:block;width:100%;height:100%;object-fit:cover;box-shadow:0 1px 2px rgba(0,0,0,.4),0 14px 30px rgba(0,0,0,.45)}
+.pst::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,rgba(255,255,255,.16),transparent 30%,transparent 70%,rgba(0,0,0,.12))}
+.pst::before{content:"";position:absolute;z-index:1;top:-8px;left:50%;width:34%;height:16px;transform:translateX(-50%) rotate(-2deg);background:rgba(235,228,210,.75);box-shadow:0 1px 2px rgba(0,0,0,.2)}
 /* ---------- 블로그 썸네일: 검색창 + 썸네일 목록 ---------- */
 .bl-wrap{width:100%;padding:clamp(20px,4vw,48px)}
 .bl{max-width:900px;margin:0 auto;background:#f3f2ee;border-radius:14px;padding:clamp(16px,2.4vw,26px);box-shadow:0 30px 60px rgba(0,0,0,.5)}
@@ -443,6 +450,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .pop-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .ig-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
   .bl-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .posters{grid-template-columns:repeat(2,minmax(0,1fr))}
   .ig-top{padding:16px}.ig-av{width:52px;height:52px;font-size:18px}
   .hb.tall{grid-row:auto;padding:0 10%}
 }
@@ -528,7 +536,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 /* ---------- 데이터 (TOOL·TIME은 예시) ---------- */
 const MEDIA={
   outdoor:{ko:'옥외배너',en:'On the street',desc:'멀리서, 몇 초 안에 읽혀야 하는 매체.'},
-  banner:{ko:'배너',en:'On the web',desc:'다른 콘텐츠 사이에서 클릭을 만들어야 하는 매체.'},
+  banner:{ko:'배너',en:'On the web',desc:'페이지의 정체성이나 핵심 메시지를 직관적으로 알려 주는 시각적 매체.'},
+  poster:{ko:'포스터',en:'On the wall',desc:'매장 안에서 오래 머무는 시선을 붙잡는 매체.'},
   flyer:{ko:'전단지',en:'In hand',desc:'손에 쥐고 가까이서 읽는 인쇄 매체.'},
   insta:{ko:'인스타그램 이미지',en:'In the feed',desc:'엄지가 스크롤을 멈추게 해야 하는 매체.'},
   blog:{ko:'네이버 블로그 썸네일',en:'In search',desc:'검색 결과 목록에서 옆 글과 비교되는 매체.'},
@@ -538,7 +547,7 @@ const MEDIA={
 };
 const PARTS={
   archive:{ch:'CH 01',k:'CH 01 · Client Work',name:'실무 프로젝트',lead:'실제 클라이언트와 진행해 집행된 작업입니다.<br>작업물이 실제로 놓이는 환경에 넣어 보여드립니다.',
-    order:['outdoor','banner','flyer','insta','blog','detail'],
+    order:['outdoor','banner','flyer','poster','insta','blog'],
     items:[
       {m:'outdoor',kind:'stand',title:'노모어피자 스탠드 배너',sub:'물통 X배너 4종 · 양면 윈드배너 4종(소형 650×1950)',
         units:[['x','assets/outdoor/xbanner-01.jpg'],['x','assets/outdoor/xbanner-02.jpg'],['x','assets/outdoor/xbanner-03.jpg'],['x','assets/outdoor/xbanner-04.jpg'],
@@ -588,8 +597,15 @@ const PARTS={
       {m:'blog',kind:'thumbs',title:'더원테크 블로그 썸네일',sub:'지역 렌탈 · 타이포 시리즈 6종',q:'서울 노트북 렌탈',
         imgs:Array.from({length:6},(_,i)=>`assets/blog/tot-${String(i+1).padStart(2,'0')}.jpg`),
         tool:'Photoshop',time:'건당 1시간',point:'지역명 + 장비명 검색 키워드를 가장 크게 배치하고, 사진형과 타이포형 두 가지 틀로 검색 결과에서 눈에 띄게 구성'},
-      {m:'detail',title:'프로젝트명',h:18,tool:'Photoshop, Figma',time:'1주',point:'문제 제기 → 해결 → 신뢰로 이어지는 스크롤 흐름'},
-      {m:'detail',title:'프로젝트명',h:45,tool:'Photoshop',time:'5일',point:'모바일 한 화면 단위로 끊어 읽히는 구성'}
+      {m:'poster',kind:'posters',title:'제로웨이브 포스터',sub:'매장 포스터 4종',
+        imgs:[1,2,3,4].map(n=>`assets/poster/zw-0${n}.jpg`),
+        tool:'Illustrator, Photoshop',time:'건당 1일',point:'제품마다 다른 콘셉트(조합 · 신제품 · 오픈 · 단백질)에 맞춰 색과 무드를 바꾸되, 하단 슬로건으로 브랜드를 하나로 묶음'},
+      {m:'poster',kind:'posters',title:'노모어피자 건대점 포스터',sub:'매장 포스터 4종',
+        imgs:[1,2,3,4].map(n=>`assets/poster/nm-0${n}.jpg`),
+        tool:'Illustrator, Photoshop',time:'건당 1일',point:'가격과 혜택을 가장 크게, 메뉴 사진으로 시선을 모으고 시간대 · 메뉴별로 분위기를 다르게 연출'},
+      {m:'poster',kind:'posters',title:'봉천동매운떡볶이 포스터',sub:'매장 포스터 4종',
+        imgs:[1,2,3,4].map(n=>`assets/poster/bm-0${n}.jpg`),
+        tool:'Illustrator, Photoshop',time:'건당 1일',point:'오픈 반값 · 학생 혜택 · 수능 이벤트처럼 대상에 맞춘 카피와 일러스트로, 매장 안에서 바로 혜택이 읽히게 구성'}
     ]},
   ailab:{ch:'CH 02',k:'CH 02 · AI Lab',name:'AI 개인 프로젝트',lead:'AI 도구를 다룬 개인 작업입니다.<br>사용한 도구와 생성 과정의 핵심을 함께 기록했습니다.',
     order:['video','detail','image'],
@@ -619,6 +635,8 @@ function mock(it){
       if(it.kind==='xbanner')return `<div class="ob">${it.imgs.map((s,i)=>`<button class="unit xb" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><i class="rod"></i><img src="${s}" alt="${it.title} ${i+1}" loading="lazy"><i class="rod"></i><i class="pole"></i><i class="tank"></i></button>`).join('')}<span class="ob-hint mono">클릭하면 크게 보기</span></div>`;
       if(it.kind==='wind')return `<div class="ob">${it.imgs.map((s,i)=>`<button class="unit wb" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><img class="flag" src="${s}" alt="${it.title} ${i+1}" loading="lazy"><i class="pole"></i><i class="base"></i></button>`).join('')}<span class="ob-hint mono">클릭하면 크게 보기</span></div>`;
       return `<div class="mk street"><div class="bd a"></div><div class="bd b"></div><div class="pole"></div><div class="bb">${tile(it.h,'auto')}</div></div>`;
+    case 'poster':
+      return `<div class="posters">${it.imgs.map((s,i)=>`<button class="pst" style="--tilt:${[-1.2,.8,-.5,1.1][i%4]}deg" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><img src="${s}" alt="" loading="lazy"></button>`).join('')}</div>`;
     case 'banner':
       if(it.kind==='site'||it.kind==='popup'){
         const chrome=`<div class="site-bar"><i></i><i></i><i></i><span class="url"></span></div>
@@ -629,7 +647,7 @@ function mock(it){
             <div class="hero">${it.slides.map((s,i)=>`<button class="sl ${i?'':'on'}" data-full="${s}" aria-label="롤링배너 ${i+1} 크게 보기"><img src="${s}" alt="" loading="lazy"></button>`).join('')}
               <button class="h-arrow" data-step="-1" aria-label="이전 배너">‹</button><button class="h-arrow nx" data-step="1" aria-label="다음 배너">›</button>
               <div class="h-dots">${it.slides.map((s,i)=>`<button class="${i?'':'on'}" data-go="${i}" aria-label="${i+1}번 배너"></button>`).join('')}</div>
-            </div>${body}</div></div>`;
+            </div></div></div>`;
         }
         return `<div class="pop-grid">${it.slides.map((s,i)=>`<button class="pg" data-full="${s}" aria-label="팝업배너 ${i+1} 크게 보기"><img src="${s}" alt="" loading="lazy"></button>`).join('')}</div>`;
       }
