@@ -280,6 +280,27 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .hb{margin:0;min-width:0;display:flex;flex-direction:column;gap:14px}
 .hb.long{grid-column:1/-1;padding:0 3%}
 .hangwall.mix{grid-template-columns:minmax(0,.8fr) minmax(0,1fr);align-items:center}
+/* ---------- 전단지: 종이 질감 + 누르면 앞뒷면 뒤집기 ---------- */
+.flyers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:52px 40px;padding:12px clamp(24px,4vw,56px) 4px;align-items:end}
+.fl{margin:0;min-width:0;display:flex;flex-direction:column;gap:16px}
+.fl.wide{grid-column:span 2}
+.fl.tri{grid-column:1/-1;width:min(100%,880px);justify-self:center}
+.flip-btn{position:relative;display:block;width:100%;aspect-ratio:var(--r);perspective:1800px;cursor:pointer}
+.flip{position:absolute;inset:0;transform-style:preserve-3d;transform:rotate(var(--tilt,0deg));transition:transform .85s cubic-bezier(.3,.7,.2,1)}
+.fl.on .flip{transform:rotate(var(--tilt,0deg)) rotateY(180deg)}
+.face{position:absolute;inset:0;background:#fff;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  box-shadow:0 1px 2px rgba(0,0,0,.4),0 14px 30px rgba(0,0,0,.45),0 30px 60px rgba(0,0,0,.25)}
+.face.back{transform:rotateY(180deg)}
+.face img{display:block;width:100%;height:100%;object-fit:cover}
+.face::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,rgba(255,255,255,.18),transparent 32%,transparent 66%,rgba(0,0,0,.12))}
+.tri .face::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,rgba(0,0,0,.05) 0,transparent 30%,rgba(0,0,0,.2) 33.3%,rgba(255,255,255,.12) 33.7%,transparent 45%,rgba(0,0,0,.04) 63%,rgba(0,0,0,.2) 66.6%,rgba(255,255,255,.1) 67%,transparent 80%)}
+.fl figcaption{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.fl .fname{font-size:14px;font-weight:500}
+.fl .fside{color:var(--acc);margin-left:8px}
+.fl .fctl{display:flex;gap:6px}
+.fl .chip2{padding:5px 11px;border:1px solid var(--line);border-radius:99px;color:var(--mute);font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;transition:color .2s,border-color .2s}
+.fl .chip2:hover,.fl .chip2:focus-visible{color:var(--fg);border-color:var(--acc)}
 .hb.tall{grid-row:span 2}
 .hb figcaption{color:var(--dim);text-align:right}
 .hbtn{position:relative;display:block;width:100%;aspect-ratio:var(--r);cursor:zoom-in}
@@ -348,6 +369,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .hangwall{grid-template-columns:minmax(0,1fr);gap:40px;padding:8px 28px 0}
   .hb.long{padding:0}
   .hangwall.mix{grid-template-columns:minmax(0,1fr)}
+  .flyers{grid-template-columns:minmax(0,1fr);gap:40px;padding:8px 20px 0}
+  .fl.wide,.fl.tri{grid-column:auto}
   .hb.tall{grid-row:auto;padding:0 10%}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-iteration-count:1!important;transition-duration:.01s!important;transition-delay:0s!important}
@@ -461,8 +484,15 @@ const PARTS={
         tool:'Illustrator, Photoshop',time:'건당 1일',point:'길고 넓은 매체라 시선이 왼쪽에서 오른쪽으로 흐르도록 메뉴 사진 → 핵심 혜택 → 연락처 순서로 배치'},
       {m:'banner',title:'프로젝트명',h:28,tool:'Photoshop',time:'4시간',point:'여러 사이즈로 리사이징해도 무너지지 않는 레이아웃'},
       {m:'banner',title:'프로젝트명',h:20,tool:'Photoshop',time:'3시간',point:'CTA 버튼까지 이어지는 시선 동선'},
-      {m:'flyer',title:'프로젝트명',h:42,tool:'InDesign, Illustrator',time:'2일',point:'혜택 → 정보 → 위치 순서로 읽히는 정보 위계'},
-      {m:'flyer',title:'프로젝트명',h:30,tool:'Illustrator',time:'1일',point:'인쇄 색 보정을 고려한 컬러 설정'},
+      {m:'flyer',kind:'flyers',title:'노모어피자 · 봉천동매운떡볶이 전단지',sub:'A4 전단지 5종 · 3단 리플렛 1종, 모두 앞뒷면 — 전단지를 누르면 뒤집혀요',
+        flyers:[
+          {t:'노모어피자 건대점 · 위생등급 매우우수',f:'assets/flyer/flyer-1f.jpg',b:'assets/flyer/flyer-1b.jpg',r:.709,tilt:-1.2},
+          {t:'노모어피자 건대점 · 홀 완비',f:'assets/flyer/flyer-2f.jpg',b:'assets/flyer/flyer-2b.jpg',r:.709,tilt:.9},
+          {t:'노모어피자 종합운동장역점 · 오픈',f:'assets/flyer/flyer-5f.jpg',b:'assets/flyer/flyer-5b.jpg',r:.709,tilt:-.6},
+          {t:'노모어피자 건대점 · 런치 이벤트',f:'assets/flyer/flyer-3f.jpg',b:'assets/flyer/flyer-3b.jpg',r:1.4028,tilt:.5,cls:'wide'},
+          {t:'봉천동매운떡볶이 건대점 · 오픈 반값',f:'assets/flyer/flyer-6f.jpg',b:'assets/flyer/flyer-6b.jpg',r:.709,tilt:1},
+          {t:'노모어피자 건대점 · 3단 리플렛',f:'assets/flyer/flyer-4f.jpg',b:'assets/flyer/flyer-4b.jpg',r:1.414,tilt:0,cls:'tri',sides:['겉면','안쪽면']}],
+        tool:'Illustrator, Photoshop',time:'건당 2일',point:'앞면은 가게를 찾아오게 하는 한 가지 메시지(위생등급·홀 완비·오픈·반값)에 집중하고, 뒷면은 메뉴와 가격을 한눈에 비교하도록 정리'},
       {m:'insta',title:'프로젝트명',h:25,tool:'Photoshop, Figma',time:'5시간',point:'첫 0.5초에 보이는 컬러 대비와 제품 크롭'},
       {m:'insta',title:'프로젝트명',h:15,tool:'Photoshop',time:'3시간',point:'시리즈 게시물 간 통일된 톤'},
       {m:'blog',title:'프로젝트명',h:38,tool:'Photoshop',time:'1시간',point:'작은 크기에서도 읽히는 키워드 타이포'},
@@ -498,7 +528,10 @@ function mock(it){
       if(it.kind==='wind')return `<div class="ob">${it.imgs.map((s,i)=>`<button class="unit wb" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><img class="flag" src="${s}" alt="${it.title} ${i+1}" loading="lazy"><i class="pole"></i><i class="base"></i></button>`).join('')}<span class="ob-hint mono">클릭하면 크게 보기</span></div>`;
       return `<div class="mk street"><div class="bd a"></div><div class="bd b"></div><div class="pole"></div><div class="bb">${tile(it.h,'auto')}</div></div>`;
     case 'banner':return `<div class="mk browser"><div class="top"><i></i><i></i><i></i></div><div class="body"><div class="ln" style="width:35%"></div>${tile(it.h,'728/220','작업물','border-radius:4px')}<div class="ln"></div><div class="ln" style="width:70%"></div></div></div>`;
-    case 'flyer':return `<div class="mk desk"><div class="paper back"></div><div class="paper">${tile(it.h,'auto')}</div></div>`;
+    case 'flyer':
+      if(it.kind==='flyers')return `<div class="flyers">${it.flyers.map(x=>{const s=x.sides||['앞면','뒷면'];
+        return `<figure class="fl ${x.cls||''}" style="--r:${x.r};--tilt:${x.tilt}deg" data-sides="${s.join('|')}" data-f="${x.f}" data-b="${x.b}"><button class="flip-btn" aria-label="${x.t} 뒤집기"><span class="flip"><span class="face front"><img src="${x.f}" alt="${x.t} ${s[0]}" loading="lazy"></span><span class="face back"><img src="${x.b}" alt="${x.t} ${s[1]}" loading="lazy"></span></span></button><figcaption><span><span class="fname">${x.t}</span><span class="fside mono">${s[0]}</span></span><span class="fctl"><button class="chip2 js-flip">뒤집기</button><button class="chip2" data-full="${x.f}" aria-label="${x.t} 크게 보기">크게 보기</button></span></figcaption></figure>`}).join('')}</div>`;
+      return `<div class="mk desk"><div class="paper back"></div><div class="paper">${tile(it.h,'auto')}</div></div>`;
     case 'insta':return `<div class="phone"><div class="notch"><i></i></div><div class="igh"><i></i>brand_official</div>${tile(it.h,'4/5')}<div class="igf"><span style="width:45%"></span><span></span><span style="width:75%"></span></div></div>`;
     case 'blog':return `<div class="mk serp" style="max-width:520px"><div class="q">검색 키워드</div><div class="res"><div class="tx"><b>블로그 포스팅 제목</b><span></span><span style="width:70%"></span></div>${tile(it.h,'1/1')}</div><div class="res dim"><div class="tx"><b>다른 블로그 글</b><span></span><span style="width:60%"></span></div><div class="t"></div></div></div>`;
     case 'detail':return `<div class="phone"><div class="notch"><i></i></div><div class="scroll">${tile(it.h,'auto','작업물 · 자동 스크롤')}</div></div>`;
@@ -518,7 +551,7 @@ function renderPart(key){
       <section class="medium" id="${key}-${m}">
         <div class="m-head"><div><div class="k mono">${MEDIA[m].en}</div><h3>${MEDIA[m].ko}</h3></div><p>${MEDIA[m].desc}</p></div>
         <div class="works ${list.length===1||m==='outdoor'?'one':''}">${list.map(it=>`
-          <article class="work ${it.units||it.hangs?'wide':''}"><div class="stage2">${mock(it)}</div><h4>${it.title}</h4>${it.sub?`<p class="sub">${it.sub}</p>`:''}
+          <article class="work ${it.units||it.hangs||it.flyers?'wide':''}"><div class="stage2">${mock(it)}</div><h4>${it.title}</h4>${it.sub?`<p class="sub">${it.sub}</p>`:''}
             <dl class="spec"><dt class="mono">Tool</dt><dd>${it.tool}<span class="ex">예시</span></dd>
             <dt class="mono">Time</dt><dd>${it.time}<span class="ex">예시</span></dd>
             <dt class="mono">Point</dt><dd>${it.point}</dd></dl></article>`).join('')}</div>
@@ -536,6 +569,13 @@ document.addEventListener('click',e=>{
   if(!lb.hidden&&(e.target===lb||e.target===lbImg||e.target.id==='lb-close')){lb.hidden=true;lbFrom&&lbFrom.focus()}
 });
 addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden){lb.hidden=true;lbFrom&&lbFrom.focus()}});
+/* 전단지 앞뒷면 뒤집기 */
+document.addEventListener('click',e=>{
+  const t=e.target.closest('.flip-btn,.js-flip');if(!t)return;
+  const fig=t.closest('.fl'),on=fig.classList.toggle('on'),s=fig.dataset.sides.split('|');
+  fig.querySelector('.fside').textContent=on?s[1]:s[0];
+  fig.querySelector('[data-full]').dataset.full=on?fig.dataset.b:fig.dataset.f;
+});
 /* 스탠드 배너 슬라이드: 천천히 자동으로 흐르고, 버튼·스와이프로도 넘김 */
 document.querySelectorAll('.carousel').forEach(c=>{
   const m=c.querySelector('.marq'),still=matchMedia('(prefers-reduced-motion: reduce)').matches;
