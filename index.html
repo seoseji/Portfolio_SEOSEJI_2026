@@ -280,6 +280,15 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .hb{margin:0;min-width:0;display:flex;flex-direction:column;gap:14px}
 .hb.long{grid-column:1/-1;padding:0 3%}
 .hangwall.mix{grid-template-columns:minmax(0,.8fr) minmax(0,1fr);align-items:center}
+/* ---------- 블로그 썸네일: 검색창 + 썸네일 목록 ---------- */
+.bl-wrap{width:100%;padding:clamp(20px,4vw,48px)}
+.bl{max-width:900px;margin:0 auto;background:#f3f2ee;border-radius:14px;padding:clamp(16px,2.4vw,26px);box-shadow:0 30px 60px rgba(0,0,0,.5)}
+.bl-q{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 18px;margin-bottom:clamp(14px,2vw,22px);border:2px solid #03c75a;border-radius:99px;background:#fff;color:#222;font-size:14px}
+.bl-q i{font-style:normal;color:#03c75a;font-size:18px;line-height:1}
+.bl-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(8px,1.2vw,14px)}
+.bl-cell{display:block;aspect-ratio:1;border-radius:8px;overflow:hidden;cursor:zoom-in;background:#ddd;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+.bl-cell img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .35s}
+.bl-cell:hover img,.bl-cell:focus-visible img{transform:scale(1.05)}
 /* ---------- 인스타그램 프로필 피드 목업 ---------- */
 .ig-wrap{width:100%;padding:clamp(20px,4vw,48px)}
 .ig{max-width:860px;margin:0 auto;background:#fff;color:#111;border-radius:14px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.5)}
@@ -433,6 +442,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .site-body{grid-template-columns:repeat(2,minmax(0,1fr))}
   .pop-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .ig-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .bl-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
   .ig-top{padding:16px}.ig-av{width:52px;height:52px;font-size:18px}
   .hb.tall{grid-row:auto;padding:0 10%}
 }
@@ -562,8 +572,8 @@ const PARTS={
           {t:'봉천동매운떡볶이 봉천본점 · 베스트 메뉴',f:'assets/flyer/flyer-8f.jpg',b:'assets/flyer/flyer-8b.jpg',r:.709,tilt:-1},
           {t:'봉천동매운떡볶이 봉천본점 · 토핑 쿠폰',f:'assets/flyer/flyer-9f.jpg',b:'assets/flyer/flyer-9b.jpg',r:.709,tilt:.6}],
         tool:'Illustrator, Photoshop',time:'건당 2일',point:'앞면은 가게를 찾아오게 하는 한 가지 메시지(위생등급·홀 완비·오픈·반값)에 집중하고, 뒷면은 메뉴와 가격을 한눈에 비교하도록 정리'},
-      {m:'insta',kind:'feed',title:'키오컴퍼니 인스타그램',sub:'피드 · 릴스 썸네일 17종',acct:'kio_company',ini:'K',av:'#1f4fd8',
-        imgs:Array.from({length:17},(_,i)=>`assets/insta/kio-${String(i+1).padStart(2,'0')}.jpg`),reels:[5,6,7],
+      {m:'insta',kind:'feed',title:'키오컴퍼니 인스타그램',sub:'피드 · 릴스 썸네일 18종',acct:'kio_company',ini:'K',av:'#1f4fd8',
+        imgs:[...Array.from({length:17},(_,i)=>`assets/insta/kio-${String(i+2).padStart(2,'0')}.jpg`),'assets/insta/kio-01.jpg'],reels:[4,5,6],
         tool:'Photoshop',time:'건당 3시간',point:'혜택과 가격을 첫 화면에서 바로 읽히게 구성하고, 시리즈마다 같은 레이아웃 틀을 유지해 계정 전체의 통일감을 살림'},
       {m:'insta',kind:'feed',title:'노모어피자 인스타그램',sub:'건대점 피드 12종',acct:'nomorepizza_kondae',ini:'N',av:'#f06a1d',
         imgs:Array.from({length:12},(_,i)=>`assets/insta/nm-${String(i+1).padStart(2,'0')}.jpg`),reels:[],
@@ -572,7 +582,12 @@ const PARTS={
         imgs:['assets/insta/bm-23.gif','assets/insta/bm-24.jpg','assets/insta/bm-25.jpg',
           ...[1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22].map(n=>`assets/insta/bm-${String(n).padStart(2,'0')}.jpg`)],reels:[],
         tool:'Photoshop',time:'건당 3시간',point:'브랜드 컬러인 빨강 · 주황 · 노랑을 돌려 가며 쓰고, 밈과 손글씨 카피로 친근한 말투를 시각적으로 표현'},
-      {m:'blog',title:'프로젝트명',h:38,tool:'Photoshop',time:'1시간',point:'작은 크기에서도 읽히는 키워드 타이포'},
+      {m:'blog',kind:'thumbs',title:'키오컴퍼니 블로그 썸네일',sub:'사례 · 솔루션 · 사장님 필독 시리즈 18종',q:'무인매장 키오스크',
+        imgs:Array.from({length:18},(_,i)=>`assets/blog/kio-${String(i+1).padStart(2,'0')}.jpg`),
+        tool:'Photoshop',time:'건당 1시간',point:'시리즈마다 같은 틀(사례 · 솔루션 · 사장님 필독)을 정해, 작은 썸네일에서도 키워드가 먼저 읽히고 한눈에 같은 브랜드로 보이게 구성'},
+      {m:'blog',kind:'thumbs',title:'더원테크 블로그 썸네일',sub:'지역 렌탈 · 타이포 시리즈 6종',q:'서울 노트북 렌탈',
+        imgs:Array.from({length:6},(_,i)=>`assets/blog/tot-${String(i+1).padStart(2,'0')}.jpg`),
+        tool:'Photoshop',time:'건당 1시간',point:'지역명 + 장비명 검색 키워드를 가장 크게 배치하고, 사진형과 타이포형 두 가지 틀로 검색 결과에서 눈에 띄게 구성'},
       {m:'detail',title:'프로젝트명',h:18,tool:'Photoshop, Figma',time:'1주',point:'문제 제기 → 해결 → 신뢰로 이어지는 스크롤 흐름'},
       {m:'detail',title:'프로젝트명',h:45,tool:'Photoshop',time:'5일',point:'모바일 한 화면 단위로 끊어 읽히는 구성'}
     ]},
@@ -631,7 +646,12 @@ function mock(it){
         <div class="ig-grid">${it.imgs.map((s,i)=>`<button class="ig-cell" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><img src="${s}" alt="" loading="lazy">${it.reels.includes(i+1)?'<span class="ig-reel">▶</span>':''}</button>`).join('')}</div>
       </div></div>`;
       return `<div class="phone"><div class="notch"><i></i></div><div class="igh"><i></i>brand_official</div>${tile(it.h,'4/5')}<div class="igf"><span style="width:45%"></span><span></span><span style="width:75%"></span></div></div>`;
-    case 'blog':return `<div class="mk serp" style="max-width:520px"><div class="q">검색 키워드</div><div class="res"><div class="tx"><b>블로그 포스팅 제목</b><span></span><span style="width:70%"></span></div>${tile(it.h,'1/1')}</div><div class="res dim"><div class="tx"><b>다른 블로그 글</b><span></span><span style="width:60%"></span></div><div class="t"></div></div></div>`;
+    case 'blog':
+      if(it.kind==='thumbs')return `<div class="bl-wrap"><div class="bl">
+        <div class="bl-q"><span>${it.q}</span><i>⌕</i></div>
+        <div class="bl-grid">${it.imgs.map((s,i)=>`<button class="bl-cell" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><img src="${s}" alt="" loading="lazy"></button>`).join('')}</div>
+      </div></div>`;
+      return `<div class="mk serp" style="max-width:520px"><div class="q">검색 키워드</div><div class="res"><div class="tx"><b>블로그 포스팅 제목</b><span></span><span style="width:70%"></span></div>${tile(it.h,'1/1')}</div><div class="res dim"><div class="tx"><b>다른 블로그 글</b><span></span><span style="width:60%"></span></div><div class="t"></div></div></div>`;
     case 'detail':return `<div class="phone"><div class="notch"><i></i></div><div class="scroll">${tile(it.h,'auto','작업물 · 자동 스크롤')}</div></div>`;
     case 'video':{const v=it.fmt==='9:16';return `<div class="mk player" style="${v?'max-width:240px':''}"><div class="v">${tile(it.h,v?'9/16':'16/9')}<span class="play">▶</span></div><div class="ctl mono">0:09<div class="tr"></div>0:15</div></div>`;}
     case 'image':return `<div class="mk frame" style="max-width:320px">${tile(it.h,it.r)}</div>`;
@@ -649,7 +669,7 @@ function renderPart(key){
       <section class="medium" id="${key}-${m}">
         <div class="m-head"><div><div class="k mono">${MEDIA[m].en}</div><h3>${MEDIA[m].ko}</h3></div><p>${MEDIA[m].desc}</p></div>
         <div class="works ${list.length===1||list.some(i=>i.kind)?'one':''}">${list.map(it=>`
-          <article class="work ${it.units||it.hangs||it.flyers||it.slides||it.imgs?'wide':''}"><div class="stage2">${mock(it)}</div><h4>${it.title}</h4>${it.sub?`<p class="sub">${it.sub}</p>`:''}
+          <article class="work ${it.kind&&it.kind!=='stand'||it.units?'wide':''}"><div class="stage2">${mock(it)}</div><h4>${it.title}</h4>${it.sub?`<p class="sub">${it.sub}</p>`:''}
             <dl class="spec"><dt class="mono">Tool</dt><dd>${it.tool}<span class="ex">예시</span></dd>
             <dt class="mono">Time</dt><dd>${it.time}<span class="ex">예시</span></dd>
             <dt class="mono">Point</dt><dd>${it.point}</dd></dl></article>`).join('')}</div>
