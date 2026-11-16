@@ -303,9 +303,14 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .h-dots{position:absolute;left:0;right:0;bottom:5%;z-index:3;display:flex;justify-content:center;gap:8px}
 .h-dots button{width:8px;height:8px;border-radius:99px;background:rgba(255,255,255,.45);transition:width .3s,background .3s}
 .h-dots button.on{width:26px;background:#fff}
-.site-body{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2%;padding:3.5% 4% 4.5%}
-.site-body b{grid-column:1/-1;width:22%;height:12px;margin-bottom:8px;border-radius:4px;background:#d5d8dd}
-.site-body i{aspect-ratio:4/3;border-radius:8px;background:#e4e6ea}
+.site-body{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.6%;padding:2% 4% 2.4%}
+.site-body b{grid-column:1/-1;width:18%;height:9px;margin-bottom:4px;border-radius:4px;background:#d5d8dd}
+.site-body i{aspect-ratio:3/1;border-radius:6px;background:#e4e6ea}
+/* 팝업배너: 목업 없이 정사각 이미지 그대로 */
+.pop-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2.4vw,28px);padding:clamp(20px,4vw,48px)}
+.pg{display:block;aspect-ratio:1;border-radius:10px;overflow:hidden;cursor:zoom-in;box-shadow:0 14px 30px rgba(0,0,0,.45);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.pg:hover,.pg:focus-visible{transform:scale(1.02)}
+.pg img{display:block;width:100%;height:100%;object-fit:cover}
 .pop-dim{position:absolute;inset:0;z-index:4;background:rgba(0,0,0,.55)}
 .pop{position:absolute;z-index:5;left:50%;top:54%;transform:translate(-50%,-50%);width:min(38%,440px);background:#fff;box-shadow:0 24px 60px rgba(0,0,0,.55)}
 .pop-stage{position:relative;aspect-ratio:1}
@@ -410,8 +415,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .fl,.fl.wide{grid-column:auto}
   .site-head nav{display:none}
   .site-body{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .pop{width:62%}
-  .pop-thumbs button{width:46px}
+  .pop-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .hb.tall{grid-row:auto;padding:0 10%}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-iteration-count:1!important;transition-duration:.01s!important;transition-delay:0s!important}
@@ -583,13 +587,7 @@ function mock(it){
               <div class="h-dots">${it.slides.map((s,i)=>`<button class="${i?'':'on'}" data-go="${i}" aria-label="${i+1}번 배너"></button>`).join('')}</div>
             </div>${body}</div></div>`;
         }
-        return `<div class="site-wrap" data-cycle="3500"><div class="site">${chrome}
-          <div class="hero"><img class="hero-still" src="${it.slides.length&&'assets/banner/rolling-02.jpg'}" alt="" loading="lazy"></div>${body}
-          <div class="pop-dim"></div>
-          <div class="pop"><div class="pop-stage">${it.slides.map((s,i)=>`<button class="sl ${i?'':'on'}" data-full="${s}" aria-label="팝업배너 ${i+1} 크게 보기"><img src="${s}" alt="" loading="lazy"></button>`).join('')}</div>
-            <div class="pop-foot"><span>오늘 하루 보지 않기</span><span>닫기 ✕</span></div></div>
-        </div>
-        <div class="pop-thumbs">${it.slides.map((s,i)=>`<button class="${i?'':'on'}" data-go="${i}" aria-label="팝업 ${i+1} 보기"><img src="${s}" alt="" loading="lazy"></button>`).join('')}</div></div>`;
+        return `<div class="pop-grid">${it.slides.map((s,i)=>`<button class="pg" data-full="${s}" aria-label="팝업배너 ${i+1} 크게 보기"><img src="${s}" alt="" loading="lazy"></button>`).join('')}</div>`;
       }
       return `<div class="mk browser"><div class="top"><i></i><i></i><i></i></div><div class="body"><div class="ln" style="width:35%"></div>${tile(it.h,'728/220','작업물','border-radius:4px')}<div class="ln"></div><div class="ln" style="width:70%"></div></div></div>`;
     case 'flyer':
