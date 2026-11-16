@@ -279,6 +279,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .hangwall{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:56px 64px;padding:16px clamp(36px,6vw,80px) 4px}
 .hb{margin:0;min-width:0;display:flex;flex-direction:column;gap:14px}
 .hb.long{grid-column:1/-1;padding:0 3%}
+.hangwall.mix{grid-template-columns:minmax(0,.8fr) minmax(0,1fr);align-items:center}
+.hb.tall{grid-row:span 2}
 .hb figcaption{color:var(--dim);text-align:right}
 .hbtn{position:relative;display:block;width:100%;aspect-ratio:var(--r);cursor:zoom-in}
 .hbtn img{display:block;width:100%;height:100%;object-fit:cover;box-shadow:0 18px 36px rgba(0,0,0,.5);transition:filter .25s}
@@ -345,6 +347,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .marq{--H:300px}
   .hangwall{grid-template-columns:minmax(0,1fr);gap:40px;padding:8px 28px 0}
   .hb.long{padding:0}
+  .hangwall.mix{grid-template-columns:minmax(0,1fr)}
+  .hb.tall{grid-row:auto;padding:0 10%}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-iteration-count:1!important;transition-duration:.01s!important;transition-delay:0s!important}
   .track{animation:none!important}.marq{overflow-x:auto}}
@@ -444,6 +448,10 @@ const PARTS={
         units:[['x','assets/outdoor/xbanner-01.jpg'],['x','assets/outdoor/xbanner-02.jpg'],['x','assets/outdoor/xbanner-03.jpg'],['x','assets/outdoor/xbanner-04.jpg'],
                ['w','assets/outdoor/wind-01.jpg'],['w','assets/outdoor/wind-02.jpg'],['w','assets/outdoor/wind-03.jpg'],['w','assets/outdoor/wind-04.jpg']],
         tool:'Illustrator, Photoshop',time:'건당 1일',point:'세워 두는 매체라 멀리서 먼저 보이는 상단에 지점명·층수·혜택을 모으고, 브랜드 컨러 대비로 가독성을 확보. 윈드배너는 앞뒷면이 대칭되는 양면 구성'},
+      {m:'outdoor',kind:'hang',layout:'mix',title:'노모어피자 현수막',sub:'건대점 입구 현수막 1종 · 방문포장 할인 현수막 2종(70×40cm)',
+        hangs:[{s:'assets/outdoor/nm-banner-01.jpg',r:.7057,tall:1,label:'건대점 입구 현수막'},
+               {s:'assets/outdoor/nm-banner-03.jpg',r:1.7498,big:1,label:'방문포장 할인 · 70×40cm'},{s:'assets/outdoor/nm-banner-02.jpg',r:1.7498,big:1,label:'방문포장 할인 · 70×40cm'}],
+        tool:'Illustrator, Photoshop',time:'건당 1일',point:'입구 현수막은 브랜드 로고와 2층 위치를 크게, 할인 현수막은 ‘2,000원’을 가장 먼저 읽히도록 숫자 크기와 색 대비를 설계'},
       {m:'outdoor',kind:'stand',title:'봉천동매운떡볶이 물통 X배너',sub:'실외 X배너 3종 · 휴먼배너 1종',
         units:[['x','assets/outdoor/bm-xbanner-01.jpg',.3341,1],['x','assets/outdoor/bm-xbanner-02.jpg',.3341,1],['x','assets/outdoor/bm-xbanner-03.jpg',.3341,1],['x','assets/outdoor/bm-xbanner-04.jpg',.4167,.92]],
         tool:'Illustrator, Photoshop',time:'건당 1일',point:'오픈 · 유튜버 추천 · 베스트 메뉴 · 반값 이벤트로 역할을 나눠, 매장 앞에 나란히 세웠을 때 하나의 흐름으로 읽히게 구성'},
@@ -484,7 +492,7 @@ function mock(it){
       }
       if(it.kind==='hang'){
         const g=['tl','tr','bl','br'];
-        return `<div class="hangwall">${it.hangs.map(h=>`<figure class="hb ${h.big?'big':'long'}" style="--r:${h.r}"><button class="hbtn" data-full="${h.s}" aria-label="${h.label} 크게 보기"><img src="${h.s}" alt="" loading="lazy">${g.map(p=>`<i class="g ${p}"></i><i class="rope ${p}"></i>`).join('')}</button><figcaption class="mono">${h.label}</figcaption></figure>`).join('')}</div>`;
+        return `<div class="hangwall ${it.layout||''}">${it.hangs.map(h=>`<figure class="hb ${h.tall?'tall':h.big?'big':'long'}" style="--r:${h.r}"><button class="hbtn" data-full="${h.s}" aria-label="${h.label} 크게 보기"><img src="${h.s}" alt="" loading="lazy">${g.map(p=>`<i class="g ${p}"></i><i class="rope ${p}"></i>`).join('')}</button><figcaption class="mono">${h.label}</figcaption></figure>`).join('')}</div>`;
       }
       if(it.kind==='xbanner')return `<div class="ob">${it.imgs.map((s,i)=>`<button class="unit xb" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><i class="rod"></i><img src="${s}" alt="${it.title} ${i+1}" loading="lazy"><i class="rod"></i><i class="pole"></i><i class="tank"></i></button>`).join('')}<span class="ob-hint mono">클릭하면 크게 보기</span></div>`;
       if(it.kind==='wind')return `<div class="ob">${it.imgs.map((s,i)=>`<button class="unit wb" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><img class="flag" src="${s}" alt="${it.title} ${i+1}" loading="lazy"><i class="pole"></i><i class="base"></i></button>`).join('')}<span class="ob-hint mono">클릭하면 크게 보기</span></div>`;
