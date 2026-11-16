@@ -289,7 +289,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .pst::before{content:"";position:absolute;z-index:1;top:-8px;left:50%;width:34%;height:16px;transform:translateX(-50%) rotate(-2deg);background:rgba(235,228,210,.75);box-shadow:0 1px 2px rgba(0,0,0,.2)}
 /* ---------- 블로그 썸네일: 검색창 + 썸네일 목록 ---------- */
 .bl-wrap{width:100%;padding:clamp(20px,4vw,48px)}
-.bl{max-width:900px;margin:0 auto;background:#f3f2ee;border-radius:14px;padding:clamp(16px,2.4vw,26px);box-shadow:0 30px 60px rgba(0,0,0,.5)}
+.blbox{max-width:900px;margin:0 auto;background:#f3f2ee;border-radius:14px;padding:clamp(16px,2.4vw,26px);box-shadow:0 30px 60px rgba(0,0,0,.5)}
 .bl-q{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 18px;margin-bottom:clamp(14px,2vw,22px);border:2px solid #03c75a;border-radius:99px;background:#fff;color:#222;font-size:14px}
 .bl-q i{font-style:normal;color:#03c75a;font-size:18px;line-height:1}
 .bl-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(8px,1.2vw,14px)}
@@ -553,15 +553,15 @@ const PARTS={
         units:[['x','assets/outdoor/xbanner-01.jpg'],['x','assets/outdoor/xbanner-02.jpg'],['x','assets/outdoor/xbanner-03.jpg'],['x','assets/outdoor/xbanner-04.jpg'],
                ['w','assets/outdoor/wind-01.jpg'],['w','assets/outdoor/wind-02.jpg'],['w','assets/outdoor/wind-03.jpg'],['w','assets/outdoor/wind-04.jpg']],
         tool:'Illustrator, Photoshop',time:'건당 1일',point:'세워 두는 매체라 멀리서 먼저 보이는 상단에 지점명·층수·혜택을 배치, 브랜드 컬러 대비. 윈드배너는 앞뒷면이 대칭되는 양면 구성'},
-      {m:'outdoor',kind:'hang',layout:'mix',title:'노모어피자 현수막',sub:'건대점 입구 현수막 1종 · 방문포장 할인 현수막 2종(70×40cm)',
+      {m:'outdoor',kind:'hang',layout:'mix',title:'노모어피자 현수막',sub:'건대점 입구 현수막 1종 · 방문포장 할인 현수막 2종',
         hangs:[{s:'assets/outdoor/nm-banner-01.jpg',r:.7057,tall:1,label:'건대점 입구 현수막'},
-               {s:'assets/outdoor/nm-banner-03.jpg',r:1.7498,big:1,label:'방문포장 할인 · 70×40cm'},{s:'assets/outdoor/nm-banner-02.jpg',r:1.7498,big:1,label:'방문포장 할인 · 70×40cm'}],
+               {s:'assets/outdoor/nm-banner-03.jpg',r:1.7498,big:1,label:'방문포장 할인'},{s:'assets/outdoor/nm-banner-02.jpg',r:1.7498,big:1,label:'방문포장 할인'}],
         tool:'Illustrator, Photoshop',time:'건당 1일',point:'입구 현수막은 브랜드 로고와 2층 위치를 크게, 할인 현수막은 ‘2,000원’을 가장 먼저 읽히도록 숫자 크기와 색 대비를 설계'},
       {m:'outdoor',kind:'stand',title:'봉천동매운떡볶이 물통 X배너',sub:'실외 X배너 3종 · 휴먼배너 1종',
         units:[['x','assets/outdoor/bm-xbanner-01.jpg',.3341,1],['x','assets/outdoor/bm-xbanner-02.jpg',.3341,1],['x','assets/outdoor/bm-xbanner-03.jpg',.3341,1],['x','assets/outdoor/bm-xbanner-04.jpg',.4167,.92]],
         tool:'Illustrator, Photoshop',time:'건당 1일',point:'오픈 · 유튜버 추천 · 베스트 메뉴 · 반값 이벤트로 역할을 나눠, 매장 앞에 나란히 세웠을 때 하나의 흐름으로 읽히게 구성'},
-      {m:'outdoor',kind:'hang',title:'봉천동매운떡볶이 현수막',sub:'대형 현수막 2종(3600×1940) · 서울대 가로형 현수막 1종',
-        hangs:[{s:'assets/outdoor/bm-banner-01.jpg',r:1.8556,big:1,label:'대형 현수막 · 3600×1940'},{s:'assets/outdoor/bm-banner-02.jpg',r:1.8556,big:1,label:'대형 현수막 · 3600×1940'},
+      {m:'outdoor',kind:'hang',title:'봉천동매운떡볶이 현수막',sub:'대형 현수막 2종 · 서울대 가로형 현수막 1종',
+        hangs:[{s:'assets/outdoor/bm-banner-01.jpg',r:1.8556,big:1,label:'대형 현수막'},{s:'assets/outdoor/bm-banner-02.jpg',r:1.8556,big:1,label:'대형 현수막'},
                {s:'assets/outdoor/bm-banner-03.jpg',r:6.645,label:'서울대 가로형 현수막'}],
         tool:'Illustrator, Photoshop',time:'건당 1일',point:'길고 넓은 매체라 시선이 왼쪽에서 오른쪽으로 흐르도록 메뉴 사진 → 핵심 혜택 → 연락처 순서로 배치'},
       {m:'banner',kind:'site',title:'키오 홈페이지 메인 롤링배너',sub:'PC 메인 롤링배너 4종(1920×900)',
@@ -665,7 +665,7 @@ function mock(it){
       </div></div>`;
       return `<div class="phone"><div class="notch"><i></i></div><div class="igh"><i></i>brand_official</div>${tile(it.h,'4/5')}<div class="igf"><span style="width:45%"></span><span></span><span style="width:75%"></span></div></div>`;
     case 'blog':
-      if(it.kind==='thumbs')return `<div class="bl-wrap"><div class="bl">
+      if(it.kind==='thumbs')return `<div class="bl-wrap"><div class="blbox">
         <div class="bl-q"><span>${it.q}</span><i>⌕</i></div>
         <div class="bl-grid">${it.imgs.map((s,i)=>`<button class="bl-cell" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><img src="${s}" alt="" loading="lazy"></button>`).join('')}</div>
       </div></div>`;
