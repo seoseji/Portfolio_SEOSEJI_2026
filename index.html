@@ -444,12 +444,12 @@ const PARTS={
         units:[['x','assets/outdoor/xbanner-01.jpg'],['x','assets/outdoor/xbanner-02.jpg'],['x','assets/outdoor/xbanner-03.jpg'],['x','assets/outdoor/xbanner-04.jpg'],
                ['w','assets/outdoor/wind-01.jpg'],['w','assets/outdoor/wind-02.jpg'],['w','assets/outdoor/wind-03.jpg'],['w','assets/outdoor/wind-04.jpg']],
         tool:'Illustrator, Photoshop',time:'건당 1일',point:'세워 두는 매체라 멀리서 먼저 보이는 상단에 지점명·층수·혜택을 모으고, 브랜드 컨러 대비로 가독성을 확보. 윈드배너는 앞뒷면이 대칭되는 양면 구성'},
-      {m:'outdoor',kind:'stand',title:'봉천동매운떡볶이 물통 X배너',sub:'건대점 실외 X배너 3종 · 휴먼배너 1종 — 실제 크기 비율대로 세웠어요',
-        units:[['x','assets/outdoor/bm-xbanner-01.jpg',.3341,.75],['x','assets/outdoor/bm-xbanner-02.jpg',.3341,.75],['x','assets/outdoor/bm-xbanner-03.jpg',.3341,.75],['x','assets/outdoor/bm-xbanner-04.jpg',.4167,1]],
+      {m:'outdoor',kind:'stand',title:'봉천동매운떡볶이 물통 X배너',sub:'실외 X배너 3종 · 휴먼배너 1종',
+        units:[['x','assets/outdoor/bm-xbanner-01.jpg',.3341,1],['x','assets/outdoor/bm-xbanner-02.jpg',.3341,1],['x','assets/outdoor/bm-xbanner-03.jpg',.3341,1],['x','assets/outdoor/bm-xbanner-04.jpg',.4167,.92]],
         tool:'Illustrator, Photoshop',time:'건당 1일',point:'오픈 · 유튜버 추천 · 베스트 메뉴 · 반값 이벤트로 역할을 나눠, 매장 앞에 나란히 세웠을 때 하나의 흐름으로 읽히게 구성'},
-      {m:'outdoor',kind:'hang',title:'봉천동매운떡볶이 현수막',sub:'대형 현수막 2종(3600×1940) · 서울대 가로형 현수막 2종',
+      {m:'outdoor',kind:'hang',title:'봉천동매운떡볶이 현수막',sub:'대형 현수막 2종(3600×1940) · 서울대 가로형 현수막 1종',
         hangs:[{s:'assets/outdoor/bm-banner-01.jpg',r:1.8556,big:1,label:'대형 현수막 · 3600×1940'},{s:'assets/outdoor/bm-banner-02.jpg',r:1.8556,big:1,label:'대형 현수막 · 3600×1940'},
-               {s:'assets/outdoor/bm-banner-03.jpg',r:6.645,label:'서울대 가로형 현수막'},{s:'assets/outdoor/bm-banner-04.jpg',r:6.667,label:'서울대 가로형 현수막'}],
+               {s:'assets/outdoor/bm-banner-03.jpg',r:6.645,label:'서울대 가로형 현수막'}],
         tool:'Illustrator, Photoshop',time:'건당 1일',point:'길고 넓은 매체라 시선이 왼쪽에서 오른쪽으로 흐르도록 메뉴 사진 → 핵심 혜택 → 연락처 순서로 배치'},
       {m:'banner',title:'프로젝트명',h:28,tool:'Photoshop',time:'4시간',point:'여러 사이즈로 리사이징해도 무너지지 않는 레이아웃'},
       {m:'banner',title:'프로젝트명',h:20,tool:'Photoshop',time:'3시간',point:'CTA 버튼까지 이어지는 시선 동선'},
@@ -532,7 +532,12 @@ addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden){lb.hidden=true;l
 document.querySelectorAll('.carousel').forEach(c=>{
   const m=c.querySelector('.marq'),still=matchMedia('(prefers-reduced-motion: reduce)').matches;
   let pos=0,hold=0,over=false,last=performance.now();
-  const half=()=>m.scrollWidth/2;
+  const track=m.querySelector('.track'),first=track.querySelector('.set');
+  const half=()=>first.getBoundingClientRect().width;   /* 배너 묶음 하나의 폭 */
+  /* 묶음이 화면보다 짧으면 넘길 공간이 없어서, 화면 폭을 채울 때까지 복제해 이어 붙임 */
+  const fill=()=>{const w=half();if(!w)return;let n=0;
+    while(track.scrollWidth<m.clientWidth+2*w&&n<12){const k=first.cloneNode(true);k.setAttribute('aria-hidden','true');
+      k.querySelectorAll('button').forEach(b=>{b.tabIndex=-1;b.setAttribute('aria-hidden','true')});track.appendChild(k);n++}};
   const unit=()=>{const u=m.querySelector('.su'),g=parseFloat(getComputedStyle(m.querySelector('.set')).columnGap)||60;return u.getBoundingClientRect().width+g};
   const wrap=()=>{const h=half();if(m.scrollLeft>=h){m.scrollLeft-=h}else if(m.scrollLeft<=0){m.scrollLeft+=h}pos=m.scrollLeft};
   m.addEventListener('scroll',()=>{if(Math.abs(m.scrollLeft-pos)>2){hold=performance.now()+2500;wrap()}},{passive:true});
@@ -540,6 +545,7 @@ document.querySelectorAll('.carousel').forEach(c=>{
   ['pointerleave','focusout','touchend'].forEach(t=>m.addEventListener(t,()=>{over=false;hold=performance.now()+1200},{passive:true}));
   (function tick(now){
     const dt=Math.min(64,now-last);last=now;
+    if(m.offsetParent)fill();
     if(!still&&!over&&now>hold&&m.offsetParent){pos+=dt*.032;if(pos>=half())pos-=half();m.scrollLeft=pos}
     requestAnimationFrame(tick);
   })(last);
