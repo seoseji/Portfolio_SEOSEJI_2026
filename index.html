@@ -273,7 +273,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   border:1px solid var(--line);background:rgba(12,12,14,.82);backdrop-filter:blur(6px);color:var(--acc);font-size:12px;line-height:1;
   transition:border-color .2s,box-shadow .2s,background .2s}
 .cbtn:hover,.cbtn:focus-visible{border-color:var(--acc);background:rgba(12,12,14,.95);box-shadow:0 0 16px color-mix(in srgb,var(--acc) 45%,transparent);outline:none}
-.cbtn.prev{left:16px}.cbtn.next{right:16px}
+.cbtn.c-prev{left:16px}.cbtn.c-next{right:16px}
 .sw svg path{stroke-linejoin:round}
 .set{display:flex;align-items:flex-end;gap:clamp(40px,5vw,80px);padding-right:clamp(40px,5vw,80px)}
 .su{position:relative;isolation:isolate;flex:0 0 auto;display:flex;flex-direction:column;align-items:center;cursor:zoom-in;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
@@ -450,7 +450,7 @@ function mock(it){
         const W=(s,b,c)=>{const px=99,d='M99,322 L99,3 Q99,.8 91,.8 L58.5,6 L43.5,12 L33.5,18 L26.5,24 L20.5,30 L16.5,36 L12.5,42 L9.5,48 L7,54 L4.8,60 L3.3,66 L1.8,72 L.8,80';
           return `<button class="su sw ${b?'b':''}" data-full="${s}" ${c?'tabindex="-1" aria-hidden="true"':'aria-label="양면 윈드배너 크게 보기"'}><span class="fw"><img class="flag" src="${s}" alt="" loading="lazy"><svg viewBox="0 0 100 340" preserveAspectRatio="none" aria-hidden="true"><path d="${d}" fill="none" stroke="#4d5055" stroke-width="3.6" stroke-linecap="round"/><path d="${d}" fill="none" stroke="#eef0f2" stroke-width="1.4" stroke-linecap="round"/><path d="M${px-21},322 L${px-21},336 Q${px-21},341 ${px},341 Q${px+21},341 ${px+21},336 L${px+21},322 Z" fill="url(#drumG)"/><ellipse cx="${px}" cy="322" rx="21" ry="4.5" fill="#2c2e32" stroke="#4a4d52" stroke-width=".6"/><ellipse cx="${px}" cy="321.6" rx="3" ry="1" fill="#000"/><ellipse cx="${px+11}" cy="322" rx="4" ry="1.2" fill="#1a1b1e" stroke="#5a5d62" stroke-width=".5"/></svg></span><span class="shadow"></span></button>`};
         const set=c=>`<div class="set" ${c?'aria-hidden="true"':''}>${it.units.map(([k,s])=>k==='x'?X(s,c):W(s,k==='wb',c)).join('')}</div>`;
-        return `<div class="carousel"><button class="cbtn prev" aria-label="이전 배너">◀</button><div class="marq" tabindex="0" aria-label="스탠드 배너 목록, 좌우로 넘겨 볼 수 있어요"><div class="track">${set(false)}${set(true)}</div></div><button class="cbtn next" aria-label="다음 배너">▶</button></div>`;
+        return `<div class="carousel"><button class="cbtn c-prev" aria-label="이전 배너">◀</button><div class="marq" tabindex="0" aria-label="스탠드 배너 목록, 좌우로 넘겨 볼 수 있어요"><div class="track">${set(false)}${set(true)}</div></div><button class="cbtn c-next" aria-label="다음 배너">▶</button></div>`;
       }
       if(it.kind==='xbanner')return `<div class="ob">${it.imgs.map((s,i)=>`<button class="unit xb" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><i class="rod"></i><img src="${s}" alt="${it.title} ${i+1}" loading="lazy"><i class="rod"></i><i class="pole"></i><i class="tank"></i></button>`).join('')}<span class="ob-hint mono">클릭하면 크게 보기</span></div>`;
       if(it.kind==='wind')return `<div class="ob">${it.imgs.map((s,i)=>`<button class="unit wb" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><img class="flag" src="${s}" alt="${it.title} ${i+1}" loading="lazy"><i class="pole"></i><i class="base"></i></button>`).join('')}<span class="ob-hint mono">클릭하면 크게 보기</span></div>`;
@@ -511,7 +511,7 @@ document.querySelectorAll('.carousel').forEach(c=>{
   })(last);
   const go=d=>{wrap();if(d<0&&m.scrollLeft<unit()){m.scrollLeft+=half();pos=m.scrollLeft}
     hold=performance.now()+3500;m.scrollBy({left:d*unit(),behavior:still?'auto':'smooth'})};
-  c.querySelector('.prev').onclick=()=>go(-1);c.querySelector('.next').onclick=()=>go(1);
+  c.querySelector('.c-prev').onclick=()=>go(-1);c.querySelector('.c-next').onclick=()=>go(1);
   m.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();go(-1)}if(e.key==='ArrowRight'){e.preventDefault();go(1)}});
 });
 
