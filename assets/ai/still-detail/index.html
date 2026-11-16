@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>STILL. 상세페이지</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Inter:wght@400;500;700;800&display=swap">
+<style>
+  /* Layout: one centered 860px column, image-led sections stacked vertically like a Korean product detail page.
+     Single light look by choice: every photo was shot on white, so the page stays white around them. */
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f4f4f2;
+    --fg: #1a1a1a;
+    --fg-muted: #6b6b68;
+    --line: #e4e4e0;
+    --accent: #22c08a;
+    --ink: #111111;
+    --font-body: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    --font-display: "Inter", "Helvetica Neue", Arial, sans-serif;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    word-break: keep-all;
+  }
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding-block: 0 96px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    display: flex;
+    flex-direction: column;
+    gap: 112px;
+  }
+  img { max-width: 100%; display: block; }
+  .photo { width: 100%; height: auto; }
+  section { display: flex; flex-direction: column; gap: 32px; }
+  .copy { display: flex; flex-direction: column; gap: 14px; max-width: 34em; }
+  .copy.center { align-self: center; align-items: center; text-align: center; }
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    margin: 0;
+  }
+  h1, h2 { margin: 0; font-weight: 700; line-height: 1.3; text-wrap: balance; }
+  h1 { font-size: clamp(26px, 4.2vw, 38px); }
+  h2 { font-size: clamp(22px, 3.2vw, 30px); }
+  p { margin: 0; }
+  .lead { font-size: 17px; color: var(--fg); }
+  .muted { color: var(--fg-muted); font-size: 15px; }
+  .wordmark {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .wordmark .dot { color: var(--accent); }
+  .wordmark.xl { font-size: clamp(64px, 12vw, 120px); line-height: 1; }
+  .wordmark.lg { font-size: clamp(40px, 7vw, 64px); line-height: 1; }
+
+  /* Hero */
+  .hero { gap: 40px; padding-top: 56px; }
+  .hero-text { display: flex; flex-direction: column; gap: 20px; align-items: center; text-align: center; }
+  .hero-text h1 { font-weight: 500; font-size: clamp(20px, 3.4vw, 28px); color: var(--fg); }
+  .hero-text .hybrid {
+    font-family: var(--font-display);
+    font-size: clamp(14px, 2.2vw, 18px);
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+  .hero-stripe { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .hero-stripe div { padding: 18px 8px; text-align: center; }
+  .hero-stripe strong { display: block; font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  .hero-stripe span { font-size: 13px; color: var(--fg-muted); }
+
+  /* Two-column sections on wide screens */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .split > * { min-width: 0; }
+  .split.flip > .copy { order: -1; }
+  @media (max-width: 680px) {
+    .split { grid-template-columns: 1fr; gap: 28px; }
+    .split.flip > .copy { order: 0; }
+  }
+
+  /* Absorb GIF section */
+  .absorb { background: var(--bg-soft); padding: 48px 24px; gap: 36px; border-radius: 4px; }
+  .absorb .gif-wrap { max-width: 640px; width: 100%; align-self: center; }
+  .absorb img { width: 100%; height: auto; }
+  .timeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 640px; width: 100%; align-self: center; }
+  .timeline div { border-top: 2px solid var(--line); padding-top: 12px; }
+  .timeline div:last-child { border-top-color: var(--accent); }
+  .timeline strong { display: block; font-family: var(--font-display); font-size: 13px; letter-spacing: 0.08em; color: var(--fg-muted); font-weight: 500; }
+  .timeline span { font-size: 15px; font-weight: 500; }
+
+  /* Ingredients */
+  .ingredients { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 32px; border-top: 1px solid var(--line); }
+  .ingredients div { padding: 20px 0; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 4px; }
+  .ingredients strong { font-weight: 700; font-size: 16px; }
+  .ingredients em { font-style: normal; font-family: var(--font-display); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+  .ingredients span { font-size: 14px; color: var(--fg-muted); }
+  @media (max-width: 680px) { .ingredients { grid-template-columns: 1fr; } }
+
+  /* Steps */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .steps div { display: flex; flex-direction: column; gap: 8px; }
+  .steps strong { font-family: var(--font-display); font-size: 28px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+  .steps strong .dot { color: var(--accent); }
+  .steps p { font-size: 15px; }
+  @media (max-width: 680px) { .steps { grid-template-columns: 1fr; gap: 16px; } }
+
+  /* Spec table */
+  .spec { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .spec th, .spec td { text-align: left; padding: 14px 4px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .spec th { width: 30%; font-weight: 500; color: var(--fg-muted); }
+
+  /* Closing */
+  .closing { align-items: center; text-align: center; gap: 24px; padding-top: 24px; border-top: 1px solid var(--line); }
+  .closing p { max-width: 30em; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-text > * { animation: rise .7s ease-out both; }
+    .hero-text > *:nth-child(2) { animation-delay: .08s; }
+    .hero-text > *:nth-child(3) { animation-delay: .16s; }
+  }
+  @keyframes rise { from { opacity: .001; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+</style>
+
+</head>
+<body>
+<main class="page">
+
+  <!-- 1. 타이틀 -->
+  <section class="hero">
+    <div class="hero-text">
+      <p class="hybrid">Hybrid Skincare</p>
+      <div class="wordmark xl">STILL<span class="dot">.</span></div>
+      <h1>스킨, 로션, 에센스의 경계를 허문<br>Hybrid Skincare STILL.</h1>
+    </div>
+    <img class="photo" src="assets/title.jpg" alt="쓰러진 흰색 병 세 개 옆에 홀로 서 있는 STILL. 올인원 스킨 로션" width="1400" height="1867">
+    <div class="hero-stripe">
+      <div><strong>3 → 1</strong><span>세 단계를 한 번으로</span></div>
+      <div><strong>150ml</strong><span>약 2개월 사용량</span></div>
+      <div><strong>1 PUMP</strong><span>아침 저녁 한 번씩</span></div>
+    </div>
+  </section>
+
+  <!-- 2. 거울 -->
+  <section class="split">
+    <img class="photo" src="assets/mirror.jpg" alt="욕실 거울 앞에서 미소 짓는 남성" width="1400" height="788">
+    <div class="copy">
+      <p class="eyebrow">Morning Routine</p>
+      <h2>거울 앞에서 보내는 시간,<br>이제 30초면 됩니다.</h2>
+      <p class="lead">스킨 바르고, 로션 바르고, 에센스까지. 매일 세 병을 여는 일은 생각보다 귀찮습니다. STILL.은 세안 후 한 번의 펌핑으로 그 과정을 끝냅니다.</p>
+      <p class="muted">남성 피부를 기준으로 설계한 하이브리드 제형입니다.</p>
+    </div>
+  </section>
+
+  <!-- 3. 흡수 GIF -->
+  <section class="absorb">
+    <div class="copy center">
+      <p class="eyebrow">Fast Absorption</p>
+      <h2>끈적임 없이, 빠르게 흡수됩니다.</h2>
+      <p class="lead">투명한 워터 제형이 손끝을 따라 피부에 스며듭니다. 바르고 바로 옷을 입어도 남는 느낌이 없습니다.</p>
+    </div>
+    <div class="gif-wrap">
+      <img src="assets/absorb.gif" alt="손가락으로 투명한 로션을 볼에 펴 바르자 번들거림 없이 흡수되는 모습" width="640" height="476">
+    </div>
+    <div class="timeline">
+      <div><strong>0초</strong><span>투명하게 펴 발림</span></div>
+      <div><strong>3초</strong><span>윤기가 가라앉음</span></div>
+      <div><strong>5초</strong><span>산뜻한 마무리</span></div>
+    </div>
+  </section>
+
+  <!-- 4. 얼굴 클로즈업 -->
+  <section class="split flip">
+    <img class="photo" src="assets/face.jpg" alt="눈을 감고 미소 짓는 남성의 매끈한 피부 클로즈업" width="1400" height="1050">
+    <div class="copy">
+      <p class="eyebrow">After</p>
+      <h2>바른 뒤에도<br>피부는 고요하게.</h2>
+      <p class="lead">번들거리지 않고, 당기지 않고, 들뜨지 않습니다. 바르기 전과 같은 얼굴, 조금 더 편안해진 피부. 그래서 이름이 STILL.입니다.</p>
+    </div>
+  </section>
+
+  <!-- 5. 성분 -->
+  <section>
+    <div class="copy">
+      <p class="eyebrow">Ingredients</p>
+      <h2>피부에 좋은 성분만<br>한 병에 담았습니다.</h2>
+      <p class="lead">스킨의 수분, 로션의 보습, 에센스의 영양. 세 제품이 하던 일을 하나의 투명한 제형 안에서 함께 합니다.</p>
+    </div>
+    <img class="photo" src="assets/drops.jpg" alt="세 방울의 액체가 STILL. 병 위에서 하나로 합쳐지는 모습" width="1400" height="1867">
+    <div class="ingredients">
+      <div><em>Hydration</em><strong>히알루론산</strong><span>피부 깊숙이 수분을 채우고 오래 붙잡아 둡니다.</span></div>
+      <div><em>Soothing</em><strong>판테놀</strong><span>면도 후 예민해진 피부를 편안하게 가라앉힙니다.</span></div>
+      <div><em>Barrier</em><strong>세라마이드</strong><span>피부 장벽을 촘촘하게 채워 수분이 달아나지 않게 합니다.</span></div>
+      <div><em>Texture</em><strong>나이아신아마이드</strong><span>칙칙한 피부 톤과 거친 결을 매끈하게 정돈합니다.</span></div>
+      <div><em>Calming</em><strong>병풀 추출물</strong><span>외부 자극으로 붉어진 피부를 차분하게 돌봅니다.</span></div>
+      <div><em>Free From</em><strong>무향료 · 무알코올 · 무색소</strong><span>피부에 필요 없는 것은 넣지 않았습니다.</span></div>
+    </div>
+  </section>
+
+  <!-- 6. 제품 / 사용법 -->
+  <section class="split">
+    <img class="photo" src="assets/bottle.jpg" alt="빛이 드는 콘크리트 선반 위에 놓인 STILL. 병" width="1400" height="1867">
+    <div class="copy">
+      <p class="eyebrow">How to Use</p>
+      <h2>세안 후, 한 번만.</h2>
+      <div class="steps">
+        <div><strong>01<span class="dot">.</span></strong><p>세안 후 물기를 가볍게 닦아냅니다.</p></div>
+        <div><strong>02<span class="dot">.</span></strong><p>한두 번 펌핑해 손바닥에 덜어냅니다.</p></div>
+        <div><strong>03<span class="dot">.</span></strong><p>얼굴 전체에 펴 바르고 가볍게 두드립니다.</p></div>
+      </div>
+      <p class="muted">아침과 저녁, 하루 두 번이면 충분합니다. 건조한 날에는 한 번 더 덧발라도 끈적이지 않습니다.</p>
+    </div>
+  </section>
+
+  <!-- 7. 디테일 -->
+  <section class="split flip">
+    <img class="photo" src="assets/pump.jpg" alt="STILL. 병의 무광 검정 펌프 클로즈업" width="1400" height="1706">
+    <div class="copy">
+      <p class="eyebrow">Design</p>
+      <h2>욕실 어디에 두어도<br>거슬리지 않게.</h2>
+      <p class="lead">무광 반투명 보틀과 블랙 펌프. 한 손으로 누르고, 남은 양이 한눈에 보입니다. 뚜껑을 열고 닫을 일이 없어 젖은 손으로도 편합니다.</p>
+      <table class="spec">
+        <tr><th>제품명</th><td>STILL. 올인원 스킨 로션</td></tr>
+        <tr><th>용량</th><td>150ml</td></tr>
+        <tr><th>제형</th><td>투명 워터 타입</td></tr>
+        <tr><th>사용 대상</th><td>모든 남성 피부, 특히 지성 · 복합성</td></tr>
+        <tr><th>향</th><td>무향</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 8. 마무리 -->
+  <section class="closing">
+    <div class="wordmark lg">STILL<span class="dot">.</span></div>
+    <p class="lead">스타일은 바뀌어도, 피부는 그대로.</p>
+    <p class="muted">ALL-IN-ONE SKIN LOTION · 150ml</p>
+  </section>
+
+</main>
+</body>
+
+</html>

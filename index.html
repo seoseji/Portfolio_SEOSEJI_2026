@@ -280,6 +280,29 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .hb{margin:0;min-width:0;display:flex;flex-direction:column;gap:14px}
 .hb.long{grid-column:1/-1;padding:0 3%}
 .hangwall.mix{grid-template-columns:minmax(0,.8fr) minmax(0,1fr);align-items:center}
+/* ---------- AI 개인 프로젝트: 영상 · 상세페이지 · 이미지 ---------- */
+.avid{width:100%;display:grid;place-items:center;padding:clamp(8px,2vw,24px)}
+.avid-in{width:min(820px,100%);border-radius:14px;overflow:hidden;background:#000;box-shadow:0 0 0 1px #2a2f3a,0 30px 70px rgba(0,0,0,.55)}
+.avid.vert .avid-in{width:min(300px,78vw);border:7px solid #050506;border-radius:34px;box-shadow:0 0 0 1px #333,0 30px 70px rgba(0,0,0,.55)}
+.avid video{display:block;width:100%;height:auto;background:#000}
+.aphone{width:min(330px,100%);margin:0 auto;border:8px solid #050506;border-radius:36px;background:#fff;overflow:hidden;box-shadow:0 0 0 1px #333,0 30px 60px rgba(0,0,0,.55)}
+.anotch{height:22px;display:flex;justify-content:center;align-items:center;background:#fff}
+.anotch i{width:68px;height:6px;border-radius:9px;background:#111}
+.ascroll{height:min(600px,72vh);overflow-y:auto;overflow-x:hidden;background:#fff;overscroll-behavior:contain;scrollbar-width:thin}
+.ascroll img{display:block;width:100%;height:auto}
+.ascroll iframe{display:block;width:100%;height:100%;border:0;background:#fff}
+.agal{width:100%;display:flex;flex-wrap:wrap;gap:clamp(14px,2vw,24px);align-items:flex-end;padding:clamp(20px,3.4vw,44px)}
+.agal figure{margin:0;min-width:0;display:flex;flex-direction:column;gap:10px}
+.ag{display:block;cursor:zoom-in;border-radius:10px;overflow:hidden;box-shadow:0 14px 30px rgba(0,0,0,.45)}
+.ag img{display:block;width:100%;height:auto;transition:transform .35s}
+.ag:hover img,.ag:focus-visible img{transform:scale(1.03)}
+.agal figcaption{color:var(--dim)}
+/* ---------- 맨 위로 가기 버튼 ---------- */
+#totop{position:fixed;right:max(18px,env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;width:48px;height:48px;border-radius:50%;
+  display:grid;place-items:center;font-size:18px;line-height:1;color:var(--tt,var(--sand));background:rgba(12,12,14,.86);border:1px solid var(--line);backdrop-filter:blur(8px);
+  box-shadow:0 8px 24px rgba(0,0,0,.5);opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .3s,transform .3s,border-color .2s,box-shadow .2s}
+#totop.on{opacity:1;transform:none;pointer-events:auto}
+#totop:hover,#totop:focus-visible{border-color:var(--tt,var(--sand));box-shadow:0 8px 24px rgba(0,0,0,.5),0 0 16px color-mix(in srgb,var(--tt,var(--sand)) 45%,transparent)}
 /* ---------- 포스터: 벽에 붙인 종이 ---------- */
 .posters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(18px,3vw,40px);padding:clamp(24px,4vw,52px)}
 .pst{position:relative;display:block;aspect-ratio:900/1270;transform:rotate(var(--tilt));cursor:zoom-in;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
@@ -528,6 +551,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 <section class="part" id="archive" hidden></section>
 <section class="part" id="ailab" hidden></section>
+<button id="totop" aria-label="맨 위로 이동">▲</button>
 <div id="lb" hidden role="dialog" aria-modal="true" aria-label="작업물 크게 보기"><img alt=""><button class="mono" id="lb-close">닫기 ✕</button></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><clipPath id="flagClip" clipPathUnits="objectBoundingBox"><path d="M.014,.415 C.014,.19 .44,.01 .99,.01 L.99,.852 C.62,.858 .24,.89 .014,.958 Z"/></clipPath><linearGradient id="tankG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4d52"/><stop offset=".22" stop-color="#1d1e21"/><stop offset="1" stop-color="#050506"/></linearGradient><linearGradient id="drumG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#060607"/><stop offset=".28" stop-color="#3e4045"/><stop offset=".55" stop-color="#151619"/><stop offset="1" stop-color="#040405"/></linearGradient><clipPath id="flagClipB" clipPathUnits="objectBoundingBox"><path d="M.014,.355 C.014,.16 .42,.01 .975,.01 L.975,.84 C.6,.848 .22,.885 .014,.952 Z"/></clipPath></defs></svg>
 
@@ -609,11 +633,25 @@ const PARTS={
   ailab:{ch:'CH 02',k:'CH 02 · AI Lab',name:'AI 개인 프로젝트',lead:'AI 도구를 다룬 개인 작업입니다.<br>사용한 도구와 생성 과정의 핵심을 함께 기록했습니다.',
     order:['video','detail','image'],
     items:[
-      {m:'video',title:'망고팡 광고',h:42,fmt:'9:16',tool:'Higgsfield, Premiere Pro',time:'6시간',point:'첫 프레임과 마지막 프레임을 먼저 고정하고 사이를 생성'},
-      {m:'video',title:'캠코더를 주웠다',h:215,fmt:'16:9',tool:'Higgsfield, Premiere Pro',time:'2일',point:'캠코더 화면 질감으로 통일한 브이로그 무드'},
-      {m:'detail',title:'올인원 스킨로션',h:190,tool:'Higgsfield, Photoshop, Figma',time:'2일',point:'제품 촬영 없이 AI 컷만으로 구성한 상세페이지'},
-      {m:'image',title:'망고팡 키비주얼',h:38,r:'4/5',tool:'Higgsfield, Photoshop',time:'4시간',point:'레퍼런스 광고의 색감을 기준으로 톤 통일'},
-      {m:'image',title:'올인원 스킨로션 컷',h:185,r:'1/1',tool:'Higgsfield, Photoshop',time:'3시간',point:'컷마다 달라지는 AI 이미지의 톤 보정'}
+      {m:'video',kind:'avideo',title:'신소재 패딩 광고',sub:'가로형 영상 · 13초',src:'assets/ai/video/padding.mp4',poster:'assets/ai/video/padding.jpg',ratio:'16/9',
+        tool:'Higgsfield',point:'레퍼런스 컷과 모델 시트로 패딩의 형태와 색, 인물을 먼저 정해 두고 장면을 만들어, 컷이 바뀌어도 제품이 같은 모습으로 보이게 구성'},
+      {m:'video',kind:'avideo',title:'STILL. 남성 올인원 로션 광고',sub:'가로형 영상 · 11초',src:'assets/ai/video/still.mp4',poster:'assets/ai/video/still.jpg',ratio:'16/9',
+        tool:'Higgsfield',point:'제품 레퍼런스 컷과 장면별 이미지를 기준으로 영상을 만들어, 같은 모델과 같은 제품이 처음부터 끝까지 이어지게 구성'},
+      {m:'video',kind:'avideo',title:'피즈캣 오렌지 음료 광고',sub:'세로형 영상 · 10초',src:'assets/ai/video/fizzcat.mp4',poster:'assets/ai/video/fizzcat.jpg',ratio:'9/16',
+        tool:'Higgsfield',point:'캐릭터와 라벨을 직접 디자인한 뒤 영상으로 확장해, 라벨 속 캐릭터가 광고 안에서도 같은 모습으로 움직이게 구성'},
+      {m:'detail',kind:'adetail',title:'신소재 패딩 상세페이지',sub:'기술 설명부터 제품 정보까지 한 장으로 이어지는 구성 — 폰 화면을 위아래로 넘겨 보세요',img:'assets/ai/img/padding-detail.jpg',
+        tool:'Higgsfield',point:'에어로젤 기술을 첫 화면에서 한 문장으로 전달하고, 기술 설명 → 착용 장면 → 디테일 → 제품 정보 순서로 스크롤 흐름을 구성'},
+      {m:'detail',kind:'adetail',title:'STILL. 올인원 스킨 로션 상세페이지',sub:'실제 웹페이지 그대로 — 폰 화면을 위아래로 넘겨 보세요',page:'assets/ai/still-detail/index.html',
+        tool:'Higgsfield',point:'제품 사진과 흡수 장면 GIF로 사용감을 보여 주고, 화면 폭에 맞춰 레이아웃이 바뀌는 반응형 웹페이지로 구성'},
+      {m:'image',kind:'agal',title:'신소재 패딩',sub:'레퍼런스 컷 · 모델 시트',
+        imgs:[['assets/ai/img/padding-ref.jpg','레퍼런스 컷',690/640],['assets/ai/img/padding-sheet.jpg','모델 시트',1800/1012]],
+        tool:'Higgsfield',point:'앞·뒤 레퍼런스 컷과 정면·측면·후면 모델 시트로 소재감과 실루엣을 기록해 이후 장면의 기준으로 사용'},
+      {m:'image',kind:'agal',title:'STILL. 남성 올인원 로션',sub:'레퍼런스 컷 · 장면 컷 3종',
+        imgs:[['assets/ai/img/still-ref.jpg','레퍼런스 컷',1000/1334],['assets/ai/img/still-scene-1.jpg','장면 컷 1',1400/782],['assets/ai/img/still-scene-2.jpg','장면 컷 2',1400/782],['assets/ai/img/still-scene-3.jpg','장면 컷 3',1400/782]],
+        tool:'Higgsfield',point:'제품 레퍼런스 컷을 기준으로 같은 모델의 의상과 표정만 바꿔 세 가지 장면으로 확장'},
+      {m:'image',kind:'agal',title:'피즈캣 오렌지 음료',sub:'캐릭터 디자인 · 라벨 디자인 · 연출 컷',
+        imgs:[['assets/ai/img/fizz-character.jpg','캐릭터 디자인',1200/1152],['assets/ai/img/fizz-label.jpg','라벨 디자인',1400/1052],['assets/ai/img/fizz-scene.jpg','연출 컷',1],],
+        tool:'Higgsfield',point:'캐릭터 → 라벨 → 병 연출 컷 순서로 이어, 직접 만든 캐릭터가 라벨에서 실물 연출까지 같은 모습으로 나오게 구성'}
     ]}
 };
 const tile=(h,r,label='작업물',extra='')=>`<div class="t" style="--h:${h};aspect-ratio:${r};${extra}">${label}</div>`;
@@ -669,9 +707,16 @@ function mock(it){
         <div class="bl-grid">${it.imgs.map((s,i)=>`<button class="bl-cell" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><img src="${s}" alt="" loading="lazy"></button>`).join('')}</div>
       </div></div>`;
       return `<div class="mk serp" style="max-width:520px"><div class="q">검색 키워드</div><div class="res"><div class="tx"><b>블로그 포스팅 제목</b><span></span><span style="width:70%"></span></div>${tile(it.h,'1/1')}</div><div class="res dim"><div class="tx"><b>다른 블로그 글</b><span></span><span style="width:60%"></span></div><div class="t"></div></div></div>`;
-    case 'detail':return `<div class="phone"><div class="notch"><i></i></div><div class="scroll">${tile(it.h,'auto','작업물 · 자동 스크롤')}</div></div>`;
-    case 'video':{const v=it.fmt==='9:16';return `<div class="mk player" style="${v?'max-width:240px':''}"><div class="v">${tile(it.h,v?'9/16':'16/9')}<span class="play">▶</span></div><div class="ctl mono">0:09<div class="tr"></div>0:15</div></div>`;}
-    case 'image':return `<div class="mk frame" style="max-width:320px">${tile(it.h,it.r)}</div>`;
+    case 'detail':
+      if(it.kind==='adetail')return `<div class="aphone"><div class="anotch"><i></i></div><div class="ascroll">${it.img?`<img src="${it.img}" alt="${it.title}" loading="lazy">`:`<iframe src="${it.page}" title="${it.title}" loading="lazy"></iframe>`}</div></div>`;
+      return `<div class="phone"><div class="notch"><i></i></div><div class="scroll">${tile(it.h,'auto','작업물 · 자동 스크롤')}</div></div>`;
+    case 'video':
+      if(it.kind==='avideo'){const v=it.ratio==='9/16';
+        return `<div class="avid ${v?'vert':''}"><div class="avid-in"><video controls playsinline preload="metadata" poster="${it.poster}" aria-label="${it.title}"><source src="${it.src}" type="video/mp4"></video></div></div>`}
+      {const v=it.fmt==='9:16';return `<div class="mk player" style="${v?'max-width:240px':''}"><div class="v">${tile(it.h,v?'9/16':'16/9')}<span class="play">▶</span></div><div class="ctl mono">0:09<div class="tr"></div>0:15</div></div>`;}
+    case 'image':
+      if(it.kind==='agal')return `<div class="agal">${it.imgs.map(([s,l,r])=>`<figure style="flex:${r.toFixed(3)} 1 ${Math.round(r*300)}px"><button class="ag" data-full="${s}" aria-label="${it.title} ${l} 크게 보기"><img src="${s}" alt="" loading="lazy"></button><figcaption class="mono">${l}</figcaption></figure>`).join('')}</div>`;
+      return `<div class="mk frame" style="max-width:320px">${tile(it.h,it.r)}</div>`;
   }
 }
 function renderPart(key){
@@ -685,10 +730,10 @@ function renderPart(key){
     ${P.order.map(m=>{const list=P.items.filter(i=>i.m===m);return `
       <section class="medium" id="${key}-${m}">
         <div class="m-head"><div><div class="k mono">${MEDIA[m].en}</div><h3>${MEDIA[m].ko}</h3></div><p>${MEDIA[m].desc}</p></div>
-        <div class="works ${list.length===1||list.some(i=>i.kind)?'one':''}">${list.map(it=>`
-          <article class="work ${it.kind&&it.kind!=='stand'||it.units?'wide':''}"><div class="stage2">${mock(it)}</div><h4>${it.title}</h4>${it.sub?`<p class="sub">${it.sub}</p>`:''}
-            <dl class="spec"><dt class="mono">Tool</dt><dd>${it.tool}</dd>
-            <dt class="mono">Time</dt><dd>${it.time}</dd>
+        <div class="works ${list.length===1||list.some(i=>i.kind&&i.kind!=='adetail')?'one':''}">${list.map(it=>`
+          <article class="work ${['hang','flyers','posters','site','popup','feed','thumbs'].includes(it.kind)||it.units?'wide':''}"><div class="stage2">${mock(it)}</div><h4>${it.title}</h4>${it.sub?`<p class="sub">${it.sub}</p>`:''}
+            <dl class="spec">${it.tool?`<dt class="mono">Tool</dt><dd>${it.tool}</dd>`:''}
+            ${it.time?`<dt class="mono">Time</dt><dd>${it.time}</dd>`:''}
             <dt class="mono">Point</dt><dd>${it.point}</dd></dl></article>`).join('')}</div>
       </section>`}).join('')}
     <div class="next"><a href="#"><span class="ar">◀</span>TV</a><a href="#${other}">${PARTS[other].ch} ${PARTS[other].name}<span class="ar">▶</span></a></div>
@@ -715,6 +760,13 @@ document.querySelectorAll('[data-cycle]').forEach(root=>{
   const still=matchMedia('(prefers-reduced-motion: reduce)').matches,gap=+root.dataset.cycle;
   setInterval(()=>{if(still||over||!root.offsetParent)return;timer+=500;if(timer>=gap){timer=0;show(cur+1)}},500);
 });
+/* 맨 위로 가기: 파트 페이지에서 조금 내려가면 나타남 */
+const totop=document.getElementById('totop');
+function tt(){const k=location.hash.slice(1);const part=(k==='archive'||k==='ailab');
+  totop.style.setProperty('--tt',k==='ailab'?'#5FD6F0':'#FF7A2E');
+  totop.classList.toggle('on',part&&scrollY>500)}
+addEventListener('scroll',tt,{passive:true});addEventListener('hashchange',tt);
+totop.onclick=()=>scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
 /* 전단지 앞뒷면 뒤집기 */
 document.addEventListener('click',e=>{
   const t=e.target.closest('.flip-btn,.js-flip');if(!t)return;
