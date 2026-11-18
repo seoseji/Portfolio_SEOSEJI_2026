@@ -179,17 +179,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .p-head .k i{width:7px;height:7px;border-radius:50%;background:var(--acc)}
 .p-head h2{font-family:var(--f-body);font-weight:600;font-size:clamp(40px,6.6vw,88px);line-height:1.05;margin:14px 0 0;letter-spacing:-.02em;color:var(--acc);
   text-shadow:0 0 10px color-mix(in srgb,var(--acc) 65%,transparent),0 0 36px color-mix(in srgb,var(--acc) 28%,transparent)}
-/* 인트로처럼 잠깐 지직거렸다가 깨끗해지는 효과를 반복 */
-.p-head h2{animation:tvGlitch 4.6s steps(1,end) infinite}
-@keyframes tvGlitch{
-  0%,82%,100%{transform:none;clip-path:none;opacity:1}
-  83%{transform:translateX(-5px) skewX(-7deg);opacity:.8;text-shadow:-4px 0 rgba(255,60,110,.75),4px 0 rgba(60,240,255,.75)}
-  85%{transform:translateX(6px);clip-path:inset(18% 0 52% 0);text-shadow:4px 0 rgba(255,60,110,.75),-4px 0 rgba(60,240,255,.75)}
-  87%{transform:translateX(-3px) skewX(5deg);clip-path:none;opacity:.65}
-  89%{transform:translateX(7px);clip-path:inset(58% 0 8% 0);opacity:.9}
-  91%{transform:translateX(-2px);clip-path:none;opacity:.75;text-shadow:-3px 0 rgba(255,60,110,.6),3px 0 rgba(60,240,255,.6)}
-  93%{transform:translateX(2px) skewX(-2deg);opacity:1}
-  95%{transform:none;opacity:1}}
+/* 파트 제목: 인트로처럼 도트가 깨졌다가 선명해지는 효과(캔버스가 글자 위에 겹쳐 그려짐) */
+.p-head h2{position:relative;width:fit-content}
+.p-head h2 canvas.gl{position:absolute;left:0;top:0;display:none;pointer-events:none;image-rendering:pixelated;filter:drop-shadow(0 0 8px color-mix(in srgb,var(--acc) 70%,transparent))}
+.p-head h2.gl{color:transparent;text-shadow:none}
+.p-head h2.gl canvas.gl{display:block}
 .p-head p{margin:0 0 0 auto;color:var(--mute);text-align:right}
 .toc-row{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:12px 24px;flex-wrap:wrap;padding-bottom:40px}
 @media(min-width:1001px){.toc-row{min-height:1lh}.toc-row .lead{position:absolute;right:0;top:0}}   /* 안내 문구는 두 파트 모두 같은 높이에서 시작(두 줄이면 아래로 이어짐) */
@@ -1010,6 +1004,62 @@ async function choose(key){
   location.hash=key;
 }
 
+/* ---------- 파트 제목 도트 글리치 ---------- */
+/* 인트로와 같은 방식: 글자를 큰 도트로 뭉갠 뒤(디더링) 도트가 잘게 쪼개지며 선명해짐. 열리자마자 길게, 이후 주기적으로 짧게 반복 */
+let glRun=0;
+function glitchTitle(h2,dur){
+  if(reduce||!h2||!h2.offsetParent)return Promise.resolve();
+  const cs=getComputedStyle(h2),r=h2.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);
+  const color=cs.color==='rgba(0, 0, 0, 0)'?(h2.dataset.col||'#fff'):cs.color;h2.dataset.col=color;
+  const W=Math.ceil(r.width),H=Math.ceil(r.height),txt=h2.dataset.t||(h2.dataset.t=h2.textContent.trim());
+  let cv=h2.querySelector('canvas.gl');
+  if(!cv){cv=document.createElement('canvas');cv.className='gl';cv.setAttribute('aria-hidden','true');h2.appendChild(cv)}
+  cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+  /* 글자 원본(실제 제목과 같은 글꼴·위치) */
+  const src=document.createElement('canvas');src.width=cv.width;src.height=cv.height;const s=src.getContext('2d');
+  s.scale(dpr,dpr);s.font=`${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;if('letterSpacing' in s)s.letterSpacing=cs.letterSpacing;
+  const m=s.measureText(txt),asc=m.fontBoundingBoxAscent||parseFloat(cs.fontSize)*.9,desc=m.fontBoundingBoxDescent||parseFloat(cs.fontSize)*.25;
+  s.fillStyle='#fff';s.textBaseline='alphabetic';s.fillText(txt,0,(H-(asc+desc))/2+asc);
+  const x=cv.getContext('2d'),sm=document.createElement('canvas'),smc=sm.getContext('2d',{willReadFrequently:true});
+  h2.classList.add('gl');
+  const t0=performance.now();
+  return new Promise(res=>{
+    const draw=n=>{
+      const k=Math.min(1,(n-t0)/dur),lv=1-k;
+      x.clearRect(0,0,cv.width,cv.height);
+      if(k>=1){h2.classList.remove('gl');return res()}
+      if(Math.random()<.18*lv){requestAnimationFrame(draw);return}      /* 신호가 잠깐 끊김 */
+      const b=Math.max(2,Math.round((3+lv*lv*15)*dpr));                   /* 도트 크기: 크게 → 작게 */
+      const sw=Math.ceil(cv.width/b),sh=Math.ceil(cv.height/b);sm.width=sw;sm.height=sh;
+      smc.clearRect(0,0,sw,sh);smc.drawImage(src,0,0,sw,sh);
+      const d=smc.getImageData(0,0,sw,sh).data;
+      x.fillStyle=color;
+      for(let j=0;j<sh;j++){
+        const sh2=Math.random()<.3*lv?Math.round((Math.random()*2-1)*(2+lv*4)):0;  /* 줄 단위로 밀림 */
+        for(let i=0;i<sw;i++){
+          const a=d[(j*sw+i)*4+3]/255,th=(BAYER[(j&3)*4+(i&3)]+.5)/16;
+          if(a>th*.85+.05*lv)x.fillRect((i+sh2)*b,j*b,b,b);
+        }
+      }
+      requestAnimationFrame(draw);
+    };
+    requestAnimationFrame(draw);
+  });
+}
+function startTitleGlitch(key){
+  const id=++glRun,h2=document.querySelector('#'+key+' .p-head h2');
+  (async()=>{
+    if(document.fonts&&document.fonts.ready)await document.fonts.ready;
+    if(id!==glRun)return;
+    await glitchTitle(h2,1100);
+    while(id===glRun){
+      await wait(3600+Math.random()*1400);
+      if(id!==glRun)break;
+      await glitchTitle(h2,520);
+    }
+  })();
+}
+
 /* ---------- 라우팅 ---------- */
 let first=true;
 function route(){
@@ -1017,6 +1067,7 @@ function route(){
   home.hidden=on;
   for(const n in PARTS)document.getElementById(n).hidden=(n!==k);
   scrollTo(0,0);
+  if(on)startTitleGlitch(k);else glRun++;
   if(!on){
     home.classList.remove('zoom');osd.classList.remove('show');busy=false;
     powerOn(!first);
