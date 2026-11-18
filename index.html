@@ -56,6 +56,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
 .pins{width:120px;height:12px;background:repeating-linear-gradient(90deg,#B08A3A 0 2px,#3A2E14 2px 5px);border-radius:1px;opacity:.85}
 .led{width:6px;height:6px;border-radius:50%;background:#3A1A0A;transition:.4s}
 .tv.on .led{background:#FF5A2A;box-shadow:0 0 8px #FF5A2A}
+.tv.on.term-on .led{background:#7CFF9A;box-shadow:0 0 8px #7CFF9A,0 0 16px rgba(124,255,154,.5)}   /* 인트로가 끝나고 터미널이 뜨면 초록 */
 .brand{font-family:var(--f-mono);font-size:9px;letter-spacing:.3em;color:#9EA2A6}
 /* 줄무늬 수납장 */
 .cabinet{width:min(1320px,100%);height:clamp(70px,14vh,140px);margin-top:0;position:relative;z-index:1;
@@ -178,6 +179,17 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .p-head .k i{width:7px;height:7px;border-radius:50%;background:var(--acc)}
 .p-head h2{font-family:var(--f-body);font-weight:600;font-size:clamp(40px,6.6vw,88px);line-height:1.05;margin:14px 0 0;letter-spacing:-.02em;color:var(--acc);
   text-shadow:0 0 10px color-mix(in srgb,var(--acc) 65%,transparent),0 0 36px color-mix(in srgb,var(--acc) 28%,transparent)}
+/* 인트로처럼 잠깐 지직거렸다가 깨끗해지는 효과를 반복 */
+.p-head h2{animation:tvGlitch 4.6s steps(1,end) infinite}
+@keyframes tvGlitch{
+  0%,82%,100%{transform:none;clip-path:none;opacity:1}
+  83%{transform:translateX(-5px) skewX(-7deg);opacity:.8;text-shadow:-4px 0 rgba(255,60,110,.75),4px 0 rgba(60,240,255,.75)}
+  85%{transform:translateX(6px);clip-path:inset(18% 0 52% 0);text-shadow:4px 0 rgba(255,60,110,.75),-4px 0 rgba(60,240,255,.75)}
+  87%{transform:translateX(-3px) skewX(5deg);clip-path:none;opacity:.65}
+  89%{transform:translateX(7px);clip-path:inset(58% 0 8% 0);opacity:.9}
+  91%{transform:translateX(-2px);clip-path:none;opacity:.75;text-shadow:-3px 0 rgba(255,60,110,.6),3px 0 rgba(60,240,255,.6)}
+  93%{transform:translateX(2px) skewX(-2deg);opacity:1}
+  95%{transform:none;opacity:1}}
 .p-head p{margin:0 0 0 auto;color:var(--mute);text-align:right}
 .toc-row{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:12px 24px;flex-wrap:wrap;padding-bottom:40px}
 @media(min-width:1001px){.toc-row{min-height:1lh}.toc-row .lead{position:absolute;right:0;top:0}}   /* 안내 문구는 두 파트 모두 같은 높이에서 시작(두 줄이면 아래로 이어짐) */
@@ -324,8 +336,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 #totop:hover,#totop:focus-visible{border-color:var(--tt,var(--sand));box-shadow:0 8px 24px rgba(0,0,0,.5),0 0 16px color-mix(in srgb,var(--tt,var(--sand)) 45%,transparent)}
 /* ---------- 포스터: 벽에 붙인 종이 ---------- */
 .posters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(18px,3vw,40px);padding:clamp(24px,4vw,52px)}
-.pst{position:relative;display:block;aspect-ratio:900/1270;transform:rotate(var(--tilt));cursor:zoom-in;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-.pst:hover,.pst:focus-visible{transform:rotate(0) scale(1.03)}
+.pst{position:relative;display:block;aspect-ratio:900/1270;transform:none;cursor:zoom-in;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.pst:hover,.pst:focus-visible{transform:scale(1.03)}
 .pst img{display:block;width:100%;height:100%;object-fit:cover;box-shadow:0 1px 2px rgba(0,0,0,.4),0 14px 30px rgba(0,0,0,.45)}
 .pst::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,rgba(255,255,255,.16),transparent 30%,transparent 70%,rgba(0,0,0,.12))}
 .pst::before{content:"";position:absolute;z-index:1;top:-8px;left:50%;width:34%;height:16px;transform:translateX(-50%) rotate(-2deg);background:rgba(235,228,210,.75);box-shadow:0 1px 2px rgba(0,0,0,.2)}
@@ -402,8 +414,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .fl{margin:0;min-width:0;display:flex;flex-direction:column;gap:16px;grid-column:span 2}
 .fl.wide{grid-column:span 3}
 .flip-btn{position:relative;display:block;width:100%;aspect-ratio:var(--r);perspective:1800px;cursor:pointer}
-.flip{position:absolute;inset:0;transform-style:preserve-3d;transform:rotate(var(--tilt,0deg));transition:transform .85s cubic-bezier(.3,.7,.2,1)}
-.fl.on .flip{transform:rotate(var(--tilt,0deg)) rotateY(180deg)}
+.flip{position:absolute;inset:0;transform-style:preserve-3d;transform:rotate(0deg);transition:transform .85s cubic-bezier(.3,.7,.2,1)}
+.fl.on .flip{transform:rotate(0deg) rotateY(180deg)}
 .face{position:absolute;inset:0;background:#fff;backface-visibility:hidden;-webkit-backface-visibility:hidden;
   box-shadow:0 1px 2px rgba(0,0,0,.4),0 14px 30px rgba(0,0,0,.45),0 30px 60px rgba(0,0,0,.25)}
 .face.back{transform:rotateY(180deg)}
@@ -931,7 +943,7 @@ function typeIn(el,fast){
   return new Promise(r=>{const iv=setInterval(()=>{i+=2;el.textContent=full.slice(0,i);if(i>=full.length){clearInterval(iv);r()}},18)});
 }
 async function bootTerminal(id,fast){
-  term.classList.add('show');
+  term.classList.add('show');tv.classList.add('term-on');
   const steps=[...term.querySelectorAll('[data-step]')].sort((a,b)=>a.dataset.step-b.dataset.step);
   for(const p of steps){
     if(id!==runId)return;
@@ -953,7 +965,7 @@ function startAttract(){
 function stopAttract(){if(att){clearInterval(att);att=null;chs.forEach(x=>x.classList.remove('on'))}}
 function resetTerminal(){
   stopAttract();
-  ready=false;home.classList.remove('ready');term.classList.remove('show');
+  ready=false;home.classList.remove('ready');term.classList.remove('show');tv.classList.remove('term-on');
   term.querySelectorAll('.go').forEach(p=>p.classList.remove('go'));
   term.querySelectorAll('.ty').forEach(el=>el.textContent='');
 }
