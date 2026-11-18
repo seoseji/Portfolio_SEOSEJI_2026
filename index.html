@@ -304,8 +304,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .hb.long{grid-column:1/-1;padding:0 3%}
 .hangwall.mix{grid-template-columns:minmax(0,.8fr) minmax(0,1fr);align-items:center}
 /* ---------- AI 개인 프로젝트: 영상 · 상세페이지 · 이미지 ---------- */
-.avid{width:100%;display:grid;place-items:center;padding:clamp(8px,2vw,24px)}
-.avid-in{width:min(820px,100%);border-radius:14px;overflow:hidden;background:#000;box-shadow:0 0 0 1px #2a2f3a,0 30px 70px rgba(0,0,0,.55)}
+.avid{width:100%;display:grid;place-items:center;padding:0}
+.avid.vert{padding:clamp(8px,2vw,24px)}
+.avid-in{width:100%;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 0 0 1px #2a2f3a,0 30px 70px rgba(0,0,0,.55)}
 .avid.vert .avid-in{width:min(300px,78vw);border:7px solid #050506;border-radius:34px;box-shadow:0 0 0 1px #333,0 30px 70px rgba(0,0,0,.55)}
 .avid video{display:block;width:100%;height:auto;background:#000}
 .aphone{width:min(430px,100%);margin:0 auto;border:8px solid #050506;border-radius:36px;background:#fff;overflow:hidden;box-shadow:0 0 0 1px #333,0 30px 60px rgba(0,0,0,.55)}
@@ -769,7 +770,7 @@ function renderPart(key){
         <div class="m-head"><div><div class="k mono">${MEDIA[m].en}</div><h3>${MEDIA[m].ko}</h3></div><p>${MEDIA[m].desc}</p><span class="m-no mono">${String(mi+1).padStart(2,'0')} / ${String(P.order.length).padStart(2,'0')}</span></div>
         <p class="m-desc-m">${MEDIA[m].desc}</p>
         <div class="works ${list.length===1||list.some(i=>i.kind&&i.kind!=='adetail')?'one':''}">${list.map(it=>`
-          <article class="work ${['hang','flyers','posters','site','popup','feed','thumbs'].includes(it.kind)||it.units?'wide':''}"><div class="stage2">${mock(it)}</div><h4>${it.title}</h4>${it.sub?`<p class="sub">${it.sub}</p>`:''}
+          <article class="work ${['hang','flyers','posters','site','popup','feed','thumbs'].includes(it.kind)||it.units||(it.kind==='avideo'&&it.ratio!=='9/16')?'wide':''}"><div class="stage2">${mock(it)}</div><h4>${it.title}</h4>${it.sub?`<p class="sub">${it.sub}</p>`:''}
             <dl class="spec">${it.tool?`<dt class="mono">Tool</dt><dd>${it.tool}</dd>`:''}
             ${it.time?`<dt class="mono">Time</dt><dd>${it.time}</dd>`:''}
             <dt class="mono">Point</dt><dd>${it.point}</dd></dl></article>`).join('')}</div>
@@ -1077,6 +1078,4 @@ function route(){
 }
 addEventListener('hashchange',route);route();
 </script>
-
-</body>
-</html>
+</body></html>
