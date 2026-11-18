@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
-<body>
 <title>SEOSEJI Portfolio</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=VT323&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -137,6 +136,15 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
 .ch .ko{font-family:var(--f-body);font-weight:600;font-size:clamp(14px,3.2cqw,28px);letter-spacing:-.01em;line-height:1.1}
 .ch .st{display:flex;justify-content:space-between;gap:1cqw;text-transform:uppercase;white-space:nowrap}
 .ch .sel{display:none}
+/* 항상 보이는 입장 버튼(마우스가 없는 휴대폰에서도 눌러야 할 곳이 보이게) */
+.cta{font-family:var(--f-body);font-weight:600;letter-spacing:0;text-transform:none;font-size:clamp(11px,2.1cqw,17px);padding:.6cqw 1.8cqw;border:1px solid var(--amb);border-radius:99px;
+  color:var(--amb);animation:ctaPulse 1.7s ease-in-out infinite;transition:background .2s,color .2s}
+@keyframes ctaPulse{50%{background:color-mix(in srgb,var(--amb) 20%,transparent);box-shadow:0 0 1.4cqw color-mix(in srgb,var(--amb) 55%,transparent)}}
+.ch:hover .cta,.ch:focus-visible .cta,.ch.on .cta{background:var(--amb);color:#050506;text-shadow:none;animation:none}
+.mi-grp{display:flex;gap:2.4cqw}
+.mi{font:inherit;color:inherit;text-shadow:inherit;text-transform:inherit;letter-spacing:inherit;cursor:pointer;padding:.2cqw .8cqw;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+.mi[data-go=archive]:hover,.mi[data-go=archive]:focus-visible{color:#FF7A2E;border-color:#FF7A2E;outline:none}
+.mi[data-go=ailab]:hover,.mi[data-go=ailab]:focus-visible{color:#5FD6F0;border-color:#5FD6F0;outline:none}
 .ch:hover>.box,.ch:focus-visible>.box,.ch.on>.box{background-color:color-mix(in srgb,var(--amb) 11%,transparent);box-shadow:inset 0 0 0 1px var(--amb)}
 .ch:hover .sel,.ch:focus-visible .sel,.ch.on .sel{display:inline;animation:blink .8s steps(2) infinite}
 .ch:hover .ok,.ch:focus-visible .ok,.ch.on .ok{display:none}
@@ -171,8 +179,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .p-head p{margin:0 0 0 auto;color:var(--mute);text-align:right}
 .toc{display:flex;gap:6px 18px;flex-wrap:wrap;padding-bottom:40px;color:var(--mute)}
 .toc button:hover{color:var(--fg)}
-.medium{padding-block:56px;border-top:1px solid var(--line);scroll-margin-top:70px}
-.m-head{display:flex;flex-wrap:wrap;align-items:flex-end;gap:6px 20px;margin-bottom:32px}
+.medium{padding-block:56px;border-top:1px solid var(--line);scroll-margin-top:calc(var(--barH,56px) + env(safe-area-inset-top,0px))}
+/* 스크롤하면 소제목이 상단 바 아래에 붙어 따라오고, 다음 구간이 시작되면 밀려나며 바뀜 */
+.m-head{position:sticky;top:calc(var(--barH,56px) + env(safe-area-inset-top,0px));z-index:6;display:flex;flex-wrap:wrap;align-items:flex-end;gap:6px 20px;
+  padding-block:12px;margin-bottom:24px;background:rgba(7,7,7,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.m-head .m-no{margin-left:auto;color:var(--acc);align-self:center;white-space:nowrap}
+.m-desc-m{display:none;margin:0 0 24px;color:var(--mute)}
 .m-head .k{color:var(--acc)}
 .m-head h3{font-size:30px;font-weight:500;margin:6px 0 0;letter-spacing:-.01em}
 .m-head p{margin:0 0 5px;color:var(--mute);max-width:32em}
@@ -453,6 +465,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .pixtag{font-size:13px;bottom:9%}   /* 픽셀 오프닝이 늘어나지 않게 */
   .term{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) minmax(0,1fr) auto;grid-template-areas:"menu" "ch1" "ch2" "foot";font-size:clamp(12px,3.6cqw,18px);padding:4cqw}
   .diag,.hide-m,.pins,.brand,.slots{display:none}
+  .m-head p{display:none}.m-desc-m{display:block}
+  .m-head h3{font-size:22px}
   .foot{padding:1.4cqw 2.4cqw}
   .foot .ty{white-space:normal}
   .p-head p{margin:0;text-align:left}
@@ -492,7 +506,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
           <div class="term" id="term">
             <div class="p menu" data-step="0"><i class="box"></i>
-              <span>Home</span><span>CH 01</span><span>CH 02</span><span class="hide-m">About</span><span class="hide-m">Contact</span><span class="hide-m">2026</span></div>
+              <span class="hide-m">Select Channel</span><span class="mi-grp"><button class="mi" data-go="archive" aria-label="CH 01 실무 프로젝트 보기">CH 01 · 실무</button><button class="mi" data-go="ailab" aria-label="CH 02 AI 개인 프로젝트 보기">CH 02 · AI</button></span></div>
 
             <button class="p ch c1" data-step="2" data-go="archive" aria-label="CH 01 실무 프로젝트 보기">
               <i class="box"></i>
@@ -509,7 +523,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
                 <path class="w ld" style="--d:.4" d="M190 74L196 84" pathLength="1"/><text x="166" y="93" style="--d:.4">FEED 4:5</text>
               </svg>
               <span class="ko">실무 프로젝트</span>
-              <span class="st"><span class="ok">Scan Complete</span><span class="sel">▶ Select</span><span>Client</span></span>
+              <span class="st"><span class="cta">▶ 클릭해서 입장</span><span class="hide-m">Client</span></span>
             </button>
 
             <button class="p ch c2" data-step="3" data-go="ailab" aria-label="CH 02 AI 개인 프로젝트 보기">
@@ -527,11 +541,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
                 <text x="140" y="108" style="--d:.5">GEN SIGNAL</text>
               </svg>
               <span class="ko">AI 개인 프로젝트</span>
-              <span class="st"><span class="ok">Generating...</span><span class="sel">▶ Select</span><span>AI</span></span>
+              <span class="st"><span class="cta">▶ 클릭해서 입장</span><span class="hide-m">AI</span></span>
             </button>
 
             <div class="p foot" data-step="4"><i class="box"></i>
-              <span class="ty cur" data-t="> RECOMMENDED ACTION: SELECT CHANNEL"></span><span class="hide-m">◀ ▶ / ENTER</span></div>
+              <span class="ty cur" data-t="> 보고 싶은 채널을 선택하세요"></span><span class="hide-m">◀ ▶ / 1 · 2 / ENTER</span></div>
           </div>
         </div>
         <canvas id="noise" width="200" height="150"></canvas>
@@ -731,9 +745,10 @@ function renderPart(key){
   <div class="wrap">
     <div class="p-head"><div><div class="k mono"><i></i>${P.k}</div><h2>${P.name}</h2></div><p>${P.lead}</p></div>
     <nav class="toc mono">${P.order.map(m=>`<button class="mono" data-to="${key}-${m}">${MEDIA[m].ko}</button>`).join('')}</nav>
-    ${P.order.map(m=>{const list=P.items.filter(i=>i.m===m);return `
+    ${P.order.map((m,mi)=>{const list=P.items.filter(i=>i.m===m);return `
       <section class="medium" id="${key}-${m}">
-        <div class="m-head"><div><div class="k mono">${MEDIA[m].en}</div><h3>${MEDIA[m].ko}</h3></div><p>${MEDIA[m].desc}</p></div>
+        <div class="m-head"><div><div class="k mono">${MEDIA[m].en}</div><h3>${MEDIA[m].ko}</h3></div><p>${MEDIA[m].desc}</p><span class="m-no mono">${String(mi+1).padStart(2,'0')} / ${String(P.order.length).padStart(2,'0')}</span></div>
+        <p class="m-desc-m">${MEDIA[m].desc}</p>
         <div class="works ${list.length===1||list.some(i=>i.kind&&i.kind!=='adetail')?'one':''}">${list.map(it=>`
           <article class="work ${['hang','flyers','posters','site','popup','feed','thumbs'].includes(it.kind)||it.units?'wide':''}"><div class="stage2">${mock(it)}</div><h4>${it.title}</h4>${it.sub?`<p class="sub">${it.sub}</p>`:''}
             <dl class="spec">${it.tool?`<dt class="mono">Tool</dt><dd>${it.tool}</dd>`:''}
@@ -764,6 +779,11 @@ document.querySelectorAll('[data-cycle]').forEach(root=>{
   const still=matchMedia('(prefers-reduced-motion: reduce)').matches,gap=+root.dataset.cycle;
   setInterval(()=>{if(still||over||!root.offsetParent)return;timer+=500;if(timer>=gap){timer=0;show(cur+1)}},500);
 });
+/* 상단 바 높이를 CSS 변수로 알려 줌 → 소제목이 바 바로 아래에 붙음 */
+const setBarH=()=>{const b=document.querySelector('.part:not([hidden]) .bar');if(b)document.documentElement.style.setProperty('--barH',b.getBoundingClientRect().height+'px')};
+addEventListener('resize',setBarH);addEventListener('hashchange',()=>setTimeout(setBarH,0));
+if('ResizeObserver' in window){const ro=new ResizeObserver(setBarH);document.querySelectorAll('.part .bar').forEach(b=>ro.observe(b))}
+setBarH();
 /* 맨 위로 가기: 파트 페이지에서 조금 내려가면 나타남 */
 const totop=document.getElementById('totop');
 function tt(){const k=location.hash.slice(1);const part=(k==='archive'||k==='ailab');
@@ -905,9 +925,18 @@ async function bootTerminal(id,fast){
   }
   if(!fast)await wait(900);
   if(id!==runId)return;
-  ready=true;home.classList.add('ready');
+  ready=true;home.classList.add('ready');startAttract();
 }
+/* 어텐트 모드: 부팅이 끝나면 두 채널이 자기 색으로 번갈아 빛나서 눌러야 할 곳을 알려 줌. 첫 조작이 있으면 멈춤 */
+let att=null,attI=0;
+function startAttract(){
+  if(att||reduce)return;
+  const tick=()=>{chs.forEach((x,k)=>x.classList.toggle('on',k===attI%2));attI++};
+  tick();att=setInterval(tick,1500);
+}
+function stopAttract(){if(att){clearInterval(att);att=null;chs.forEach(x=>x.classList.remove('on'))}}
 function resetTerminal(){
+  stopAttract();
   ready=false;home.classList.remove('ready');term.classList.remove('show');
   term.querySelectorAll('.go').forEach(p=>p.classList.remove('go'));
   term.querySelectorAll('.ty').forEach(el=>el.textContent='');
@@ -930,11 +959,15 @@ document.getElementById('skip').onclick=()=>powerOn(true);
 /* ---------- 채널 선택 ---------- */
 const chs=[...document.querySelectorAll('.ch')];
 chs.forEach((c,i)=>{
-  c.addEventListener('mouseenter',()=>chs.forEach(x=>x.classList.toggle('on',x===c)));
-  c.addEventListener('click',()=>choose(c.dataset.go));
+  c.addEventListener('mouseenter',()=>{stopAttract();chs.forEach(x=>x.classList.toggle('on',x===c))});
+  c.addEventListener('click',()=>{stopAttract();choose(c.dataset.go)});
 });
+document.querySelectorAll('.mi').forEach(b=>b.addEventListener('click',()=>{stopAttract();choose(b.dataset.go)}));
+['pointermove','pointerdown','touchstart'].forEach(t=>home.addEventListener(t,()=>{if(att)stopAttract()},{passive:true}));
 addEventListener('keydown',e=>{
   if(home.hidden||busy)return;
+  if(ready&&(e.key==='1'||e.key==='2')){stopAttract();choose(chs[+e.key-1].dataset.go);return}
+  if(ready&&(e.key==='ArrowLeft'||e.key==='ArrowRight'))stopAttract();
   if(!ready&&(e.key==='Enter'||e.key===' '||e.key==='Escape')){powerOn(true);return}
   if(ready&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){const c=chs[e.key==='ArrowLeft'?0:1];c.focus();chs.forEach(x=>x.classList.toggle('on',x===c))}
 });
