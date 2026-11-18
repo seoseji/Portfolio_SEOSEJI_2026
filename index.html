@@ -17,7 +17,7 @@
   --sand:#D8C2A0; --ice:#9FD3E2;
   --amb:#FF6A1A;          /* 터미널 주황 형광 */
   --amb-dim:rgba(255,106,26,.38);
-  --pix:#3D4DFF;          /* 인트로 픽셀 블루 */
+  --pix:#5568FF;          /* 인트로 픽셀 블루 */
   --f-disp:"Instrument Serif","Times New Roman",serif;
   --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
@@ -69,9 +69,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
 #pix{width:100%;height:100%;image-rendering:pixelated}
 #pixwrap{opacity:0}#pixwrap.on{opacity:1}
 /* 작은 문구는 선명한 픽셀 글꼴로 따로 올림 (어떤 화면 크기에서도 또렷하게) */
-.pixtag{position:absolute;left:5.5%;bottom:6.5%;display:flex;align-items:center;gap:.7em;font-family:"Silkscreen",monospace;font-size:clamp(11px,2.7cqw,20px);letter-spacing:.14em;line-height:1;color:#5B6BFF;
-  text-shadow:0 0 .4em rgba(61,77,255,.85);opacity:0;transition:opacity .15s steps(2)}
-.pixtag i{width:.55em;height:.55em;background:currentColor;box-shadow:0 0 .4em rgba(61,77,255,.85)}
+.pixtag{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;bottom:6.5%;display:flex;align-items:center;gap:.7em;font-family:"Silkscreen",monospace;font-size:clamp(13px,3.3cqw,25px);letter-spacing:.14em;line-height:1;color:#7585FF;
+  text-shadow:0 0 .4em rgba(85,104,255,.85);opacity:0;transition:opacity .15s steps(2)}
+.pixtag i{width:.55em;height:.55em;background:currentColor;box-shadow:0 0 .4em rgba(85,104,255,.85)}
 #pixwrap.on .pixtag{opacity:1;transition-delay:.5s}
 .fx{position:absolute;inset:0;pointer-events:none;z-index:5}
 .scan{background:repeating-linear-gradient(to bottom,rgba(0,0,0,.35) 0 1px,transparent 1px 3px)}
@@ -134,7 +134,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
 .ch.go .w,.ch.go .ld{stroke-dashoffset:0}
 .ch.go .wire text{opacity:1}
 .ch .ko{font-family:var(--f-body);font-weight:600;font-size:clamp(14px,3.2cqw,28px);letter-spacing:-.01em;line-height:1.1}
-.ch .st{display:flex;justify-content:space-between;gap:1cqw;text-transform:uppercase;white-space:nowrap}
+.ch .st{display:flex;justify-content:space-between;align-items:center;gap:1cqw;text-transform:uppercase;white-space:nowrap}
 .ch .sel{display:none}
 /* 항상 보이는 입장 버튼(마우스가 없는 휴대폰에서도 눌러야 할 곳이 보이게) */
 .cta{font-family:var(--f-body);font-weight:600;letter-spacing:0;text-transform:none;font-size:clamp(11px,2.1cqw,17px);padding:.6cqw 1.8cqw;border:1px solid var(--amb);border-radius:99px;
@@ -190,7 +190,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .m-head p{margin:0 0 5px;color:var(--mute);max-width:32em}
 .works{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
 .works.one{grid-template-columns:minmax(0,1fr)}
-.work .stage2{background:var(--raise);border-radius:14px;padding:clamp(20px,4vw,48px);display:grid;place-items:center;min-height:380px}
+.work .stage2{background:none;border-radius:0;padding:clamp(20px,4vw,48px);display:grid;place-items:center;min-height:380px}
 .work h4{font-size:17px;font-weight:500;margin:18px 0 12px}
 .spec{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:14px}
 .spec dt{color:var(--dim);padding-top:2px}
@@ -308,6 +308,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .ag{display:block;cursor:zoom-in;border-radius:10px;overflow:hidden;box-shadow:0 14px 30px rgba(0,0,0,.45)}
 .ag img{display:block;width:100%;height:auto;transition:transform .35s}
 .ag:hover img,.ag:focus-visible img{transform:scale(1.03)}
+.agal.row{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;--H:clamp(110px,13vw,190px);scrollbar-width:thin;scrollbar-color:#3a3a40 transparent}
+.agal.row figure:first-child{margin-left:auto}.agal.row figure:last-child{margin-right:auto}
 .agal figcaption{color:var(--dim)}
 /* ---------- 맨 위로 가기 버튼 ---------- */
 #totop{position:fixed;right:max(18px,env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;width:48px;height:48px;border-radius:50%;
@@ -462,7 +464,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .cabinet{height:clamp(48px,9vh,90px)}
   .screen{aspect-ratio:3/4}
   #pix{object-fit:contain;background:rgb(6,8,40)}
-  .pixtag{font-size:13px;bottom:9%}   /* 픽셀 오프닝이 늘어나지 않게 */
+  .pixtag{font-size:15px;bottom:9%}
+  .vig{box-shadow:inset 0 0 14px 1px rgba(0,0,0,.35)}   /* 픽셀 오프닝이 늘어나지 않게 */
   .term{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) minmax(0,1fr) auto;grid-template-areas:"menu" "ch1" "ch2" "foot";font-size:clamp(12px,3.6cqw,18px);padding:4cqw}
   .diag,.hide-m,.pins,.brand,.slots{display:none}
   .m-head p{display:none}.m-desc-m{display:block}
@@ -506,7 +509,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
           <div class="term" id="term">
             <div class="p menu" data-step="0"><i class="box"></i>
-              <span class="hide-m">Select Channel</span><span class="mi-grp"><button class="mi" data-go="archive" aria-label="CH 01 실무 프로젝트 보기">CH 01 · 실무</button><button class="mi" data-go="ailab" aria-label="CH 02 AI 개인 프로젝트 보기">CH 02 · AI</button></span></div>
+              <span>Home</span><span>CH 01</span><span>CH 02</span><span class="hide-m">About</span><span class="hide-m">Contact</span><span class="hide-m">2026</span></div>
 
             <button class="p ch c1" data-step="2" data-go="archive" aria-label="CH 01 실무 프로젝트 보기">
               <i class="box"></i>
@@ -523,7 +526,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
                 <path class="w ld" style="--d:.4" d="M190 74L196 84" pathLength="1"/><text x="166" y="93" style="--d:.4">FEED 4:5</text>
               </svg>
               <span class="ko">실무 프로젝트</span>
-              <span class="st"><span class="cta">▶ 클릭해서 입장</span><span class="hide-m">Client</span></span>
+              <span class="st"><span class="cta">▶ 클릭해서 입장</span><span>Client</span></span>
             </button>
 
             <button class="p ch c2" data-step="3" data-go="ailab" aria-label="CH 02 AI 개인 프로젝트 보기">
@@ -541,7 +544,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
                 <text x="140" y="108" style="--d:.5">GEN SIGNAL</text>
               </svg>
               <span class="ko">AI 개인 프로젝트</span>
-              <span class="st"><span class="cta">▶ 클릭해서 입장</span><span class="hide-m">AI</span></span>
+              <span class="st"><span class="cta">▶ 클릭해서 입장</span><span>AI</span></span>
             </button>
 
             <div class="p foot" data-step="4"><i class="box"></i>
@@ -651,24 +654,24 @@ const PARTS={
     order:['padding','still','fizz'],
     items:[
       {m:'padding',kind:'avideo',title:'광고영상',sub:'가로형 영상 · 13초',src:'assets/ai/video/padding.mp4',poster:'assets/ai/video/padding.jpg',ratio:'16/9',
-        tool:'힉스필드, 포토샵',point:'레퍼런스 컷과 모델 시트로 패딩의 형태와 색, 인물을 먼저 정해 두고 장면을 만들어, 컷이 바뀌어도 제품이 같은 모습으로 보이게 구성'},
+        tool:'Higgsfield, Photoshop, Premiere Pro',point:'레퍼런스 컷과 모델 시트로 패딩의 형태와 색, 인물을 먼저 정해 두고 장면을 만들어, 컷이 바뀌어도 제품이 같은 모습으로 보이게 구성'},
       {m:'padding',kind:'adetail',title:'상세페이지',sub:'기술 설명부터 제품 정보까지 한 장으로 이어지는 구성 — 폰 화면을 위아래로 넘겨 보세요',img:'assets/ai/img/padding-detail.jpg',
-        tool:'힉스필드, 포토샵',point:'에어로젤 기술을 첫 화면에서 한 문장으로 전달하고, 기술 설명 → 착용 장면 → 디테일 → 제품 정보 순서로 스크롤 흐름을 구성'},
+        tool:'Higgsfield, Photoshop, Premiere Pro',point:'에어로젤 기술을 첫 화면에서 한 문장으로 전달하고, 기술 설명 → 착용 장면 → 디테일 → 제품 정보 순서로 스크롤 흐름을 구성'},
       {m:'padding',kind:'agal',title:'광고 이미지',sub:'레퍼런스 컷 · 모델 시트',
         imgs:[['assets/ai/img/padding-ref.jpg','레퍼런스 컷',690/640],['assets/ai/img/padding-sheet.jpg','모델 시트',1800/1012]],
-        tool:'힉스필드, 포토샵',point:'앞·뒤 레퍼런스 컷과 정면·측면·후면 모델 시트로 소재감과 실루엣을 기록해 이후 장면의 기준으로 사용'},
+        tool:'Higgsfield, Photoshop, Premiere Pro',point:'앞·뒤 레퍼런스 컷과 정면·측면·후면 모델 시트로 소재감과 실루엣을 기록해 이후 장면의 기준으로 사용'},
       {m:'still',kind:'avideo',title:'광고영상',sub:'가로형 영상 · 11초',src:'assets/ai/video/still.mp4',poster:'assets/ai/video/still.jpg',ratio:'16/9',
-        tool:'힉스필드, 수노, 포토샵',point:'제품 레퍼런스 컷과 장면별 이미지를 기준으로 영상을 만들어, 같은 모델과 같은 제품이 처음부터 끝까지 이어지게 구성'},
+        tool:'Higgsfield, Suno, Photoshop, Premiere Pro',point:'제품 레퍼런스 컷과 장면별 이미지를 기준으로 영상을 만들어, 같은 모델과 같은 제품이 처음부터 끝까지 이어지게 구성'},
       {m:'still',kind:'adetail',title:'상세페이지',sub:'실제 웹페이지 그대로 — 폰 화면을 위아래로 넘겨 보세요',page:'assets/ai/still-detail/index.html',
-        tool:'힉스필드, 수노, 포토샵',point:'제품 사진과 흡수 장면 GIF로 사용감을 보여 주고, 화면 폭에 맞춰 레이아웃이 바뀌는 반응형 웹페이지로 구성'},
+        tool:'Higgsfield, Suno, Photoshop, Premiere Pro',point:'제품 사진과 흡수 장면 GIF로 사용감을 보여 주고, 화면 폭에 맞춰 레이아웃이 바뀌는 반응형 웹페이지로 구성'},
       {m:'still',kind:'agal',title:'광고 이미지',sub:'레퍼런스 컷 · 장면 컷 3종',
         imgs:[['assets/ai/img/still-ref.jpg','레퍼런스 컷',1000/1334],['assets/ai/img/still-scene-1.jpg','장면 컷 1',1400/782],['assets/ai/img/still-scene-2.jpg','장면 컷 2',1400/782],['assets/ai/img/still-scene-3.jpg','장면 컷 3',1400/782]],
-        tool:'힉스필드, 수노, 포토샵',point:'제품 레퍼런스 컷을 기준으로 같은 모델의 의상과 표정만 바꿔 세 가지 장면으로 확장'},
+        tool:'Higgsfield, Suno, Photoshop, Premiere Pro',point:'제품 레퍼런스 컷을 기준으로 같은 모델의 의상과 표정만 바꿔 세 가지 장면으로 확장'},
       {m:'fizz',kind:'avideo',title:'광고영상',sub:'세로형 영상 · 10초',src:'assets/ai/video/fizzcat.mp4',poster:'assets/ai/video/fizzcat.jpg',ratio:'9/16',
-        tool:'힉스필드, 수노, 포토샵',point:'캐릭터와 라벨을 직접 디자인한 뒤 영상으로 확장해, 라벨 속 캐릭터가 광고 안에서도 같은 모습으로 움직이게 구성'},
+        tool:'Higgsfield, Suno, Photoshop, Premiere Pro',point:'캐릭터와 라벨을 직접 디자인한 뒤 영상으로 확장해, 라벨 속 캐릭터가 광고 안에서도 같은 모습으로 움직이게 구성'},
       {m:'fizz',kind:'agal',title:'광고 이미지',sub:'캐릭터 디자인 · 라벨 디자인 · 연출 컷',
         imgs:[['assets/ai/img/fizz-character.jpg','캐릭터 디자인',1200/1152],['assets/ai/img/fizz-label.jpg','라벨 디자인',1400/1052],['assets/ai/img/fizz-scene.jpg','연출 컷',1]],
-        tool:'힉스필드, 수노, 포토샵',point:'캐릭터 → 라벨 → 병 연출 컷 순서로 이어, 직접 만든 캐릭터가 라벨에서 실물 연출까지 같은 모습으로 나오게 구성'}
+        tool:'Higgsfield, Suno, Photoshop, Premiere Pro',point:'캐릭터 → 라벨 → 병 연출 컷 순서로 이어, 직접 만든 캐릭터가 라벨에서 실물 연출까지 같은 모습으로 나오게 구성'}
     ]}
 };
 const tile=(h,r,label='작업물',extra='')=>`<div class="t" style="--h:${h};aspect-ratio:${r};${extra}">${label}</div>`;
@@ -733,7 +736,7 @@ function mock(it){
         return `<div class="avid ${v?'vert':''}"><div class="avid-in"><video controls playsinline preload="metadata" poster="${it.poster}" aria-label="${it.title}"><source src="${it.src}" type="video/mp4"></video></div></div>`}
       {const v=it.fmt==='9:16';return `<div class="mk player" style="${v?'max-width:240px':''}"><div class="v">${tile(it.h,v?'9/16':'16/9')}<span class="play">▶</span></div><div class="ctl mono">0:09<div class="tr"></div>0:15</div></div>`;}
     case 'image':
-      if(it.kind==='agal')return `<div class="agal">${it.imgs.map(([s,l,r])=>`<figure style="width:calc(var(--H)*${r.toFixed(3)})"><button class="ag" data-full="${s}" aria-label="${it.title} ${l} 크게 보기"><img src="${s}" alt="" loading="lazy"></button><figcaption class="mono">${l}</figcaption></figure>`).join('')}</div>`;
+      if(it.kind==='agal')return `<div class="agal${it.m==='still'?' row':''}">${it.imgs.map(([s,l,r])=>`<figure style="width:calc(var(--H)*${r.toFixed(3)})"><button class="ag" data-full="${s}" aria-label="${it.title} ${l} 크게 보기"><img src="${s}" alt="" loading="lazy"></button><figcaption class="mono">${l}</figcaption></figure>`).join('')}</div>`;
       return `<div class="mk frame" style="max-width:320px">${tile(it.h,it.r)}</div>`;
   }
 }
@@ -845,12 +848,12 @@ const pix=document.getElementById('pix'),pctx=pix.getContext('2d'),pixwrap=docum
 const PW=160,PH=120;
 const off=document.createElement('canvas');off.width=PW;off.height=PH;const octx=off.getContext('2d',{willReadFrequently:true});
 const BAYER=[0,8,2,10,12,4,14,6,3,11,1,9,15,7,13,5];
-const BLUE=[61,77,255],NAVY=[6,8,40];
+const BLUE=[85,104,255],NAVY=[6,8,40];
 function drawSource(t){
   octx.fillStyle='#000';octx.fillRect(0,0,PW,PH);
   /* 눈: 방사형 그라데이션 → 디더링으로 도트 질감 */
   const blink=t>1.15&&t<1.4?Math.abs(Math.sin((t-1.15)/.25*Math.PI)):0;
-  octx.save();octx.translate(80,62);octx.scale(1,1-blink*.92);
+  octx.save();octx.translate(80,56);octx.scale(1,1-blink*.92);
   const g=octx.createRadialGradient(0,0,4,0,0,46);g.addColorStop(0,'rgba(255,255,255,.75)');g.addColorStop(.35,'rgba(255,255,255,.35)');g.addColorStop(1,'rgba(255,255,255,0)');
   octx.beginPath();octx.ellipse(0,0,58,26,0,0,Math.PI*2);octx.fillStyle=g;octx.fill();
   const look=Math.sin(t*2.2)*6;
@@ -861,10 +864,9 @@ function drawSource(t){
   /* 픽셀 타이포 */
   octx.fillStyle='#fff';octx.textBaseline='top';
   octx.font='700 8px Silkscreen, monospace';
-  octx.fillText('26',8,8);octx.textAlign='right';octx.fillText('.11',152,8);octx.textAlign='left';
   octx.font='700 16px Silkscreen, monospace';
-  octx.fillText('SEOSEJI',8,20);
-  octx.textAlign='right';octx.fillText('PORTFOLIO',152,82);octx.textAlign='left';
+  octx.fillText('SEOSEJI',8,14);
+  octx.textAlign='right';octx.fillText('PORTFOLIO',152,76);octx.textAlign='left';
 
 }
 /* 작은 문구는 디더링 없이 선명한 도트로 따로 찍음 */
