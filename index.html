@@ -188,7 +188,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .p-head p{margin:0 0 0 auto;color:var(--mute);text-align:right}
 .toc-row{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:12px 24px;flex-wrap:wrap;padding-bottom:40px}
 @media(min-width:1001px){.toc-row{min-height:1lh}.toc-row .lead{position:absolute;right:0;top:0}}   /* 안내 문구는 두 파트 모두 같은 높이에서 시작(두 줄이면 아래로 이어짐) */
-.toc-row .lead{margin:0;color:var(--mute);text-align:right}
+.toc-row .lead{margin:0;color:var(--mute);text-align:right;transform:translateY(-1px)}
 .toc{display:flex;gap:6px 18px;flex-wrap:wrap;color:var(--mute)}
 .toc button:hover{color:var(--fg)}
 .medium{padding-block:56px;border-top:1px solid var(--line);scroll-margin-top:calc(var(--barH,56px) + env(safe-area-inset-top,0px))}
@@ -619,7 +619,7 @@ const MEDIA={
   image:{ko:'광고 이미지',en:'Key visual',desc:'하나의 콘셉트를 여러 장의 광고 컷으로 확장한 작업.'}
 };
 const PARTS={
-  archive:{ch:'CH 01',k:'CH 01 · Client Work',name:'실무 프로젝트',lead:'실제 클라이언트와 진행해 집행된 작업입니다.',
+  archive:{ch:'CH 01',k:'CH 01 · Client Work',name:'실무 프로젝트',lead:'실제 현업에 적용된 실무 디자인 결과물입니다.',
     order:['outdoor','banner','flyer','poster','insta','blog'],
     items:[
       {m:'outdoor',kind:'stand',title:'노모어피자 스탠드 배너',sub:'물통 X배너 4종 · 양면 윈드배너 4종',
