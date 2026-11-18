@@ -147,7 +147,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
 .mi[data-go=archive]:hover,.mi[data-go=archive]:focus-visible{color:#FF7A2E;border-color:#FF7A2E;outline:none}
 .mi[data-go=ailab]:hover,.mi[data-go=ailab]:focus-visible{color:#5FD6F0;border-color:#5FD6F0;outline:none}
 .ch:hover>.box,.ch:focus-visible>.box,.ch.on>.box{background-color:color-mix(in srgb,var(--amb) 11%,transparent)}
-.ch>.box{--bw:2.5px;transition:none}
+.ch>.box{--bw:clamp(2.5px,.45cqw,4.5px);transition:none}
 .ch:hover .sel,.ch:focus-visible .sel,.ch.on .sel{display:inline;animation:blink .8s steps(2) infinite}
 .ch:hover .ok,.ch:focus-visible .ok,.ch.on .ok{display:none}
 .ch:focus-visible{outline:none}
@@ -180,7 +180,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   text-shadow:0 0 10px color-mix(in srgb,var(--acc) 65%,transparent),0 0 36px color-mix(in srgb,var(--acc) 28%,transparent)}
 .p-head p{margin:0 0 0 auto;color:var(--mute);text-align:right}
 .toc-row{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:12px 24px;flex-wrap:wrap;padding-bottom:40px}
-@media(min-width:1001px){.toc-row .lead{position:absolute;right:0;bottom:40px}}   /* 안내 문구가 두 줄이어도 목차 위치(제목과의 간격)는 그대로, 문구만 위로 늘어남 */
+@media(min-width:1001px){.toc-row{min-height:1lh}.toc-row .lead{position:absolute;right:0;top:0}}   /* 안내 문구는 두 파트 모두 같은 높이에서 시작(두 줄이면 아래로 이어짐) */
 .toc-row .lead{margin:0;color:var(--mute);text-align:right}
 .toc{display:flex;gap:6px 18px;flex-wrap:wrap;color:var(--mute)}
 .toc button:hover{color:var(--fg)}
