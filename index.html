@@ -134,15 +134,15 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
 .ch.go .w,.ch.go .ld{stroke-dashoffset:0}
 .ch.go .wire text{opacity:1}
 .ch .ko{font-family:var(--f-body);font-weight:600;font-size:clamp(14px,3.2cqw,28px);letter-spacing:-.01em;line-height:1.1}
-.ch .st>span:not(.cta){line-height:1;margin-bottom:.15em}
+.ch .st>span:not(.enter-btn){line-height:1;margin-bottom:.15em}
 .ch.go>.box{box-shadow:inset 0 0 0 1px var(--amb);transition:box-shadow .3s .65s}
 .ch .st{display:flex;justify-content:space-between;align-items:flex-end;gap:1cqw;text-transform:uppercase;white-space:nowrap}
 .ch .sel{display:none}
 /* 항상 보이는 입장 버튼(마우스가 없는 휴대폰에서도 눌러야 할 곳이 보이게) */
-.cta{font-family:var(--f-body);font-weight:600;letter-spacing:0;text-transform:none;font-size:clamp(11px,2.1cqw,17px);padding:.6cqw 1.8cqw;border:1px solid var(--amb);border-radius:99px;
+.enter-btn{font-family:var(--f-body);font-weight:600;letter-spacing:0;text-transform:none;font-size:clamp(11px,2.1cqw,17px);padding:.6cqw 1.8cqw;border:1px solid var(--amb);border-radius:99px;
   color:var(--amb);animation:ctaPulse 1.7s ease-in-out infinite;transition:background .2s,color .2s}
 @keyframes ctaPulse{50%{background:color-mix(in srgb,var(--amb) 20%,transparent);box-shadow:0 0 1.4cqw color-mix(in srgb,var(--amb) 55%,transparent)}}
-.ch:hover .cta,.ch:focus-visible .cta,.ch.on .cta{background:var(--amb);color:#050506;text-shadow:none;animation:none}
+.ch:hover .enter-btn,.ch:focus-visible .enter-btn,.ch.on .enter-btn{background:var(--amb);color:#050506;text-shadow:none;animation:none}
 .mi-grp{display:flex;gap:2.4cqw}
 .mi{font:inherit;color:inherit;text-shadow:inherit;text-transform:inherit;letter-spacing:inherit;cursor:pointer;padding:.2cqw .8cqw;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
 .mi[data-go=archive]:hover,.mi[data-go=archive]:focus-visible{color:#FF7A2E;border-color:#FF7A2E;outline:none}
@@ -173,13 +173,15 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .seg{display:flex;padding:3px;border:1px solid var(--line);border-radius:99px}
 .seg a{text-decoration:none;padding:5px 12px;border-radius:99px;color:var(--mute)}
 .seg a.on{background:var(--fg);color:var(--bg)}
-.p-head{padding-block:72px 40px;display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
+.p-head{padding-block:72px 32px;display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
 .p-head .k{color:var(--acc);display:flex;gap:8px;align-items:center}
 .p-head .k i{width:7px;height:7px;border-radius:50%;background:var(--acc)}
 .p-head h2{font-family:var(--f-body);font-weight:600;font-size:clamp(40px,6.6vw,88px);line-height:1.05;margin:14px 0 0;letter-spacing:-.02em;color:var(--acc);
   text-shadow:0 0 10px color-mix(in srgb,var(--acc) 65%,transparent),0 0 36px color-mix(in srgb,var(--acc) 28%,transparent)}
 .p-head p{margin:0 0 0 auto;color:var(--mute);text-align:right}
-.toc{display:flex;gap:6px 18px;flex-wrap:wrap;padding-bottom:40px;color:var(--mute)}
+.toc-row{display:flex;justify-content:space-between;align-items:flex-end;gap:12px 24px;flex-wrap:wrap;padding-bottom:40px}
+.toc-row .lead{margin:0;color:var(--mute);text-align:right}
+.toc{display:flex;gap:6px 18px;flex-wrap:wrap;color:var(--mute)}
 .toc button:hover{color:var(--fg)}
 .medium{padding-block:56px;border-top:1px solid var(--line);scroll-margin-top:calc(var(--barH,56px) + env(safe-area-inset-top,0px))}
 /* 스크롤하면 소제목이 상단 바 아래에 붙어 따라오고, 다음 구간이 시작되면 밀려나며 바뀜 */
@@ -471,7 +473,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   /* 모바일: 제목과 입장 버튼을 한 줄에(버튼은 오른쪽), 그림은 살짝 아래로 */
   .ch{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto minmax(0,1fr) auto;grid-template-areas:"hd hd" "wire wire" "ko st";align-items:center;column-gap:2cqw}
   .ch .hd{grid-area:hd}.ch .wire{grid-area:wire;align-self:stretch;height:auto;min-height:0;margin-top:7cqw;margin-bottom:1cqw}.ch .ko{grid-area:ko}.ch .st{grid-area:st}
-  .ch .st>span:not(.cta){display:none}   /* 픽셀 오프닝이 늘어나지 않게 */
+  .ch .st>span:not(.enter-btn){display:none}   /* 픽셀 오프닝이 늘어나지 않게 */
   .term{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) minmax(0,1fr) auto;grid-template-areas:"menu" "ch1" "ch2" "foot";font-size:clamp(12px,3.6cqw,18px);padding:4cqw}
   .diag,.hide-m,.pins,.brand,.slots{display:none}
   .m-head p{display:none}.m-desc-m{display:block}
@@ -479,6 +481,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .foot{padding:1.4cqw 2.4cqw}
   .foot .ty{white-space:normal}
   .p-head p{margin:0;text-align:left}
+  .toc-row{flex-direction:column;align-items:flex-start}.toc-row .lead{text-align:left}
   .works{grid-template-columns:minmax(0,1fr)}
   .ob{aspect-ratio:auto;flex-wrap:wrap;row-gap:9%;padding:10% 10% 12%;background:linear-gradient(#22262C,#1C1D20)}
   .ob::before,.ob::after{display:none}
@@ -532,7 +535,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
                 <path class="w ld" style="--d:.4" d="M190 74L196 84" pathLength="1"/><text x="166" y="93" style="--d:.4">FEED 4:5</text>
               </svg>
               <span class="ko">실무 프로젝트</span>
-              <span class="st"><span class="cta">▶ 클릭해서 입장</span><span>Client</span></span>
+              <span class="st"><span class="enter-btn">▶ 클릭해서 입장</span><span>Client</span></span>
             </button>
 
             <button class="p ch c2" data-step="3" data-go="ailab" aria-label="CH 02 AI 개인 프로젝트 보기">
@@ -550,7 +553,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
                 <text x="140" y="108" style="--d:.5">GEN SIGNAL</text>
               </svg>
               <span class="ko">AI 개인 프로젝트</span>
-              <span class="st"><span class="cta">▶ 클릭해서 입장</span><span>AI</span></span>
+              <span class="st"><span class="enter-btn">▶ 클릭해서 입장</span><span>AI</span></span>
             </button>
 
             <div class="p foot" data-step="4"><i class="box"></i>
@@ -590,12 +593,12 @@ const MEDIA={
   detail:{ko:'상세페이지',en:'Before buying',desc:'구매 직전, 끝까지 읽혀야 하는 매체.'},
   video:{ko:'광고영상',en:'On screen',desc:'짧은 시간 안에 제품을 기억시키는 영상 광고.'},
   padding:{ko:'신소재 패딩 광고',en:'Project 01',desc:'에어로젤 소재를 앞세운 겨울 패딩의 영상 · 상세페이지 · 이미지 작업.'},
-  still:{ko:'STILL. 남성 올인원 로션 광고',en:'Project 02',desc:'남성 올인원 스킨 로션의 영상 · 상세페이지 · 이미지 작업.'},
-  fizz:{ko:'피즈캣 오렌지 음료 광고',en:'Project 03',desc:'직접 디자인한 캐릭터와 라벨로 만든 오렌지 음료의 영상 · 이미지 작업.'},
+  still:{ko:'남성 올인원 로션 광고',en:'Project 02',desc:'남성 올인원 스킨 로션의 영상 · 상세페이지 · 이미지 작업.'},
+  fizz:{ko:'오렌지 음료 광고',en:'Project 03',desc:'직접 디자인한 캐릭터와 라벨로 만든 오렌지 음료의 영상 · 이미지 작업.'},
   image:{ko:'광고 이미지',en:'Key visual',desc:'하나의 콘셉트를 여러 장의 광고 컷으로 확장한 작업.'}
 };
 const PARTS={
-  archive:{ch:'CH 01',k:'CH 01 · Client Work',name:'실무 프로젝트',lead:'실제 클라이언트와 진행해 집행된 작업입니다.<br>작업물이 실제로 놓이는 환경에 넣어 보여드립니다.',
+  archive:{ch:'CH 01',k:'CH 01 · Client Work',name:'실무 프로젝트',lead:'실제 클라이언트와 진행해 집행된 작업입니다.',
     order:['outdoor','banner','flyer','poster','insta','blog'],
     items:[
       {m:'outdoor',kind:'stand',title:'노모어피자 스탠드 배너',sub:'물통 X배너 4종 · 양면 윈드배너 4종',
@@ -742,7 +745,7 @@ function mock(it){
         return `<div class="avid ${v?'vert':''}"><div class="avid-in"><video controls playsinline preload="metadata" poster="${it.poster}" aria-label="${it.title}"><source src="${it.src}" type="video/mp4"></video></div></div>`}
       {const v=it.fmt==='9:16';return `<div class="mk player" style="${v?'max-width:240px':''}"><div class="v">${tile(it.h,v?'9/16':'16/9')}<span class="play">▶</span></div><div class="ctl mono">0:09<div class="tr"></div>0:15</div></div>`;}
     case 'image':
-      if(it.kind==='agal')return `<div class="agal${it.m==='still'?' row':''}">${it.imgs.map(([s,l,r])=>`<figure style="width:calc(var(--H)*${r.toFixed(3)})"><button class="ag" data-full="${s}" aria-label="${it.title} ${l} 크게 보기"><img src="${s}" alt="" loading="lazy"></button><figcaption class="mono">${l}</figcaption></figure>`).join('')}</div>`;
+      if(it.kind==='agal')return `<div class="agal${it.m==='still'||it.m==='fizz'?' row':''}">${it.imgs.map(([s,l,r])=>`<figure style="width:calc(var(--H)*${r.toFixed(3)})"><button class="ag" data-full="${s}" aria-label="${it.title} ${l} 크게 보기"><img src="${s}" alt="" loading="lazy"></button><figcaption class="mono">${l}</figcaption></figure>`).join('')}</div>`;
       return `<div class="mk frame" style="max-width:320px">${tile(it.h,it.r)}</div>`;
   }
 }
@@ -752,8 +755,8 @@ function renderPart(key){
   <header class="bar"><div class="wrap"><a class="name" href="#">◀ TV로 돌아가기</a>
     <div class="seg mono"><a href="#archive" class="${key==='archive'?'on':''}">CH 01</a><a href="#ailab" class="${key==='ailab'?'on':''}">CH 02</a></div></div></header>
   <div class="wrap">
-    <div class="p-head"><div><div class="k mono"><i></i>${P.k}</div><h2>${P.name}</h2></div><p>${P.lead}</p></div>
-    <nav class="toc mono">${P.order.map(m=>`<button class="mono" data-to="${key}-${m}">${MEDIA[m].ko}</button>`).join('')}</nav>
+    <div class="p-head"><div><div class="k mono"><i></i>${P.k}</div><h2>${P.name}</h2></div></div>
+    <div class="toc-row"><nav class="toc mono">${P.order.map(m=>`<button class="mono" data-to="${key}-${m}">${MEDIA[m].ko}</button>`).join('')}</nav><p class="lead">${P.lead}</p></div>
     ${P.order.map((m,mi)=>{const list=P.items.filter(i=>i.m===m);return `
       <section class="medium" id="${key}-${m}">
         <div class="m-head"><div><div class="k mono">${MEDIA[m].en}</div><h3>${MEDIA[m].ko}</h3></div><p>${MEDIA[m].desc}</p><span class="m-no mono">${String(mi+1).padStart(2,'0')} / ${String(P.order.length).padStart(2,'0')}</span></div>
@@ -810,7 +813,7 @@ document.addEventListener('click',e=>{
 /* 스탠드 배너 슬라이드: 천천히 자동으로 흐르고, 버튼·스와이프로도 넘김 */
 document.querySelectorAll('.carousel').forEach(c=>{
   const m=c.querySelector('.marq'),still=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let pos=0,hold=0,over=false,last=performance.now();
+  let pos=0,hold=0,over=false,anim=0,last=performance.now();
   const track=m.querySelector('.track'),first=track.querySelector('.set');
   const half=()=>first.getBoundingClientRect().width;   /* 배너 묶음 하나의 폭 */
   /* 묶음이 화면보다 짧으면 넘길 공간이 없어서, 화면 폭을 채울 때까지 복제해 이어 붙임 */
@@ -819,7 +822,7 @@ document.querySelectorAll('.carousel').forEach(c=>{
       k.querySelectorAll('button').forEach(b=>{b.tabIndex=-1;b.setAttribute('aria-hidden','true')});track.appendChild(k);n++}};
   const unit=()=>{const u=m.querySelector('.su'),g=parseFloat(getComputedStyle(m.querySelector('.set')).columnGap)||60;return u.getBoundingClientRect().width+g};
   const wrap=()=>{const h=half();if(m.scrollLeft>=h){m.scrollLeft-=h}else if(m.scrollLeft<=0){m.scrollLeft+=h}pos=m.scrollLeft};
-  m.addEventListener('scroll',()=>{if(Math.abs(m.scrollLeft-pos)>2){hold=performance.now()+2500;wrap()}},{passive:true});
+  m.addEventListener('scroll',()=>{if(!anim&&Math.abs(m.scrollLeft-pos)>2){hold=performance.now()+2500;wrap()}},{passive:true});
   ['pointerenter','focusin','touchstart'].forEach(t=>m.addEventListener(t,()=>over=true,{passive:true}));
   ['pointerleave','focusout','touchend'].forEach(t=>m.addEventListener(t,()=>{over=false;hold=performance.now()+1200},{passive:true}));
   (function tick(now){
@@ -828,8 +831,12 @@ document.querySelectorAll('.carousel').forEach(c=>{
     if(!still&&!over&&now>hold&&m.offsetParent){pos+=dt*.032;if(pos>=half())pos-=half();m.scrollLeft=pos}
     requestAnimationFrame(tick);
   })(last);
-  const go=d=>{wrap();if(d<0&&m.scrollLeft<unit()){m.scrollLeft+=half();pos=m.scrollLeft}
-    hold=performance.now()+3500;m.scrollBy({left:d*unit(),behavior:still?'auto':'smooth'})};
+  /* 직접 움직이는 애니메이션: 브라우저 smooth 스크롤은 되감기(wrap)에 끊겨서 왼쪽 버튼이 멈췄음 */
+  const go=d=>{if(anim)return;anim=1;wrap();if(d<0&&m.scrollLeft<unit()){m.scrollLeft+=half()}
+    const from=m.scrollLeft,to=from+d*unit(),t0=performance.now(),dur=still?1:450;hold=t0+3500+dur;
+    const step=n=>{const k=Math.min(1,(n-t0)/dur),e=1-Math.pow(1-k,3);m.scrollLeft=from+(to-from)*e;pos=m.scrollLeft;
+      if(k<1)requestAnimationFrame(step);else{anim=0;wrap();hold=performance.now()+3500}};
+    requestAnimationFrame(step)};
   c.querySelector('.c-prev').onclick=()=>go(-1);c.querySelector('.c-next').onclick=()=>go(1);
   m.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();go(-1)}if(e.key==='ArrowRight'){e.preventDefault();go(1)}});
 });
