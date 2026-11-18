@@ -985,7 +985,8 @@ chs.forEach((c,i)=>{
   c.addEventListener('click',()=>{stopAttract();choose(c.dataset.go)});
 });
 document.querySelectorAll('.mi').forEach(b=>b.addEventListener('click',()=>{stopAttract();choose(b.dataset.go)}));
-['pointermove','pointerdown','touchstart'].forEach(t=>home.addEventListener(t,()=>{if(att)stopAttract()},{passive:true}));
+/* 마우스를 박스 위에 올려 둔 동안만 멈추고, 벗어나면 다시 번갈아 켜짐 (PC는 마우스가 늘 움직이므로 움직임만으로는 멈추지 않음) */
+chs.forEach(c=>c.addEventListener('mouseleave',()=>setTimeout(()=>{if(ready&&!busy&&!att&&!chs.some(x=>x.matches(':hover')))startAttract()},900)));
 addEventListener('keydown',e=>{
   if(home.hidden||busy)return;
   if(ready&&(e.key==='1'||e.key==='2')){stopAttract();choose(chs[+e.key-1].dataset.go);return}
