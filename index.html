@@ -138,6 +138,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
 .ch .st>span:not(.enter-btn){line-height:1;margin-bottom:.15em}
 .ch .st{display:flex;justify-content:space-between;align-items:flex-end;gap:1cqw;text-transform:uppercase;white-space:nowrap}
 .ch .sel{display:none}
+@media(min-width:701px){.ch .ko{text-align:center;font-size:clamp(16px,3.8cqw,33px)}.ch .st{justify-content:center}.ch .enter-btn{font-size:clamp(12px,2.5cqw,20px)}}
 /* 항상 보이는 입장 버튼(마우스가 없는 휴대폰에서도 눌러야 할 곳이 보이게) */
 .enter-btn{font-family:var(--f-body);font-weight:600;letter-spacing:0;text-transform:none;font-size:clamp(11px,2.1cqw,17px);padding:.6cqw 1.8cqw;border:1px solid var(--amb);border-radius:99px;
   color:var(--amb);animation:ctaPulse 1.7s ease-in-out infinite}
@@ -543,7 +544,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
                 <path class="w ld" style="--d:.4" d="M190 74L196 84" pathLength="1"/><text x="166" y="93" style="--d:.4">FEED 4:5</text>
               </svg>
               <span class="ko">실무 프로젝트</span>
-              <span class="st"><span class="enter-btn">▶ 클릭해서 입장</span><span>Client</span></span>
+              <span class="st"><span class="enter-btn">▶ 클릭해서 입장</span></span>
             </button>
 
             <button class="p ch c2" data-step="3" data-go="ailab" aria-label="CH 02 AI 개인 프로젝트 보기">
@@ -561,7 +562,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
                 <text x="140" y="108" style="--d:.5">GEN SIGNAL</text>
               </svg>
               <span class="ko">AI 개인 프로젝트</span>
-              <span class="st"><span class="enter-btn">▶ 클릭해서 입장</span><span>AI</span></span>
+              <span class="st"><span class="enter-btn">▶ 클릭해서 입장</span></span>
             </button>
 
             <div class="p foot" data-step="4"><i class="box"></i>
