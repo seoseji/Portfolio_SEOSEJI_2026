@@ -101,14 +101,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
   --g:linear-gradient(var(--amb),var(--amb));
   background-image:var(--g),var(--g),var(--g),var(--g);background-repeat:no-repeat;
   background-position:top left,top right,bottom right,bottom left;
-  background-size:0 1.5px,1.5px 0,0 1.5px,1.5px 0;filter:drop-shadow(0 0 3px color-mix(in srgb,var(--amb) 80%,transparent))}
+  background-size:0 var(--bw,1.5px),var(--bw,1.5px) 0,0 var(--bw,1.5px),var(--bw,1.5px) 0;filter:drop-shadow(0 0 3px color-mix(in srgb,var(--amb) 80%,transparent))}
 .p.go>.box{animation:draw .6s linear forwards}
 @keyframes draw{
-  0%{background-size:0 1.5px,1.5px 0,0 1.5px,1.5px 0}
-  25%{background-size:100% 1.5px,1.5px 0,0 1.5px,1.5px 0}
-  50%{background-size:100% 1.5px,1.5px 100%,0 1.5px,1.5px 0}
-  75%{background-size:100% 1.5px,1.5px 100%,100% 1.5px,1.5px 0}
-  100%{background-size:100% 1.5px,1.5px 100%,100% 1.5px,1.5px 100%}}
+  0%{background-size:0 var(--bw,1.5px),var(--bw,1.5px) 0,0 var(--bw,1.5px),var(--bw,1.5px) 0}
+  25%{background-size:100% var(--bw,1.5px),var(--bw,1.5px) 0,0 var(--bw,1.5px),var(--bw,1.5px) 0}
+  50%{background-size:100% var(--bw,1.5px),var(--bw,1.5px) 100%,0 var(--bw,1.5px),var(--bw,1.5px) 0}
+  75%{background-size:100% var(--bw,1.5px),var(--bw,1.5px) 100%,100% var(--bw,1.5px),var(--bw,1.5px) 0}
+  100%{background-size:100% var(--bw,1.5px),var(--bw,1.5px) 100%,100% var(--bw,1.5px),var(--bw,1.5px) 100%}}
 .menu{grid-area:menu;display:flex;justify-content:space-between;gap:1cqw;padding:.7cqw 2cqw;font-size:clamp(10px,1.9cqw,16px);text-transform:uppercase}
 .diag{grid-area:diag;display:flex;flex-direction:column;gap:1cqw}
 .bars{display:grid;gap:.45cqw}
@@ -120,7 +120,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
 .gauge circle{fill:none;stroke:var(--amb);stroke-width:1}
 .gauge .arc{stroke-width:6;stroke-dasharray:0 1;transition:stroke-dasharray 1.4s cubic-bezier(.2,.8,.2,1) .5s;transform:rotate(-90deg);transform-origin:50% 50%;opacity:.9}
 .diag.go .gauge .arc{stroke-dasharray:.72 1}
-.ch{display:flex;flex-direction:column;gap:.8cqw;cursor:pointer;color:var(--amb);font-family:inherit;font-size:inherit;transition:color .25s;
+.ch{display:flex;flex-direction:column;gap:.8cqw;cursor:pointer;color:var(--amb);font-family:inherit;font-size:inherit;
   text-shadow:0 0 .5cqw color-mix(in srgb,var(--amb) 85%,transparent),0 0 1.6cqw color-mix(in srgb,var(--amb) 40%,transparent)}
 /* 마우스를 올리거나 선택하면 채널 색으로 */
 .ch.c1:hover,.ch.c1:focus-visible,.ch.c1.on{--amb:#FF7A2E}
@@ -135,19 +135,19 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-a
 .ch.go .wire text{opacity:1}
 .ch .ko{font-family:var(--f-body);font-weight:600;font-size:clamp(14px,3.2cqw,28px);letter-spacing:-.01em;line-height:1.1}
 .ch .st>span:not(.enter-btn){line-height:1;margin-bottom:.15em}
-.ch.go>.box{box-shadow:inset 0 0 0 1px var(--amb);transition:box-shadow .3s .65s}
 .ch .st{display:flex;justify-content:space-between;align-items:flex-end;gap:1cqw;text-transform:uppercase;white-space:nowrap}
 .ch .sel{display:none}
 /* 항상 보이는 입장 버튼(마우스가 없는 휴대폰에서도 눌러야 할 곳이 보이게) */
 .enter-btn{font-family:var(--f-body);font-weight:600;letter-spacing:0;text-transform:none;font-size:clamp(11px,2.1cqw,17px);padding:.6cqw 1.8cqw;border:1px solid var(--amb);border-radius:99px;
-  color:var(--amb);animation:ctaPulse 1.7s ease-in-out infinite;transition:background .2s,color .2s}
+  color:var(--amb);animation:ctaPulse 1.7s ease-in-out infinite}
 @keyframes ctaPulse{50%{background:color-mix(in srgb,var(--amb) 20%,transparent);box-shadow:0 0 1.4cqw color-mix(in srgb,var(--amb) 55%,transparent)}}
 .ch:hover .enter-btn,.ch:focus-visible .enter-btn,.ch.on .enter-btn{background:var(--amb);color:#050506;text-shadow:none;animation:none}
 .mi-grp{display:flex;gap:2.4cqw}
 .mi{font:inherit;color:inherit;text-shadow:inherit;text-transform:inherit;letter-spacing:inherit;cursor:pointer;padding:.2cqw .8cqw;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
 .mi[data-go=archive]:hover,.mi[data-go=archive]:focus-visible{color:#FF7A2E;border-color:#FF7A2E;outline:none}
 .mi[data-go=ailab]:hover,.mi[data-go=ailab]:focus-visible{color:#5FD6F0;border-color:#5FD6F0;outline:none}
-.ch:hover>.box,.ch:focus-visible>.box,.ch.on>.box{background-color:color-mix(in srgb,var(--amb) 11%,transparent);box-shadow:inset 0 0 0 1px var(--amb)}
+.ch:hover>.box,.ch:focus-visible>.box,.ch.on>.box{background-color:color-mix(in srgb,var(--amb) 11%,transparent)}
+.ch>.box{--bw:2.5px;transition:none}
 .ch:hover .sel,.ch:focus-visible .sel,.ch.on .sel{display:inline;animation:blink .8s steps(2) infinite}
 .ch:hover .ok,.ch:focus-visible .ok,.ch.on .ok{display:none}
 .ch:focus-visible{outline:none}
@@ -179,7 +179,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .p-head h2{font-family:var(--f-body);font-weight:600;font-size:clamp(40px,6.6vw,88px);line-height:1.05;margin:14px 0 0;letter-spacing:-.02em;color:var(--acc);
   text-shadow:0 0 10px color-mix(in srgb,var(--acc) 65%,transparent),0 0 36px color-mix(in srgb,var(--acc) 28%,transparent)}
 .p-head p{margin:0 0 0 auto;color:var(--mute);text-align:right}
-.toc-row{display:flex;justify-content:space-between;align-items:flex-end;gap:12px 24px;flex-wrap:wrap;padding-bottom:40px}
+.toc-row{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:12px 24px;flex-wrap:wrap;padding-bottom:40px}
+@media(min-width:1001px){.toc-row .lead{position:absolute;right:0;bottom:40px}}   /* 안내 문구가 두 줄이어도 목차 위치(제목과의 간격)는 그대로, 문구만 위로 늘어남 */
 .toc-row .lead{margin:0;color:var(--mute);text-align:right}
 .toc{display:flex;gap:6px 18px;flex-wrap:wrap;color:var(--mute)}
 .toc button:hover{color:var(--fg)}
