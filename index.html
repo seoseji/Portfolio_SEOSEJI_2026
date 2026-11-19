@@ -351,13 +351,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .cd{margin:0;min-width:0;display:flex;flex-direction:column;gap:14px}
 .cd-pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,1.4vw,18px)}
 .cd figcaption{color:var(--dim)}
-.cd-side,.pg{display:block;padding:0;border:0;background:none;cursor:zoom-in;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
-.cd-side:hover,.cd-side:focus-visible,.pg:hover,.pg:focus-visible{transform:translateY(-4px)}
+.cd-side,.pr{display:block;padding:0;border:0;background:none;cursor:zoom-in;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.cd-side:hover,.cd-side:focus-visible,.pr:hover,.pr:focus-visible{transform:translateY(-4px)}
 .cd-side img{display:block;width:100%;aspect-ratio:1000/556;object-fit:cover;border-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.4),0 12px 26px rgba(0,0,0,.45)}
 .pgrid{display:grid;gap:clamp(18px,2.4vw,32px);padding:clamp(8px,2vw,24px) clamp(8px,3vw,40px)}
 .pgrid.stickers{grid-template-columns:repeat(2,minmax(0,1fr))}
 .pgrid.minis{grid-template-columns:repeat(2,minmax(0,300px));justify-content:center;gap:clamp(24px,5vw,72px)}
-.pg img{display:block;width:100%;height:auto;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.4),0 12px 26px rgba(0,0,0,.45)}
+.pr img{display:block;width:100%;height:auto;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.4),0 12px 26px rgba(0,0,0,.45)}
 @media(max-width:700px){.cards,.pgrid.stickers{grid-template-columns:minmax(0,1fr)}.pgrid.minis{gap:14px}}
 .pst{position:relative;display:block;aspect-ratio:900/1270;transform:none;cursor:zoom-in;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 .pst:hover,.pst:focus-visible{transform:scale(1.03)}
@@ -753,7 +753,7 @@ function mock(it){
       return `<div class="mk street"><div class="bd a"></div><div class="bd b"></div><div class="pole"></div><div class="bb">${tile(it.h,'auto')}</div></div>`;
     case 'print':
       if(it.kind==='cards')return `<div class="cards">${it.cards.map(c=>`<figure class="cd"><div class="cd-pair">${[c.f,c.b].map((s,i)=>`<button class="cd-side" data-full="${s}" aria-label="${c.t} ${i?'뒷면':'앞면'} 크게 보기"><img src="${s}" alt="" loading="lazy"></button>`).join('')}</div><figcaption class="mono">${c.t}</figcaption></figure>`).join('')}</div>`;
-      return `<div class="pgrid ${it.kind}">${it.imgs.map((s,i)=>`<button class="pg" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><img src="${s}" alt="" loading="lazy"></button>`).join('')}</div>`;
+      return `<div class="pgrid ${it.kind}">${it.imgs.map((s,i)=>`<button class="pr" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><img src="${s}" alt="" loading="lazy"></button>`).join('')}</div>`;
     case 'poster':
       return `<div class="posters">${it.imgs.map((s,i)=>`<button class="pst" style="--tilt:${[-1.2,.8,-.5,1.1][i%4]}deg" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><img src="${s}" alt="" loading="lazy"></button>`).join('')}</div>`;
     case 'banner':
