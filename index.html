@@ -346,6 +346,19 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 #totop:hover,#totop:focus-visible{border-color:var(--tt,var(--sand));box-shadow:0 8px 24px rgba(0,0,0,.5),0 0 16px color-mix(in srgb,var(--tt,var(--sand)) 45%,transparent)}
 /* ---------- 포스터: 벽에 붙인 종이 ---------- */
 .posters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(18px,3vw,40px);padding:clamp(24px,4vw,52px)}
+/* 기타 인쇄물: 명함(앞뒷면 나란히) · 스티커 · 미니배너 */
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 56px;padding:clamp(8px,2vw,24px) clamp(8px,3vw,40px)}
+.cd{margin:0;min-width:0;display:flex;flex-direction:column;gap:14px}
+.cd-pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,1.4vw,18px)}
+.cd figcaption{color:var(--dim)}
+.cd-side,.pg{display:block;padding:0;border:0;background:none;cursor:zoom-in;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.cd-side:hover,.cd-side:focus-visible,.pg:hover,.pg:focus-visible{transform:translateY(-4px)}
+.cd-side img{display:block;width:100%;aspect-ratio:1000/556;object-fit:cover;border-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.4),0 12px 26px rgba(0,0,0,.45)}
+.pgrid{display:grid;gap:clamp(18px,2.4vw,32px);padding:clamp(8px,2vw,24px) clamp(8px,3vw,40px)}
+.pgrid.stickers{grid-template-columns:repeat(2,minmax(0,1fr))}
+.pgrid.minis{grid-template-columns:repeat(2,minmax(0,300px));justify-content:center;gap:clamp(24px,5vw,72px)}
+.pg img{display:block;width:100%;height:auto;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.4),0 12px 26px rgba(0,0,0,.45)}
+@media(max-width:700px){.cards,.pgrid.stickers{grid-template-columns:minmax(0,1fr)}.pgrid.minis{gap:14px}}
 .pst{position:relative;display:block;aspect-ratio:900/1270;transform:none;cursor:zoom-in;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 .pst:hover,.pst:focus-visible{transform:scale(1.03)}
 .pst img{display:block;width:100%;height:100%;object-fit:cover;box-shadow:0 1px 2px rgba(0,0,0,.4),0 14px 30px rgba(0,0,0,.45)}
@@ -612,17 +625,18 @@ const MEDIA={
   poster:{ko:'포스터',en:'On the wall',desc:'매장 안에서 오래 머무는 시선을 붙잡는 매체.'},
   flyer:{ko:'전단지',en:'In hand',desc:'손에 쥐고 가까이서 읽는 인쇄 매체.'},
   insta:{ko:'인스타그램 이미지',en:'In the feed',desc:'엄지가 스크롤을 멈추게 해야 하는 매체.'},
-  blog:{ko:'네이버 블로그 썸네일',en:'In search',desc:'검색 결과 목록에서 옆 글과 비교되는 매체.'},
+  blog:{ko:'블로그 썸네일',en:'In search',desc:'검색 결과 목록에서 옆 글과 비교되는 매체.'},
   detail:{ko:'상세페이지',en:'Before buying',desc:'구매 직전, 끝까지 읽혀야 하는 매체.'},
   video:{ko:'광고영상',en:'On screen',desc:'짧은 시간 안에 제품을 기억시키는 영상 광고.'},
   padding:{ko:'신소재 패딩 광고',en:'Project 01',desc:'에어로젤 소재를 앞세운 겨울 패딩의 영상 · 상세페이지 · 이미지 작업.'},
   still:{ko:'남성 올인원 로션 광고',en:'Project 02',desc:'남성 올인원 스킨 로션의 영상 · 상세페이지 · 이미지 작업.'},
   fizz:{ko:'오렌지 음료 광고',en:'Project 03',desc:'직접 디자인한 캐릭터와 라벨로 만든 오렌지 음료의 영상 · 이미지 작업.'},
+  print:{ko:'기타 인쇄물',en:'Up close',desc:'명함 · 매장 스티커 · 미니배너처럼 가까이서 보는 소형 인쇄물.'},
   image:{ko:'광고 이미지',en:'Key visual',desc:'하나의 콘셉트를 여러 장의 광고 컷으로 확장한 작업.'}
 };
 const PARTS={
   archive:{ch:'CH 01',k:'CH 01 · Client Work',name:'실무 프로젝트',lead:'실제 현업에 적용된 실무 디자인 결과물입니다.',
-    order:['outdoor','banner','flyer','poster','insta','blog'],
+    order:['outdoor','banner','flyer','poster','insta','blog','print'],
     items:[
       {m:'outdoor',kind:'stand',title:'노모어피자 스탠드 배너',sub:'물통 X배너 4종 · 양면 윈드배너 4종',
         units:[['x','assets/outdoor/xbanner-01.jpg'],['x','assets/outdoor/xbanner-02.jpg'],['x','assets/outdoor/xbanner-03.jpg'],['x','assets/outdoor/xbanner-04.jpg'],
@@ -680,7 +694,19 @@ const PARTS={
         tool:'Illustrator, Photoshop',time:'건당 3시간',point:'가격과 혜택을 가장 크게, 메뉴 사진으로 시선을 모으고 시간대 · 메뉴별로 분위기를 다르게 연출'},
       {m:'poster',kind:'posters',title:'봉천동매운떡볶이 포스터',sub:'매장 포스터 4종',
         imgs:[1,2,3,4].map(n=>`assets/poster/bm-0${n}.jpg`),
-        tool:'Illustrator, Photoshop',time:'건당 3시간',point:'오픈 반값 · 학생 혜택 · 수능 이벤트처럼 대상에 맞춘 카피와 일러스트로, 매장 안에서 바로 혜택이 읽히게 구성'}
+        tool:'Illustrator, Photoshop',time:'건당 3시간',point:'오픈 반값 · 학생 혜택 · 수능 이벤트처럼 대상에 맞춘 카피와 일러스트로, 매장 안에서 바로 혜택이 읽히게 구성'},
+      {m:'print',kind:'cards',title:'명함',sub:'4종, 모두 앞뒷면 — 누르면 크게 보기',
+        cards:[{t:'키오 명함',f:'assets/etc/card-kio-1f.jpg',b:'assets/etc/card-kio-1b.jpg'},
+               {t:'키오컴퍼니 명함 · 박람회용',f:'assets/etc/card-kio-2f.jpg',b:'assets/etc/card-kio-2b.jpg'},
+               {t:'이우성 프로 명함',f:'assets/etc/card-lee-f.jpg',b:'assets/etc/card-lee-b.jpg'},
+               {t:'김규보 프로 명함',f:'assets/etc/card-kim-f.jpg',b:'assets/etc/card-kim-b.jpg'}],
+        tool:'Illustrator',point:'앞면은 로고와 브랜드 컬러(프로 명함은 인물 사진과 약력)로 첫인상을 만들고, 뒷면은 이름 · 연락처 · QR을 위계에 맞춰 정리'},
+      {m:'print',kind:'stickers',title:'제로웨이브 무인매장 냉장고 상단 스티커',sub:'냉장고 · 냉동고 상단 띠 스티커 8종',
+        imgs:[1,2,3,4,5,6,7,8].map(n=>`assets/etc/zw-sticker-${n}.jpg`),
+        tool:'Illustrator, Photoshop',point:'냉장고 칸마다 다른 상품군(제로음료 · 고단백 · 베이커리 등)을 굵은 카피와 캐릭터로 안내해, 멀리서도 칸의 성격이 바로 읽히게 구성'},
+      {m:'print',kind:'minis',title:'제로웨이브 미니배너',sub:'매장 안내 미니배너 2종',
+        imgs:['assets/etc/zw-mini-1.jpg','assets/etc/zw-mini-2.jpg'],
+        tool:'Illustrator, Photoshop',point:'적립 혜택과 결제 수단을 큰 숫자와 아이콘으로 정리해, 계산 전에 한눈에 확인할 수 있게 구성'}
     ]},
   ailab:{ch:'CH 02',k:'CH 02 · AI Lab',name:'AI 개인 프로젝트',lead:'AI 도구를 다룬 개인 작업입니다.<br>사용한 도구와 생성 과정의 핵심을 함께 기록했습니다.',
     order:['padding','still','fizz'],
@@ -725,6 +751,9 @@ function mock(it){
       if(it.kind==='xbanner')return `<div class="ob">${it.imgs.map((s,i)=>`<button class="unit xb" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><i class="rod"></i><img src="${s}" alt="${it.title} ${i+1}" loading="lazy"><i class="rod"></i><i class="pole"></i><i class="tank"></i></button>`).join('')}<span class="ob-hint mono">클릭하면 크게 보기</span></div>`;
       if(it.kind==='wind')return `<div class="ob">${it.imgs.map((s,i)=>`<button class="unit wb" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><img class="flag" src="${s}" alt="${it.title} ${i+1}" loading="lazy"><i class="pole"></i><i class="base"></i></button>`).join('')}<span class="ob-hint mono">클릭하면 크게 보기</span></div>`;
       return `<div class="mk street"><div class="bd a"></div><div class="bd b"></div><div class="pole"></div><div class="bb">${tile(it.h,'auto')}</div></div>`;
+    case 'print':
+      if(it.kind==='cards')return `<div class="cards">${it.cards.map(c=>`<figure class="cd"><div class="cd-pair">${[c.f,c.b].map((s,i)=>`<button class="cd-side" data-full="${s}" aria-label="${c.t} ${i?'뒷면':'앞면'} 크게 보기"><img src="${s}" alt="" loading="lazy"></button>`).join('')}</div><figcaption class="mono">${c.t}</figcaption></figure>`).join('')}</div>`;
+      return `<div class="pgrid ${it.kind}">${it.imgs.map((s,i)=>`<button class="pg" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><img src="${s}" alt="" loading="lazy"></button>`).join('')}</div>`;
     case 'poster':
       return `<div class="posters">${it.imgs.map((s,i)=>`<button class="pst" style="--tilt:${[-1.2,.8,-.5,1.1][i%4]}deg" data-full="${s}" aria-label="${it.title} ${i+1} 크게 보기"><img src="${s}" alt="" loading="lazy"></button>`).join('')}</div>`;
     case 'banner':
@@ -785,7 +814,7 @@ function renderPart(key){
         <div class="m-head"><div><div class="k mono">${MEDIA[m].en}</div><h3>${MEDIA[m].ko}</h3></div><p>${MEDIA[m].desc}</p><span class="m-no mono">${String(mi+1).padStart(2,'0')} / ${String(P.order.length).padStart(2,'0')}</span></div>
         <p class="m-desc-m">${MEDIA[m].desc}</p>
         <div class="works ${list.length===1||list.some(i=>i.kind&&i.kind!=='adetail')?'one':''}">${list.map(it=>`
-          <article class="work ${['hang','flyers','posters','site','popup','feed','thumbs'].includes(it.kind)||it.units||(it.kind==='avideo'&&it.ratio!=='9/16')?'wide':''}"><div class="stage2">${mock(it)}</div><h4>${it.title}</h4>${it.sub?`<p class="sub">${it.sub}</p>`:''}
+          <article class="work ${['hang','flyers','posters','site','popup','feed','thumbs','cards','stickers','minis'].includes(it.kind)||it.units||(it.kind==='avideo'&&it.ratio!=='9/16')?'wide':''}"><div class="stage2">${mock(it)}</div><h4>${it.title}</h4>${it.sub?`<p class="sub">${it.sub}</p>`:''}
             <dl class="spec">${it.tool?`<dt class="mono">Tool</dt><dd>${it.tool}</dd>`:''}
             ${it.time?`<dt class="mono">Time</dt><dd>${it.time}</dd>`:''}
             <dt class="mono">Point</dt><dd>${it.point}</dd></dl></article>`).join('')}</div>
