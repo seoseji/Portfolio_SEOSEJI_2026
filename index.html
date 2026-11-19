@@ -327,6 +327,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .anotch i{width:68px;height:6px;border-radius:9px;background:#111}
 .ascroll{height:min(780px,86vh);overflow-y:auto;overflow-x:hidden;background:#fff;overscroll-behavior:contain;scrollbar-width:thin}
 .ascroll img{display:block;width:100%;height:auto}
+.dimg{position:relative}
+.ascroll .dimg .dgif{position:absolute;height:auto;object-fit:cover;border-radius:3.67%/4.92%}
 .ascroll iframe{display:block;width:100%;height:100%;border:0;background:#fff}
 .agal{--H:clamp(140px,18vw,250px);width:100%;display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(14px,2vw,24px);align-items:flex-end;padding:clamp(20px,3.4vw,44px)}
 .agal figure{margin:0;min-width:0;max-width:100%;flex:none;display:flex;flex-direction:column;gap:10px}
@@ -692,8 +694,8 @@ const PARTS={
         tool:'Higgsfield, Firefly, Photoshop',point:'앞·뒤 레퍼런스 컷과 정면·측면·후면 모델 시트로 소재감과 실루엣을 기록해 이후 장면의 기준으로 사용'},
       {m:'still',kind:'avideo',title:'광고영상',sub:'가로형 영상 · 11초',src:'assets/ai/video/still.mp4',poster:'assets/ai/video/still.jpg',ratio:'16/9',
         tool:'Higgsfield, Suno, Photoshop, Premiere Pro',point:'장면별 이미지를 기준으로 영상을 만든 뒤 영상 툴로 편집'},
-      {m:'still',kind:'adetail',title:'상세페이지',sub:'실제 웹페이지 그대로 — 폰 화면을 위아래로 넘겨 보세요',page:'assets/ai/still-detail/index.html',
-        tool:'Higgsfield, Firefly, Suno, Photoshop, Figma',point:'제품 사진과 흡수 장면 GIF로 사용감을 보여 주고, 화면 폭에 맞춰 레이아웃이 바뀌는 반응형 웹페이지로 구성'},
+      {m:'still',kind:'adetail',title:'상세페이지',sub:'제품 소개부터 성분 · 루틴까지 한 장으로 이어지는 구성 — 폰 화면을 위아래로 넘겨 보세요',img:'assets/ai/img/still-detail.jpg',gif:{src:'assets/ai/still-detail/assets/absorb.gif?v=2',x:130,y:3622,w:600,h:447,W:860,H:14748},
+        tool:'Higgsfield, Firefly, Suno, Photoshop, Figma',point:'제품 사진과 흡수 장면 GIF로 사용감을 보여 주고, 성분 · 루틴 · 제품 정보까지 한 장으로 이어지게 구성'},
       {m:'still',kind:'agal',title:'광고 이미지',sub:'레퍼런스 컷 · 장면 컷 3종',
         imgs:[['assets/ai/img/still-ref.jpg','레퍼런스 컷',1000/1334],['assets/ai/img/still-scene-1.jpg','장면 컷 1',1400/782],['assets/ai/img/still-scene-2.jpg','장면 컷 2',1400/782],['assets/ai/img/still-scene-3.jpg','장면 컷 3',1400/782]],
         tool:'Higgsfield, Firefly, Suno, Photoshop',point:'제품 레퍼런스 컷과 모델 시트를 활용하여 다양한 광고컷을 생성'},
@@ -759,7 +761,7 @@ function mock(it){
       </div></div>`;
       return `<div class="mk serp" style="max-width:520px"><div class="q">검색 키워드</div><div class="res"><div class="tx"><b>블로그 포스팅 제목</b><span></span><span style="width:70%"></span></div>${tile(it.h,'1/1')}</div><div class="res dim"><div class="tx"><b>다른 블로그 글</b><span></span><span style="width:60%"></span></div><div class="t"></div></div></div>`;
     case 'detail':
-      if(it.kind==='adetail')return `<div class="aphone"><div class="anotch"><i></i></div><div class="ascroll">${it.img?`<img src="${it.img}" alt="${it.title}" loading="lazy">`:`<iframe src="${it.page}" title="${it.title}" loading="lazy"></iframe>`}</div></div>`;
+      if(it.kind==='adetail')return `<div class="aphone"><div class="anotch"><i></i></div><div class="ascroll">${it.img?`<div class="dimg"><img src="${it.img}" alt="${it.title}" loading="lazy">${it.gif?`<img class="dgif" src="${it.gif.src}" alt="" loading="lazy" style="left:${it.gif.x/it.gif.W*100}%;top:${it.gif.y/it.gif.H*100}%;width:${it.gif.w/it.gif.W*100}%;height:${it.gif.h/it.gif.H*100}%">`:``}</div>`:`<iframe src="${it.page}" title="${it.title}" loading="lazy"></iframe>`}</div></div>`;
       return `<div class="phone"><div class="notch"><i></i></div><div class="scroll">${tile(it.h,'auto','작업물 · 자동 스크롤')}</div></div>`;
     case 'video':
       if(it.kind==='avideo'){const v=it.ratio==='9/16';
