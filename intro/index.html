@@ -62,11 +62,11 @@ nav a:focus-visible,.brand:focus-visible{outline:2px solid var(--cursor);outline
 .center{position:absolute;z-index:2;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));top:50%;
   transform:translateY(-58%);transition:transform 1.1s cubic-bezier(.2,.8,.15,1)}
 .center.up{transform:translateY(calc(-58% - clamp(36px,7vh,80px)))}
-.enter{position:absolute;left:0;right:0;top:calc(100% + clamp(24px,4.5vh,52px));display:flex;justify-content:center;flex-wrap:wrap;gap:clamp(14px,3vw,40px);
+.enter{position:absolute;left:0;right:0;top:calc(100% + clamp(36px,7vh,76px));display:flex;justify-content:center;flex-wrap:wrap;gap:clamp(14px,3vw,40px);
   opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s;pointer-events:none}
 .enter.show{opacity:1;transform:none;pointer-events:auto}
 .enter-btn{display:inline-block;background:var(--fg);color:var(--bg);font-family:var(--body);font-weight:500;font-size:clamp(14px,1.1vw,17px);letter-spacing:.02em;
-  padding:17px clamp(22px,2.4vw,34px);text-decoration:none;border-radius:0;transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+  padding:13px clamp(18px,1.8vw,26px);text-decoration:none;border-radius:0;transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
 .enter-btn:hover{transform:translateY(-5px);box-shadow:0 12px 24px rgba(30,33,45,.2)}
 .enter-btn:active{transform:translateY(-2px)}
 .enter-btn:focus-visible{outline:2px solid var(--cursor);outline-offset:4px}
@@ -137,7 +137,6 @@ nav a:focus-visible,.brand:focus-visible{outline:2px solid var(--cursor);outline
     <a class="enter-btn" href="https://seoseji.github.io/Portfolio_SEOSEJI_2026/#ailab"><span class="tw"><span class="ghost">AI 개인 프로젝트</span><span class="typed" data-text="AI 개인 프로젝트"></span></span></a>
   </div>
   </div>
-  <div class="cue">[ SCROLL &amp; EXPLORE <b>↓</b> ]</div>
 </main>
 
 <div class="cur" id="cur"></div><div class="ring" id="ring"></div>
