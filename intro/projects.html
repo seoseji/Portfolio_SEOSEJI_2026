@@ -46,14 +46,19 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .lead{margin:0 0 .5em;font-size:15px;line-height:1.6;color:rgba(30,33,45,.8);text-wrap:pretty}
 
 /* 목차 */
-.index{border-top:1px solid var(--fg);display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
-.index a{display:flex;gap:10px;align-items:baseline;padding:14px 12px 14px 0;text-decoration:none;border-bottom:1px solid var(--line);font-size:15px;font-weight:500;transition:padding .25s}
+.index{position:sticky;top:calc(var(--tbH,54px) + env(safe-area-inset-top,0px));z-index:15;background:var(--bg);border-top:1px solid var(--fg);border-bottom:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-inline:calc(-1 * var(--gx)) calc(-1 * var(--gxr));padding-inline:var(--gx) var(--gxr)}
+.index a{display:flex;gap:10px;align-items:baseline;padding:14px 12px 14px 0;text-decoration:none;font-size:15px;font-weight:500;color:var(--muted);transition:padding .25s,color .25s}
+.index a.on,.index a:hover{color:var(--fg)}
+.index a.on span{color:var(--cursor)}
 .index a span{font-family:var(--display);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;font-weight:400}
 .index a:hover{padding-left:6px}
 
 /* 매체 구간 */
-.medium{display:grid;grid-template-columns:minmax(0,26%) minmax(0,1fr);gap:28px clamp(24px,4vw,64px);padding-block:clamp(56px,9vh,96px) 8px;border-bottom:1px solid var(--line);scroll-margin-top:60px}
-.m-label{align-self:start;position:sticky;top:calc(76px + env(safe-area-inset-top,0px))}
+.medium{display:grid;grid-template-columns:minmax(0,26%) minmax(0,1fr);gap:28px clamp(24px,4vw,64px);padding-block:clamp(56px,9vh,96px) 8px;border-bottom:1px solid var(--line);scroll-margin-top:calc(var(--tbH,54px) + var(--ixH,50px))}
+.m-label{align-self:start;position:sticky;top:calc(var(--tbH,54px) + var(--ixH,50px) + 24px + env(safe-area-inset-top,0px))}
+.work.center .g,.work.center .vid,.work.center .long{margin-inline:auto}
+.work.center .long-hint{text-align:center}
 .m-no{font-family:var(--display);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.04em}
 .m-en{font-family:var(--display);font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:18px}
 .m-label h2{font-size:clamp(26px,2.4vw,36px);font-weight:700;letter-spacing:-.03em;line-height:1.2;margin:2px 0 12px}
@@ -89,7 +94,7 @@ figure{margin:0;min-width:0}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .row{display:flex;gap:clamp(8px,1vw,14px);align-items:flex-start}
 .row figure{flex:var(--r) 1 0}
-.minis{grid-template-columns:repeat(2,minmax(0,280px))}
+.minis{grid-template-columns:repeat(2,minmax(0,280px));justify-content:center}
 .vid{background:#000}
 .vid video{width:100%;height:auto}
 .vid.vert{max-width:380px}
@@ -127,6 +132,9 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--cursor);outline-off
   .hero{grid-template-columns:1fr}
   .medium{grid-template-columns:1fr}
   .m-label{position:static}
+  .index{display:flex;overflow-x:auto;scrollbar-width:none;gap:22px}
+  .index::-webkit-scrollbar{display:none}
+  .index a{flex:0 0 auto;padding:12px 0;font-size:14px;white-space:nowrap}
   .g.c6{grid-template-columns:repeat(3,minmax(0,1fr))}
   .g.c8{grid-template-columns:repeat(4,minmax(0,1fr))}
   .spec{grid-template-columns:1fr 1fr}
@@ -196,12 +204,12 @@ const PARTS={
         flyers:[
           {t:'노모어피자 건대점 · 위생등급 매우우수',f:'assets/flyer/flyer-1f.jpg',b:'assets/flyer/flyer-1b.jpg',r:.709,tilt:-1.2},
           {t:'노모어피자 건대점 · 홀 완비',f:'assets/flyer/flyer-2f.jpg',b:'assets/flyer/flyer-2b.jpg',r:.709,tilt:.9},
-          {t:'봉천동매운떡볶이 건대점 · 오픈 반값',f:'assets/flyer/flyer-6f.jpg',b:'assets/flyer/flyer-6b.jpg',r:.709,tilt:-.6},
           {t:'노모어피자 건대점 · 런치 이벤트',f:'assets/flyer/flyer-3f.jpg',b:'assets/flyer/flyer-3b.jpg',r:1.41,tilt:.5,cls:'wide'},
           {t:'노모어피자 건대점 · 메뉴 전단지',f:'assets/flyer/flyer-4f.jpg',b:'assets/flyer/flyer-4b.jpg',r:1.41,tilt:-.4,cls:'wide'},
           {t:'봉천동매운떡볶이 역삼점 · 오픈 이벤트',f:'assets/flyer/flyer-7f.jpg',b:'assets/flyer/flyer-7b.jpg',r:.709,tilt:.8},
           {t:'봉천동매운떡볶이 봉천본점 · 베스트 메뉴',f:'assets/flyer/flyer-8f.jpg',b:'assets/flyer/flyer-8b.jpg',r:.709,tilt:-1},
-          {t:'봉천동매운떡볶이 봉천본점 · 토핑 쿠폰',f:'assets/flyer/flyer-9f.jpg',b:'assets/flyer/flyer-9b.jpg',r:.709,tilt:.6}],
+          {t:'봉천동매운떡볶이 봉천본점 · 토핑 쿠폰',f:'assets/flyer/flyer-9f.jpg',b:'assets/flyer/flyer-9b.jpg',r:.709,tilt:.6},
+          {t:'봉천동매운떡볶이 건대점 · 오픈 반값',f:'assets/flyer/flyer-6f.jpg',b:'assets/flyer/flyer-6b.jpg',r:.709,tilt:-.6}],
         tool:'Illustrator, Photoshop',time:'건당 1일',point:'앞면은 가게를 찾아오게 하는 한 가지 메시지(위생등급·홀 완비·오픈·반값)에 집중하고, 뒷면은 메뉴와 가격을 한눈에 비교하도록 정리'},
       {m:'insta',kind:'feed',title:'키오컴퍼니 인스타그램',sub:'피드 · 릴스 썸네일 18종',acct:'kio_company',ini:'K',av:'#1f4fd8',
         imgs:[...Array.from({length:17},(_,i)=>`assets/insta/kio-${String(i+2).padStart(2,'0')}.jpg`),'assets/insta/kio-01.jpg'],reels:[4,5,6],
@@ -281,6 +289,7 @@ function gallery(it){
     case 'stand':{const c=it.units.length>=8?'c8':'c4';
       return `<div class="g ${c}">${it.units.map(([,s],i)=>Z(s,n(i))).join('')}</div>`}
     case 'hang':
+      if(it.layout==='mix')return `<div class="row">${it.hangs.map(h=>`<figure style="--r:${h.r}">${Z(h.s,h.label)}<figcaption class="cap">${h.label}</figcaption></figure>`).join('')}</div>`;
       return `<div class="g c2 end">${it.hangs.map(h=>`<figure class="${h.r>3?'full':''}">${Z(h.s,h.label)}<figcaption class="cap">${h.label}</figcaption></figure>`).join('')}</div>`;
     case 'site':return `<div class="g c2">${it.slides.map((s,i)=>Z(s,`롤링배너 ${i+1}`)).join('')}</div>`;
     case 'popup':return `<div class="g c3">${it.slides.map((s,i)=>Z(s,`팝업배너 ${i+1}`)).join('')}</div>`;
@@ -317,7 +326,7 @@ function render(){
   <section class="medium" id="${id}-${m}">
     <div class="m-label"><div class="m-no">${String(mi+1).padStart(2,'0')} / ${tot}</div><div class="m-en">${MEDIA[m].en}</div><h2>${MEDIA[m].ko}</h2><p>${MEDIA[m].desc}</p></div>
     <div class="works">${P.items.filter(i=>i.m===m).map(it=>`
-      <article class="work">
+      <article class="work ${it.kind==='minis'||it.kind==='adetail'||(it.kind==='avideo'&&it.ratio==='9/16')?'center':''}">
         <div class="w-head"><h3>${it.title}</h3>${it.sub?`<p>${subOf(it)}</p>`:''}</div>
         ${gallery(it)}
         <dl class="spec">
@@ -340,6 +349,18 @@ render();
 /* 상단 바 선 */
 const tb=document.getElementById('topbar');
 addEventListener('scroll',()=>tb.classList.toggle('scrolled',scrollY>8),{passive:true});
+/* 상단 바 · 목차 높이 → 목차가 상단 바 바로 밑에 붙음 */
+const setH=()=>{const r=document.documentElement.style,ix=document.querySelector('.index');r.setProperty('--tbH',tb.offsetHeight+'px');if(ix)r.setProperty('--ixH',ix.offsetHeight+'px')};
+addEventListener('resize',setH);setH();
+/* 지금 보고 있는 매체를 목차에 표시 */
+let io=null;
+function watch(){
+  io&&io.disconnect();setH();
+  const links=[...document.querySelectorAll('.index a')];
+  io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('on',a.dataset.to===e.target.id))})},{rootMargin:'-45% 0px -50% 0px'});
+  document.querySelectorAll('.medium').forEach(s=>io.observe(s));
+}
+watch();addEventListener('hashchange',()=>setTimeout(watch,0));
 
 /* 크게 보기 */
 const lb=document.getElementById('lb'),lbImg=lb.querySelector('img');let lbFrom=null;
