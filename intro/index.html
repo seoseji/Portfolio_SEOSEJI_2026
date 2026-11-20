@@ -132,7 +132,9 @@ nav a:focus-visible,.brand:focus-visible{outline:2px solid var(--cursor);outline
 .pf-sheet.open{transform:none;visibility:visible}
 .pf-in{padding-left:max(16px,env(safe-area-inset-left,0px),2.6vw);padding-right:max(16px,env(safe-area-inset-right,0px),2.6vw);padding-block:0 clamp(48px,8vh,96px);min-height:100%}
 .pf-bar{position:sticky;top:0;z-index:2;background:rgba(251,251,251,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;justify-content:space-between;align-items:center;padding-block:calc(18px + env(safe-area-inset-top,0px)) 18px}
-.pf-home{font-family:var(--display);font-weight:500;font-size:14px;letter-spacing:.16em}
+.pf-home{border:0;background:none;padding:4px 0;color:var(--fg);cursor:pointer;font-family:var(--display);font-weight:500;font-size:14px;letter-spacing:.16em;transition:opacity .2s}
+.pf-home:hover{opacity:.6}
+.pf-home:focus-visible{outline:none;box-shadow:0 2px 0 var(--fg)}
 .pf-close{border:1px solid var(--fg);border-radius:999px;background:var(--fg);color:var(--bg);font-family:var(--display);font-weight:500;font-size:13px;letter-spacing:.14em;
   padding:9px 16px;cursor:pointer;transition:background .25s,color .25s}
 .pf-close:hover{background:transparent;color:var(--fg)}
@@ -152,7 +154,7 @@ nav a:focus-visible,.brand:focus-visible{outline:2px solid var(--cursor);outline
 .pf-rise{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .8s cubic-bezier(.2,.8,.15,1)}
 .pf-sheet.open .pf-rise{opacity:1;transform:none;transition-delay:calc(.55s + var(--i,0) * 90ms)}
 .pf-sheet.open .pf-tool:hover{transform:translateY(-4px);transition-delay:0s}
-@media (hover:hover) and (pointer:fine){.pf-btn,.pf-close{cursor:none}}
+@media (hover:hover) and (pointer:fine){.pf-btn,.pf-close,.pf-home{cursor:none}}
 @media (max-width:820px){.pf-row{grid-template-columns:1fr}.pf-tools{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media (max-width:420px){.pf-tools{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (prefers-reduced-motion:reduce){.pf-sheet{transition:none}.pf-rise{transition:none!important;opacity:1;transform:none}}
@@ -181,7 +183,7 @@ nav a:focus-visible,.brand:focus-visible{outline:2px solid var(--cursor);outline
 <button class="pf-btn" id="pfBtn" type="button" aria-haspopup="dialog" aria-controls="pfSheet"><i></i>Profile</button>
 <section class="pf-sheet" id="pfSheet" role="dialog" aria-modal="true" aria-label="프로필">
   <div class="pf-in">
-    <div class="pf-bar"><span class="pf-home">SEO-SEJI</span><button class="pf-close" id="pfClose" type="button">Close ✕</button></div>
+    <div class="pf-bar"><button class="pf-home" id="pfHome" type="button" aria-label="첫 화면으로">SEO-SEJI</button><button class="pf-close" id="pfClose" type="button">Close ✕</button></div>
     <div class="pf-head"><h2 class="pf-rise" style="--i:0">Profile</h2></div>
     <div class="pf-row">
       <div class="pf-label pf-rise" style="--i:1"><div class="en">Who I Am</div><h3>소개</h3></div>
@@ -347,6 +349,7 @@ nav a:focus-visible,.brand:focus-visible{outline:2px solid var(--cursor);outline
   const ring=document.getElementById('ring');
   btn.addEventListener('click',()=>{sheet.classList.add('open');sheet.scrollTop=0});
   close.addEventListener('click',()=>sheet.classList.remove('open'));
+  document.getElementById('pfHome').addEventListener('click',()=>sheet.classList.remove('open'));
   addEventListener('keydown',e=>{if(e.key==='Escape'&&sheet.classList.contains('open'))sheet.classList.remove('open')});
   [btn,close].forEach(b=>{b.addEventListener('pointerenter',()=>ring&&ring.classList.add('big'));b.addEventListener('pointerleave',()=>ring&&ring.classList.remove('big'))});
 })();
