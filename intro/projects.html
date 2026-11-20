@@ -357,7 +357,7 @@ function render(){
   document.getElementById('page').innerHTML=`
   <section class="hero">
     <div><h1 class="title">${pg.title}</h1></div>
-    <p class="lead">${P.lead.replace(/<br>/g,' ')}</p>
+    <p class="lead">${P.lead}</p>
   </section>
   <nav class="index" aria-label="매체 목차">${P.order.map((m,i)=>`<a href="#${id}-${m}" data-to="${id}-${m}"><span>${String(i+1).padStart(2,'0')}</span>${MEDIA[m].ko}</a>`).join('')}</nav>
   ${P.order.map((m,mi)=>`
