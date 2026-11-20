@@ -81,6 +81,15 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .spec div{min-width:0}
 .spec dt{font-family:var(--display);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .spec dd{margin:0;font-size:14.5px;line-height:1.6}
+/* TOOL 공식 로고 아이콘: 마우스를 올리면(휴대폰은 누르면) 이름 */
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding-top:2px}
+.tic{width:28px;height:28px;display:grid;place-items:center;position:relative;flex:none;cursor:default}
+.tic img{width:100%;height:100%;object-fit:contain;display:block;transition:transform .2s}
+.tic:hover img{transform:translateY(-2px)}
+.tic::after{content:attr(data-name);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translate(-50%,4px);white-space:nowrap;background:var(--fg);color:var(--bg);
+  font-family:var(--body);font-weight:500;font-size:12px;line-height:1.5;padding:3px 8px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:5}
+.tic:hover::after,.tic:focus-visible::after,.tic.show::after{opacity:1;transform:translate(-50%,0)}
+.tic:focus-visible{outline:2px solid var(--cursor);outline-offset:3px}
 
 /* 갤러리 */
 .g{display:grid;gap:clamp(8px,1vw,14px)}
@@ -302,6 +311,12 @@ const SHORT={
   fizz:'직접 그린 캐릭터로 라벨과 영상까지 만든<br>오렌지 음료 광고.'
 };
 const u=s=>BASE+s;
+/* TOOL 이름 → 공식 로고 파일 (이 페이지 옆 icons 폴더) */
+const TOOL_ICON={'Photoshop':'photoshop.svg','Illustrator':'illustrator.svg','Premiere Pro':'premiere.svg','Figma':'figma.svg',
+  'Firefly':'firefly.svg','Higgsfield':'higgsfield.png','Suno':'suno.svg'};
+const toolIcons=t=>t?`<div class="tools">${t.split(',').map(s=>s.trim()).map(n=>TOOL_ICON[n]
+  ?`<span class="tic" tabindex="0" role="img" aria-label="${n}" data-name="${n}"><img src="icons/${TOOL_ICON[n]}" alt=""></span>`
+  :`<span>${n}</span>`).join('')}</div>`:'-';
 const esc=s=>String(s).replace(/"/g,'&quot;');
 const Z=(s,label,cls='')=>`<button class="zoom ${cls}" data-full="${u(s)}" aria-label="${esc(label)} 크게 보기"><img src="${u(s)}" alt="" loading="lazy"></button>`;
 const fig=(s,label,cap)=>`<figure>${Z(s,label)}${cap?`<figcaption class="cap">${cap}</figcaption>`:''}</figure>`;
@@ -353,7 +368,7 @@ function render(){
         <div class="w-head"><h3>${it.title}</h3>${it.sub&&it.kind!=='adetail'?`<p>${subOf(it)}</p>`:''}</div>
         ${gallery(it)}
         <dl class="spec${it.time?'':' no-time'}">
-          <div><dt>Tool</dt><dd>${it.tool||'-'}</dd></div>
+          <div><dt>Tool</dt><dd>${toolIcons(it.tool)}</dd></div>
           ${it.time?`<div><dt>Time</dt><dd>${it.time}</dd></div>`:''}
           <div class="pt"><dt>Point</dt><dd>${it.point}</dd></div>
         </dl>
@@ -417,6 +432,10 @@ addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden)closeLb()});
 /* 상세페이지 상자: 누르면 크게 */
 document.addEventListener('click',e=>{const l=e.target.closest('.long .inner>img:not(.gif)');if(l){lbFrom=l.closest('.long');lbImg.src=l.src;lb.hidden=false}});
 
+/* 휴대폰: 로고를 누르면 이름이 뜨고, 다른 곳을 누르면 사라짐 */
+document.addEventListener('click',e=>{const t=e.target.closest('.tic');
+  document.querySelectorAll('.tic.show').forEach(x=>{if(x!==t)x.classList.remove('show')});
+  if(t)t.classList.toggle('show')});
 /* 커서 */
 const cur=document.getElementById('cur'),ring=document.getElementById('ring');
 let cx=-100,cy=-100,rx=-100,ry=-100;
