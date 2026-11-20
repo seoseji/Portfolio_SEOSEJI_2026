@@ -75,12 +75,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .work{padding-bottom:clamp(48px,7vh,80px)}
 .work+.work{padding-top:clamp(40px,6vh,64px);border-top:1px solid var(--line)}
 .w-head{display:flex;align-items:center;gap:18px;margin-bottom:20px}
-.w-head h3{margin:0;font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.35;flex:none;max-width:80%}
-/* 제목 옆 점선: 인트로 배경의 점 무늬를 이어 받은 장식, 끝에 주황 점 */
-.w-head .leader{flex:1;min-width:24px;height:4px;position:relative;
-  background:radial-gradient(circle,rgba(30,33,45,.32) 1.1px,transparent 1.5px) left center/9px 4px repeat-x;margin-right:12px}
-.w-head .leader::after{content:"";position:absolute;right:-12px;top:50%;width:6px;height:6px;margin-top:-3px;background:var(--cursor);border-radius:50%}
-.spec{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.7fr) minmax(0,2.4fr);gap:16px 28px;margin:26px 0 0;padding-top:18px;border-top:1px solid var(--line)}
+.w-head h3{margin:0;font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.35;flex:none;max-width:80%}.spec{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.7fr) minmax(0,2.4fr);gap:16px 28px;margin:26px 0 0;padding-top:18px;border-top:1px solid var(--line)}
 .spec div{min-width:0}
 .spec dt{font-family:var(--display);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .spec dd{margin:0;font-size:14.5px;line-height:1.6}
@@ -275,24 +270,24 @@ const PARTS={
     order:['padding','still','fizz'],
     items:[
       {m:'padding',kind:'avideo',title:'광고영상',sub:'가로형 영상 · 13초',src:'assets/ai/video/padding.mp4',poster:'assets/ai/video/padding.jpg',ratio:'16/9',time:'1시간',
-        tool:'Higgsfield, Photoshop, Premiere Pro',point:'레퍼런스 컷과 모델 시트로 패딩의 형태와 색, 인물을 먼저 정해 두고 장면을 만들어, 컷이 바뀌어도 제품이 같은 모습으로 보이게 구성'},
+        tool:'Higgsfield, Photoshop, Premiere Pro, Claude',point:'레퍼런스 컷과 모델 시트로 패딩의 형태와 색, 인물을 먼저 정해 두고 장면을 만들어, 컷이 바뀌어도 제품이 같은 모습으로 보이게 구성'},
       {m:'padding',kind:'adetail',title:'상세페이지',sub:'기술 설명부터 제품 정보까지 한 장으로 이어지는 구성 — 폰 화면을 위아래로 넘겨 보세요',img:'assets/ai/img/padding-detail.jpg',
-        tool:'Higgsfield, Firefly, Photoshop, Figma',point:'에어로젤 기술을 첫 화면에서 한 문장으로 전달하고, 기술 설명 → 착용 장면 → 디테일 → 제품 정보 순서로 스크롤 흐름을 구성'},
+        tool:'Higgsfield, Firefly, Photoshop, Figma, Claude',point:'에어로젤 기술을 첫 화면에서 한 문장으로 전달하고, 기술 설명 → 착용 장면 → 디테일 → 제품 정보 순서로 스크롤 흐름을 구성'},
       {m:'padding',kind:'agal',title:'광고 이미지',sub:'레퍼런스 컷 · 모델 시트',
         imgs:[['assets/ai/img/padding-ref.jpg','레퍼런스 컷',690/640],['assets/ai/img/padding-sheet-1.jpg','모델 시트-1',2576/1449],['assets/ai/img/padding-sheet.jpg','모델 시트-2',1800/1012]],
-        tool:'Higgsfield, Firefly, Photoshop',point:'앞·뒤 레퍼런스 컷과 정면·측면·후면 모델 시트로 소재감과 실루엣을 기록해 이후 장면의 기준으로 사용'},
+        tool:'Higgsfield, Firefly, Photoshop, Claude',point:'앞·뒤 레퍼런스 컷과 정면·측면·후면 모델 시트로 소재감과 실루엣을 기록해 이후 장면의 기준으로 사용'},
       {m:'still',kind:'avideo',title:'광고영상',sub:'가로형 영상 · 11초',src:'assets/ai/video/still.mp4',poster:'assets/ai/video/still.jpg',ratio:'16/9',time:'1시간',
-        tool:'Higgsfield, Suno, Photoshop, Premiere Pro',point:'장면별 이미지를 기준으로 영상을 만든 뒤 영상 툴로 편집'},
+        tool:'Higgsfield, Suno, Photoshop, Premiere Pro, Claude',point:'장면별 이미지를 기준으로 영상을 만든 뒤 영상 툴로 편집'},
       {m:'still',kind:'adetail',title:'상세페이지',sub:'제품 소개부터 성분 · 루틴까지 한 장으로 이어지는 구성 — 폰 화면을 위아래로 넘겨 보세요',img:'assets/ai/img/still-detail.jpg?v=3',gif:{src:'assets/ai/still-detail/assets/absorb.gif?v=2',x:130,y:3609,w:600,h:447,W:860,H:14735},
-        tool:'Higgsfield, Firefly, Suno, Photoshop, Figma',point:'제품 사진과 흡수 장면 GIF로 사용감을 보여 주고, 성분 · 루틴 · 제품 정보까지 한 장으로 이어지게 구성'},
+        tool:'Higgsfield, Firefly, Suno, Photoshop, Figma, Claude',point:'제품 사진과 흡수 장면 GIF로 사용감을 보여 주고, 성분 · 루틴 · 제품 정보까지 한 장으로 이어지게 구성'},
       {m:'still',kind:'agal',title:'광고 이미지',sub:'레퍼런스 컷 · 장면 컷 3종',
         imgs:[['assets/ai/img/still-ref.jpg','레퍼런스 컷',1000/1334],['assets/ai/img/still-scene-1.jpg','장면 컷 1',1400/782],['assets/ai/img/still-scene-2.jpg','장면 컷 2',1400/782],['assets/ai/img/still-scene-3.jpg','장면 컷 3',1400/782]],
-        tool:'Higgsfield, Firefly, Suno, Photoshop',point:'제품 레퍼런스 컷과 모델 시트를 활용하여 다양한 광고컷을 생성'},
+        tool:'Higgsfield, Firefly, Suno, Photoshop, Claude',point:'제품 레퍼런스 컷과 모델 시트를 활용하여 다양한 광고컷을 생성'},
       {m:'fizz',kind:'avideo',title:'광고영상',sub:'세로형 영상 · 10초',src:'assets/ai/video/fizzcat.mp4',poster:'assets/ai/video/fizzcat.jpg',ratio:'9/16',time:'1시간',
-        tool:'Higgsfield, Suno, Photoshop, Premiere Pro',point:'캐릭터와 라벨을 직접 디자인한 뒤 영상으로 확장해, 라벨 속 캐릭터가 광고 안에서도 같은 모습으로 움직이게 구성'},
+        tool:'Higgsfield, Suno, Photoshop, Premiere Pro, Claude',point:'캐릭터와 라벨을 직접 디자인한 뒤 영상으로 확장해, 라벨 속 캐릭터가 광고 안에서도 같은 모습으로 움직이게 구성'},
       {m:'fizz',kind:'agal',title:'광고 이미지',sub:'캐릭터 디자인 · 라벨 디자인 · 연출 컷',
         imgs:[['assets/ai/img/fizz-character.jpg','캐릭터 디자인',1200/1152],['assets/ai/img/fizz-label.jpg','라벨 디자인',1400/1052],['assets/ai/img/fizz-scene.jpg','연출 컷',1]],
-        tool:'Higgsfield, Firefly, Suno, Photoshop',point:'캐릭터 → 라벨 → 병 연출 컷 순서로 이어, 직접 만든 캐릭터가 라벨에서 실물 연출까지 같은 모습으로 나오게 구성'}
+        tool:'Higgsfield, Firefly, Suno, Photoshop, Claude',point:'캐릭터 → 라벨 → 병 연출 컷 순서로 이어, 직접 만든 캐릭터가 라벨에서 실물 연출까지 같은 모습으로 나오게 구성'}
     ]}
 };
 /* ---------- 화면 ---------- */
@@ -316,7 +311,7 @@ const SHORT={
 const u=s=>BASE+s;
 /* TOOL 이름 → 공식 로고 파일 (이 페이지 옆 icons 폴더) */
 const TOOL_ICON={'Photoshop':'photoshop.svg','Illustrator':'illustrator.svg','Premiere Pro':'premiere.svg','Figma':'figma.svg',
-  'Firefly':'firefly.svg','Higgsfield':'higgsfield.png','Suno':'suno.svg'};
+  'Firefly':'firefly.svg','Higgsfield':'higgsfield.png','Suno':'suno.svg','Claude':'claude.svg'};
 const toolIcons=t=>t?`<div class="tools">${t.split(',').map(s=>s.trim()).map(n=>TOOL_ICON[n]
   ?`<span class="tic" tabindex="0" role="img" aria-label="${n}" data-name="${n}"><img src="icons/${TOOL_ICON[n]}" alt=""></span>`
   :`<span>${n}</span>`).join('')}</div>`:'-';
@@ -368,7 +363,7 @@ function render(){
     <div class="m-label"><div class="m-en">${id==='work'?`Project ${String(mi+1).padStart(2,'0')}`:MEDIA[m].en}</div><h2>${MEDIA[m].ko}</h2>${SHORT[m]?`<p>${SHORT[m]}</p>`:''}</div>
     <div class="works">${P.items.filter(i=>i.m===m).map(it=>`
       <article class="work ${it.kind==='minis'||it.kind==='adetail'||(it.kind==='avideo'&&it.ratio==='9/16')?'center':''}">
-        <div class="w-head"><h3>${it.title}</h3><span class="leader" aria-hidden="true"></span></div>
+        <div class="w-head"><h3>${it.title}</h3></div>
         ${gallery(it)}
         <dl class="spec${it.time?'':' no-time'}">
           <div><dt>Tool</dt><dd>${toolIcons(it.tool)}</dd></div>
