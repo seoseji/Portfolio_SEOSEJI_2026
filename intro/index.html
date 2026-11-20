@@ -113,7 +113,7 @@ nav a:focus-visible,.brand:focus-visible{outline:2px solid var(--cursor);outline
   .meta span:last-child{display:none}
 }
 @media (prefers-reduced-motion:reduce){
-  .loader{display:none}
+  .loader{transition:opacity .45s}
   .name .l>span,.eyebrow>span,.cue{transform:none!important;opacity:1!important;transition:none}
   .cue b{animation:none}
 }
@@ -152,7 +152,11 @@ nav a:focus-visible,.brand:focus-visible{outline:2px solid var(--cursor);outline
     const s=document.createElement('span');s.className='c';s.textContent=text[i++];el.appendChild(s);setTimeout(step,speed)};step()});
   const enter=document.getElementById('enter'),center=document.getElementById('center');
   (async()=>{
-    if(reduce){root.classList.add('ready');center.classList.add('up');enter.classList.add('show');
+    if(reduce){
+      /* '동작 줄이기'가 켜진 기기: 타이핑 대신 글씨를 바로 보여 주고 부드럽게 사라짐 */
+      const lt=document.getElementById('ltyped');lt.textContent='2026 PORTFOLIO';lt.parentNode.classList.add('done');
+      await wait(1300);loader.style.opacity='0';await wait(450);loader.remove();
+      root.classList.add('ready');center.classList.add('up');enter.classList.add('show');
       enter.querySelectorAll('.typed').forEach(t=>{t.textContent=t.dataset.text;t.parentNode.classList.add('done')});return}
     await wait(250);await typeInto(document.getElementById('ltyped'),'2026 PORTFOLIO',85);
     await wait(550);loader.classList.add('out');await wait(250);root.classList.add('ready');
@@ -194,14 +198,16 @@ nav a:focus-visible,.brand:focus-visible{outline:2px solid var(--cursor);outline
     for(let y=gap*.5;y<H;y+=gap){
       const fade=ss(H*.3,H*.62,y);
       for(let x=gap*.5;x<W;x+=gap){
+        /* 좁은 화면: 무늬를 가운데 기준 좌우 대칭으로 펼쳐서 한쪽으로 치우치지 않게 */
+        const nx=W<700?Math.abs(x-W/2)*2.6+300:x;
         let wv=0,rdx=0,rdy=0;
         for(let j=0;j<rip.length;j++){const r=rip[j],age=now-r.t,dx=x-r.x,dy=y-r.y,d=Math.hypot(dx,dy)||1,e=(d-age*RV)/RW;
           if(e<-2.6||e>2.6)continue;const a=Math.exp(-e*e)*(1-age/RL)*r.a;wv+=a;rdx+=dx/d*a;rdy+=dy/d*a}
         let show=false;
         if(fade>0){
-          const wave=y*.011+Math.sin(x*.0052+t*.55)*1.3+Math.sin(x*.012-t*.35+y*.004)*.45+vn(x*.004+t*.05,y*.006)*.9;
+          const wave=y*.011+Math.sin(nx*.0052+t*.55)*1.3+Math.sin(nx*.012-t*.35+y*.004)*.45+vn(nx*.004+t*.05,y*.006)*.9;
           const band=((wave%1)+1)%1;
-          const mask=ss(.28,.55,vn(x*.0018+t*.02+40,y*.0026));
+          const mask=W<700?.85:ss(.28,.55,vn(x*.0018+t*.02+40,y*.0026));
           show=band<.32*fade*mask;
         }
         if(!show&&wv<.4)continue;

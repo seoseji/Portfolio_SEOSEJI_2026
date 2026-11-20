@@ -138,6 +138,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--cursor);outline-off
   .hero{grid-template-columns:1fr}
   .medium{grid-template-columns:1fr}
   .m-label{position:static}
+  .m-label p{max-width:none}
   .index{display:flex;overflow-x:auto;scrollbar-width:none;gap:22px}
   .index::-webkit-scrollbar{display:none}
   .index a{flex:0 0 auto;padding:12px 0;font-size:14px;white-space:nowrap}
@@ -148,6 +149,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--cursor);outline-off
 }
 @media (max-width:560px){
   .switch{font-size:12.5px}
+  .title{font-size:min(48px,10.8vw)}
   .g.c3,.g.c4{grid-template-columns:repeat(2,minmax(0,1fr))}
   .g.c2.flyers,.g.c2.cards,.g.c2.stickers{grid-template-columns:1fr}
   .row{flex-wrap:wrap}.row figure{flex-basis:100%}
