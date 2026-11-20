@@ -70,7 +70,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .spec.no-time{grid-template-columns:minmax(0,1.1fr) minmax(0,3.1fr)}
 .m-label h2{font-size:clamp(34px,3.4vw,52px);font-weight:700;letter-spacing:-.03em;line-height:1.08;margin:4px 0 0 -.05em}
 .work .w-head h3{line-height:1.2}
-.m-label p{margin:14px 0 0;color:var(--muted);font-size:14.5px;max-width:30ch;text-wrap:pretty}
+.m-label p{margin:14px 0 0;color:var(--muted);font-size:14.5px;word-break:keep-all}
 .works{min-width:0}
 .work{padding-bottom:clamp(48px,7vh,80px)}
 .work+.work{padding-top:clamp(40px,6vh,64px);border-top:1px solid var(--line)}
@@ -292,14 +292,14 @@ const PAGES={
 const SHORT={
   outdoor:'매장 앞에 세우고 거는 X배너, 윈드배너, 현수막.',
   banner:'홈페이지 메인 롤링배너와 이벤트 팝업.',
-  flyer:'매장 홍보용 A4 전단지. 모두 앞뒷면으로 만들었습니다.',
+  flyer:'매장 홍보용 A4 전단지 앞뒷면.',
   poster:'매장 벽에 붙이는 메뉴, 이벤트 포스터.',
   insta:'브랜드 계정에 올린 피드와 릴스 썸네일.',
   blog:'블로그 글 목록에 보이는 썸네일.',
   print:'명함, 냉장고 스티커, 미니배너.',
   padding:'에어로젤 소재 패딩의 영상, 상세페이지, 광고 이미지.',
-  still:'남성 올인원 로션 STILL.의 영상, 상세페이지, 광고 이미지.',
-  fizz:'직접 그린 캐릭터로 라벨과 영상까지 만든 오렌지 음료 광고.'
+  still:'남성 올인원 로션 STILL.의 영상, 상세페이지,<br>광고 이미지.',
+  fizz:'직접 그린 캐릭터로 라벨과 영상까지 만든<br>오렌지 음료 광고.'
 };
 const u=s=>BASE+s;
 const esc=s=>String(s).replace(/"/g,'&quot;');
@@ -347,7 +347,7 @@ function render(){
   <nav class="index" aria-label="매체 목차">${P.order.map((m,i)=>`<a href="#${id}-${m}" data-to="${id}-${m}"><span>${String(i+1).padStart(2,'0')}</span>${MEDIA[m].ko}</a>`).join('')}</nav>
   ${P.order.map((m,mi)=>`
   <section class="medium" id="${id}-${m}">
-    <div class="m-label"><div class="m-en">${MEDIA[m].en}</div><h2>${MEDIA[m].ko}</h2>${SHORT[m]?`<p>${SHORT[m]}</p>`:''}</div>
+    <div class="m-label"><div class="m-en">${id==='work'?`Project ${String(mi+1).padStart(2,'0')}`:MEDIA[m].en}</div><h2>${MEDIA[m].ko}</h2>${SHORT[m]?`<p>${SHORT[m]}</p>`:''}</div>
     <div class="works">${P.items.filter(i=>i.m===m).map(it=>`
       <article class="work ${it.kind==='minis'||it.kind==='adetail'||(it.kind==='avideo'&&it.ratio==='9/16')?'center':''}">
         <div class="w-head"><h3>${it.title}</h3>${it.sub&&it.kind!=='adetail'?`<p>${subOf(it)}</p>`:''}</div>
