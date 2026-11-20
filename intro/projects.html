@@ -74,9 +74,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .works{min-width:0}
 .work{padding-bottom:clamp(48px,7vh,80px)}
 .work+.work{padding-top:clamp(40px,6vh,64px);border-top:1px solid var(--line)}
-.w-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 20px;margin-bottom:20px}
-.w-head h3{margin:0;font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.35}
-.w-head p{margin:0;color:var(--muted);font-size:14px}
+.w-head{display:flex;align-items:center;gap:18px;margin-bottom:20px}
+.w-head h3{margin:0;font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.35;flex:none;max-width:80%}
+/* 제목 옆 점선: 인트로 배경의 점 무늬를 이어 받은 장식, 끝에 주황 점 */
+.w-head .leader{flex:1;min-width:24px;height:4px;position:relative;
+  background:radial-gradient(circle,rgba(30,33,45,.32) 1.1px,transparent 1.5px) left center/9px 4px repeat-x;margin-right:12px}
+.w-head .leader::after{content:"";position:absolute;right:-12px;top:50%;width:6px;height:6px;margin-top:-3px;background:var(--cursor);border-radius:50%}
 .spec{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.7fr) minmax(0,2.4fr);gap:16px 28px;margin:26px 0 0;padding-top:18px;border-top:1px solid var(--line)}
 .spec div{min-width:0}
 .spec dt{font-family:var(--display);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
@@ -365,7 +368,7 @@ function render(){
     <div class="m-label"><div class="m-en">${id==='work'?`Project ${String(mi+1).padStart(2,'0')}`:MEDIA[m].en}</div><h2>${MEDIA[m].ko}</h2>${SHORT[m]?`<p>${SHORT[m]}</p>`:''}</div>
     <div class="works">${P.items.filter(i=>i.m===m).map(it=>`
       <article class="work ${it.kind==='minis'||it.kind==='adetail'||(it.kind==='avideo'&&it.ratio==='9/16')?'center':''}">
-        <div class="w-head"><h3>${it.title}</h3>${it.sub&&it.kind!=='adetail'?`<p>${subOf(it)}</p>`:''}</div>
+        <div class="w-head"><h3>${it.title}</h3><span class="leader" aria-hidden="true"></span></div>
         ${gallery(it)}
         <dl class="spec${it.time?'':' no-time'}">
           <div><dt>Tool</dt><dd>${toolIcons(it.tool)}</dd></div>
