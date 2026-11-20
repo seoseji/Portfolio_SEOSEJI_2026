@@ -68,7 +68,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .m-no{font-family:var(--display);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.04em}
 .m-en{font-family:var(--display);font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:0}
 .spec.no-time{grid-template-columns:minmax(0,1.1fr) minmax(0,3.1fr)}
-.m-label h2{font-size:clamp(26px,2.4vw,36px);font-weight:700;letter-spacing:-.03em;line-height:1.2;margin:2px 0 12px}
+.m-label h2{font-size:clamp(34px,3.4vw,52px);font-weight:700;letter-spacing:-.03em;line-height:1.08;margin:4px 0 0 -.05em}
+.work .w-head h3{line-height:1.2}
 .m-label p{margin:0;color:var(--muted);font-size:14.5px;max-width:30ch;text-wrap:pretty}
 .works{min-width:0}
 .work{padding-bottom:clamp(48px,7vh,80px)}
@@ -351,7 +352,20 @@ function render(){
   </section>`;
   document.querySelectorAll('[data-to]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();document.getElementById(a.dataset.to).scrollIntoView()}));
   bindRing();
+  alignLabels();
 }
+/* 왼쪽 매체 이름의 아래선을 오른쪽 첫 작업 제목의 아래선에 맞춤 (두 칸일 때만) */
+function alignLabels(){
+  document.querySelectorAll('.medium').forEach(sec=>{
+    const lab=sec.querySelector('.m-label'),h2=lab.querySelector('h2'),h3=sec.querySelector('.w-head h3');
+    lab.style.marginTop='0px';
+    if(!h3||lab.offsetWidth>=sec.clientWidth*.6)return;
+    const d=h2.getBoundingClientRect().bottom-h3.getBoundingClientRect().bottom;
+    lab.style.marginTop=(-d)+'px';
+  });
+}
+addEventListener('resize',alignLabels);
+document.fonts&&document.fonts.ready.then(alignLabels);
 addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(h==='work'||h==='ai'){render();scrollTo(0,0)}});
 render();
 
