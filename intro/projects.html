@@ -310,7 +310,7 @@ const SHORT={
 };
 const u=s=>BASE+s;
 /* TOOL 이름 → 공식 로고 파일 (이 페이지 옆 icons 폴더) */
-const TOOL_ICON={'Photoshop':'photoshop.svg','Illustrator':'illustrator.svg','Premiere Pro':'premiere.svg','Figma':'figma.svg',
+const TOOL_ICON={'Photoshop':'photoshop.svg','Illustrator':'illustrator.svg','Premiere Pro':'premiere.svg','Figma':'figma-color.svg',
   'Firefly':'firefly.svg','Higgsfield':'higgsfield.png','Suno':'suno.svg','Claude':'claude.svg'};
 const toolIcons=t=>t?`<div class="tools">${t.split(',').map(s=>s.trim()).map(n=>TOOL_ICON[n]
   ?`<span class="tic" tabindex="0" role="img" aria-label="${n}" data-name="${n}"><img src="icons/${TOOL_ICON[n]}" alt=""></span>`
