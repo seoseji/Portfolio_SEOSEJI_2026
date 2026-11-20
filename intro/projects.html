@@ -66,7 +66,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .work.center .g,.work.center .vid,.work.center .long{margin-inline:auto}
 .work.center .long-hint{text-align:center}
 .m-no{font-family:var(--display);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.04em}
-.m-en{font-family:var(--display);font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:18px}
+.m-en{font-family:var(--display);font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:0}
+.spec.no-time{grid-template-columns:minmax(0,1.1fr) minmax(0,3.1fr)}
 .m-label h2{font-size:clamp(26px,2.4vw,36px);font-weight:700;letter-spacing:-.03em;line-height:1.2;margin:2px 0 12px}
 .m-label p{margin:0;color:var(--muted);font-size:14.5px;max-width:30ch;text-wrap:pretty}
 .works{min-width:0}
@@ -144,7 +145,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--cursor);outline-off
   .index a{flex:0 0 auto;padding:12px 0;font-size:14px;white-space:nowrap}
   .g.c6{grid-template-columns:repeat(3,minmax(0,1fr))}
   .g.c8{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .spec{grid-template-columns:1fr 1fr}
+  .spec,.spec.no-time{grid-template-columns:1fr 1fr}
   .spec .pt{grid-column:1/-1}
 }
 @media (max-width:560px){
@@ -201,10 +202,10 @@ const PARTS={
       {m:'outdoor',kind:'hang',title:'봉천동매운떡볶이 현수막',sub:'대형 현수막 2종 · 서울대 가로형 현수막 1종',
         hangs:[{s:'assets/outdoor/bm-banner-01.jpg',r:1.8556,big:1,label:'대형 현수막'},{s:'assets/outdoor/bm-banner-02.jpg',r:1.8556,big:1,label:'대형 현수막'},
                {s:'assets/outdoor/bm-banner-03.jpg',r:6.645,label:'서울대 가로형 현수막'}],
-        tool:'Illustrator, Photoshop',time:'건당 1일',point:'길고 넓은 매체라 시선이 왼쪽에서 오른쪽으로 흐르도록 메뉴 사진 → 핵심 혜택 → 연락처 순서로 배치'},
+        tool:'Illustrator, Photoshop',time:'건당 1일',point:'길고 넓은 매체라 시선이 왼쪽에서 오른쪽으로 흐르도록 메뉴 사진 → 혜택 → 연락처 순서로 배치'},
       {m:'banner',kind:'site',title:'키오 홈페이지 메인 롤링배너',sub:'PC 메인 롤링배너 4종(1920×900)',
         slides:['assets/banner/rolling-01.jpg','assets/banner/rolling-02.jpg','assets/banner/rolling-03.jpg','assets/banner/rolling-04.jpg'],
-        tool:'Photoshop',time:'건당 2시간',point:'화면에 꽉 차는 풀와이드 배너라 핵심 문구와 제품을 가운데에 모으고, 양옆은 넘김 화살표가 놓일 여백으로 비움'},
+        tool:'Photoshop',time:'건당 2시간',point:'화면에 꽉 차는 풀와이드 배너라 주요 문구와 제품을 가운데에 모으고, 양옆은 넘김 화살표가 놓일 여백으로 비움'},
       {m:'banner',kind:'popup',title:'키오 홈페이지 팝업배너',sub:'이벤트 팝업 6종(1080×1080)',
         slides:['assets/banner/popup-01.jpg','assets/banner/popup-02.jpg','assets/banner/popup-03.jpg','assets/banner/popup-04.jpg','assets/banner/popup-05.jpg','assets/banner/popup-06.jpg'],
         tool:'Photoshop',time:'건당 2시간',point:'첫 화면을 가리는 팝업이라 혜택 금액을 가장 크게, 정상가 → 할인가 흐름이 한눈에 읽히도록 구성'},
@@ -228,7 +229,7 @@ const PARTS={
       {m:'insta',kind:'feed',title:'봉천동매운떡볶이 인스타그램',sub:'공식 계정 피드 24종',acct:'bongmaeddeok_official',ini:'봉',av:'#c8161d',
         imgs:['assets/insta/bm-23.gif','assets/insta/bm-24.jpg','assets/insta/bm-25.jpg',
           ...[1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22].map(n=>`assets/insta/bm-${String(n).padStart(2,'0')}.jpg`)],reels:[],
-        tool:'Photoshop',time:'건당 3시간',point:'브랜드 컬러인 빨강 · 주황 · 노랑을 돌려 가며 쓰고, 밈과 손글씨 카피로 친근한 말투를 시각적으로 표현'},
+        tool:'Photoshop',time:'건당 3시간',point:'브랜드 컬러인 빨강 · 주황 · 노랑을 돌려 가며 쓰고, 밈과 손글씨 카피로 친근한 말투를 표현'},
       {m:'blog',kind:'thumbs',title:'키오컴퍼니 블로그 썸네일',sub:'사례 · 솔루션 · 사장님 필독 시리즈 18종',q:'무인매장 키오스크',
         imgs:Array.from({length:18},(_,i)=>`assets/blog/kio-${String(i+1).padStart(2,'0')}.jpg`),
         tool:'Photoshop',time:'건당 1시간',point:'시리즈마다 같은 틀(사례 · 솔루션 · 사장님 필독)을 정해, 작은 썸네일에서도 키워드가 먼저 읽히고 한눈에 같은 브랜드로 보이게 구성'},
@@ -249,32 +250,32 @@ const PARTS={
                {t:'키오컴퍼니 명함 · 박람회용',f:'assets/etc/card-kio-2f.jpg',b:'assets/etc/card-kio-2b.jpg'},
                {t:'이우성 프로 명함',f:'assets/etc/card-lee-f.jpg',b:'assets/etc/card-lee-b.jpg'},
                {t:'김규보 프로 명함',f:'assets/etc/card-kim-f.jpg',b:'assets/etc/card-kim-b.jpg'}],
-        tool:'Illustrator',point:'앞면은 로고와 브랜드 컬러(프로 명함은 인물 사진과 약력)로 첫인상을 만들고, 뒷면은 이름 · 연락처 · QR을 위계에 맞춰 정리'},
+        tool:'Illustrator',time:'건당 1시간',point:'앞면은 로고와 브랜드 컬러(프로 명함은 인물 사진과 약력)로 첫인상을 만들고, 뒷면은 이름 · 연락처 · QR을 위계에 맞춰 정리'},
       {m:'print',kind:'stickers',title:'제로웨이브 무인매장 냉장고 상단 스티커',sub:'냉장고 · 냉동고 상단 띠 스티커 8종',
         imgs:[1,2,3,4,5,6,7,8].map(n=>`assets/etc/zw-sticker-${n}.jpg`),
-        tool:'Illustrator, Photoshop',point:'냉장고 칸마다 다른 상품군(제로음료 · 고단백 · 베이커리 등)을 굵은 카피와 캐릭터로 안내해, 멀리서도 칸의 성격이 바로 읽히게 구성'},
+        tool:'Illustrator, Photoshop',time:'건당 1시간',point:'냉장고 칸마다 다른 상품군(제로음료 · 고단백 · 베이커리 등)을 굵은 카피와 캐릭터로 안내해, 멀리서도 칸의 성격이 바로 읽히게 구성'},
       {m:'print',kind:'minis',title:'제로웨이브 미니배너',sub:'매장 안내 미니배너 2종',
         imgs:['assets/etc/zw-mini-1.jpg','assets/etc/zw-mini-2.jpg'],
-        tool:'Illustrator, Photoshop',point:'적립 혜택과 결제 수단을 큰 숫자와 아이콘으로 정리해, 계산 전에 한눈에 확인할 수 있게 구성'}
+        tool:'Illustrator, Photoshop',time:'건당 1시간',point:'적립 혜택과 결제 수단을 큰 숫자와 아이콘으로 정리해, 계산 전에 한눈에 확인할 수 있게 구성'}
     ]},
-  ailab:{ch:'CH 02',k:'CH 02 · AI Lab',name:'AI 개인 프로젝트',lead:'AI 도구를 다룬 개인 작업입니다.<br>사용한 도구와 생성 과정의 핵심을 함께 기록했습니다.',
+  ailab:{ch:'CH 02',k:'CH 02 · AI Lab',name:'AI 개인 프로젝트',lead:'AI 도구를 다룬 개인 작업입니다.<br>사용한 도구와 생성 과정을 함께 기록했습니다.',
     order:['padding','still','fizz'],
     items:[
-      {m:'padding',kind:'avideo',title:'광고영상',sub:'가로형 영상 · 13초',src:'assets/ai/video/padding.mp4',poster:'assets/ai/video/padding.jpg',ratio:'16/9',
+      {m:'padding',kind:'avideo',title:'광고영상',sub:'가로형 영상 · 13초',src:'assets/ai/video/padding.mp4',poster:'assets/ai/video/padding.jpg',ratio:'16/9',time:'1시간',
         tool:'Higgsfield, Photoshop, Premiere Pro',point:'레퍼런스 컷과 모델 시트로 패딩의 형태와 색, 인물을 먼저 정해 두고 장면을 만들어, 컷이 바뀌어도 제품이 같은 모습으로 보이게 구성'},
       {m:'padding',kind:'adetail',title:'상세페이지',sub:'기술 설명부터 제품 정보까지 한 장으로 이어지는 구성 — 폰 화면을 위아래로 넘겨 보세요',img:'assets/ai/img/padding-detail.jpg',
         tool:'Higgsfield, Firefly, Photoshop, Figma',point:'에어로젤 기술을 첫 화면에서 한 문장으로 전달하고, 기술 설명 → 착용 장면 → 디테일 → 제품 정보 순서로 스크롤 흐름을 구성'},
       {m:'padding',kind:'agal',title:'광고 이미지',sub:'레퍼런스 컷 · 모델 시트',
         imgs:[['assets/ai/img/padding-ref.jpg','레퍼런스 컷',690/640],['assets/ai/img/padding-sheet-1.jpg','모델 시트-1',2576/1449],['assets/ai/img/padding-sheet.jpg','모델 시트-2',1800/1012]],
         tool:'Higgsfield, Firefly, Photoshop',point:'앞·뒤 레퍼런스 컷과 정면·측면·후면 모델 시트로 소재감과 실루엣을 기록해 이후 장면의 기준으로 사용'},
-      {m:'still',kind:'avideo',title:'광고영상',sub:'가로형 영상 · 11초',src:'assets/ai/video/still.mp4',poster:'assets/ai/video/still.jpg',ratio:'16/9',
+      {m:'still',kind:'avideo',title:'광고영상',sub:'가로형 영상 · 11초',src:'assets/ai/video/still.mp4',poster:'assets/ai/video/still.jpg',ratio:'16/9',time:'1시간',
         tool:'Higgsfield, Suno, Photoshop, Premiere Pro',point:'장면별 이미지를 기준으로 영상을 만든 뒤 영상 툴로 편집'},
       {m:'still',kind:'adetail',title:'상세페이지',sub:'제품 소개부터 성분 · 루틴까지 한 장으로 이어지는 구성 — 폰 화면을 위아래로 넘겨 보세요',img:'assets/ai/img/still-detail.jpg?v=3',gif:{src:'assets/ai/still-detail/assets/absorb.gif?v=2',x:130,y:3609,w:600,h:447,W:860,H:14735},
         tool:'Higgsfield, Firefly, Suno, Photoshop, Figma',point:'제품 사진과 흡수 장면 GIF로 사용감을 보여 주고, 성분 · 루틴 · 제품 정보까지 한 장으로 이어지게 구성'},
       {m:'still',kind:'agal',title:'광고 이미지',sub:'레퍼런스 컷 · 장면 컷 3종',
         imgs:[['assets/ai/img/still-ref.jpg','레퍼런스 컷',1000/1334],['assets/ai/img/still-scene-1.jpg','장면 컷 1',1400/782],['assets/ai/img/still-scene-2.jpg','장면 컷 2',1400/782],['assets/ai/img/still-scene-3.jpg','장면 컷 3',1400/782]],
         tool:'Higgsfield, Firefly, Suno, Photoshop',point:'제품 레퍼런스 컷과 모델 시트를 활용하여 다양한 광고컷을 생성'},
-      {m:'fizz',kind:'avideo',title:'광고영상',sub:'세로형 영상 · 10초',src:'assets/ai/video/fizzcat.mp4',poster:'assets/ai/video/fizzcat.jpg',ratio:'9/16',
+      {m:'fizz',kind:'avideo',title:'광고영상',sub:'세로형 영상 · 10초',src:'assets/ai/video/fizzcat.mp4',poster:'assets/ai/video/fizzcat.jpg',ratio:'9/16',time:'1시간',
         tool:'Higgsfield, Suno, Photoshop, Premiere Pro',point:'캐릭터와 라벨을 직접 디자인한 뒤 영상으로 확장해, 라벨 속 캐릭터가 광고 안에서도 같은 모습으로 움직이게 구성'},
       {m:'fizz',kind:'agal',title:'광고 이미지',sub:'캐릭터 디자인 · 라벨 디자인 · 연출 컷',
         imgs:[['assets/ai/img/fizz-character.jpg','캐릭터 디자인',1200/1152],['assets/ai/img/fizz-label.jpg','라벨 디자인',1400/1052],['assets/ai/img/fizz-scene.jpg','연출 컷',1]],
@@ -332,14 +333,14 @@ function render(){
   <nav class="index" aria-label="매체 목차">${P.order.map((m,i)=>`<a href="#${id}-${m}" data-to="${id}-${m}"><span>${String(i+1).padStart(2,'0')}</span>${MEDIA[m].ko}</a>`).join('')}</nav>
   ${P.order.map((m,mi)=>`
   <section class="medium" id="${id}-${m}">
-    <div class="m-label"><div class="m-no">${String(mi+1).padStart(2,'0')} / ${tot}</div><div class="m-en">${MEDIA[m].en}</div><h2>${MEDIA[m].ko}</h2><p>${MEDIA[m].desc}</p></div>
+    <div class="m-label"><div class="m-en">${MEDIA[m].en}</div><h2>${MEDIA[m].ko}</h2></div>
     <div class="works">${P.items.filter(i=>i.m===m).map(it=>`
       <article class="work ${it.kind==='minis'||it.kind==='adetail'||(it.kind==='avideo'&&it.ratio==='9/16')?'center':''}">
-        <div class="w-head"><h3>${it.title}</h3>${it.sub?`<p>${subOf(it)}</p>`:''}</div>
+        <div class="w-head"><h3>${it.title}</h3>${it.sub&&it.kind!=='adetail'?`<p>${subOf(it)}</p>`:''}</div>
         ${gallery(it)}
-        <dl class="spec">
+        <dl class="spec${it.time?'':' no-time'}">
           <div><dt>Tool</dt><dd>${it.tool||'-'}</dd></div>
-          <div><dt>Time</dt><dd>${it.time||'-'}</dd></div>
+          ${it.time?`<div><dt>Time</dt><dd>${it.time}</dd></div>`:''}
           <div class="pt"><dt>Point</dt><dd>${it.point}</dd></div>
         </dl>
       </article>`).join('')}</div>
