@@ -51,6 +51,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .index a{display:flex;gap:10px;align-items:baseline;padding:14px 12px 14px 0;text-decoration:none;font-size:15px;font-weight:500;color:var(--muted);transition:padding .25s,color .25s}
 .index a.on,.index a:hover{color:var(--fg)}
 .index a.on span{color:var(--cursor)}
+.index{transition:background-color .3s,border-color .3s}
+.index.stuck{background:rgba(30,33,45,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top-color:transparent;border-bottom-color:transparent}
+.index.stuck a{color:rgba(251,251,251,.62)}
+.index.stuck a span{color:rgba(251,251,251,.42)}
+.index.stuck a.on,.index.stuck a:hover{color:var(--bg)}
+.index.stuck a.on span{color:var(--cursor)}
 .index a span{font-family:var(--display);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;font-weight:400}
 .index a:hover{padding-left:6px}
 
@@ -348,7 +354,10 @@ render();
 
 /* 상단 바 선 */
 const tb=document.getElementById('topbar');
-addEventListener('scroll',()=>tb.classList.toggle('scrolled',scrollY>8),{passive:true});
+/* 목차가 상단 바에 붙으면 어두운 배경으로 */
+const stick=()=>{tb.classList.toggle('scrolled',scrollY>8);const ix=document.querySelector('.index');
+  if(ix)ix.classList.toggle('stuck',ix.getBoundingClientRect().top<=tb.offsetHeight+1)};
+addEventListener('scroll',stick,{passive:true});addEventListener('hashchange',()=>setTimeout(stick,0));
 /* 상단 바 · 목차 높이 → 목차가 상단 바 바로 밑에 붙음 */
 const setH=()=>{const r=document.documentElement.style,ix=document.querySelector('.index');r.setProperty('--tbH',tb.offsetHeight+'px');if(ix)r.setProperty('--ixH',ix.offsetHeight+'px')};
 addEventListener('resize',setH);setH();
