@@ -70,7 +70,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .spec.no-time{grid-template-columns:minmax(0,1.1fr) minmax(0,3.1fr)}
 .m-label h2{font-size:clamp(34px,3.4vw,52px);font-weight:700;letter-spacing:-.03em;line-height:1.08;margin:4px 0 0 -.05em}
 .work .w-head h3{line-height:1.2}
-.m-label p{margin:0;color:var(--muted);font-size:14.5px;max-width:30ch;text-wrap:pretty}
+.m-label p{margin:14px 0 0;color:var(--muted);font-size:14.5px;max-width:30ch;text-wrap:pretty}
 .works{min-width:0}
 .work{padding-bottom:clamp(48px,7vh,80px)}
 .work+.work{padding-top:clamp(40px,6vh,64px);border-top:1px solid var(--line)}
@@ -288,6 +288,19 @@ const PAGES={
   work:{key:'archive',eyebrow:'CH 01 · Client Work',title:'Client Work',other:'ai'},
   ai:{key:'ailab',eyebrow:'CH 02 · AI Lab',title:'AI Lab',other:'work'}
 };
+/* 매체 이름 밑 짧은 설명 */
+const SHORT={
+  outdoor:'매장 앞에 세우고 거는 X배너, 윈드배너, 현수막.',
+  banner:'홈페이지 메인 롤링배너와 이벤트 팝업.',
+  flyer:'매장 홍보용 A4 전단지. 모두 앞뒷면으로 만들었습니다.',
+  poster:'매장 벽에 붙이는 메뉴, 이벤트 포스터.',
+  insta:'브랜드 계정에 올린 피드와 릴스 썸네일.',
+  blog:'블로그 글 목록에 보이는 썸네일.',
+  print:'명함, 냉장고 스티커, 미니배너.',
+  padding:'에어로젤 소재 패딩의 영상, 상세페이지, 광고 이미지.',
+  still:'남성 올인원 로션 STILL.의 영상, 상세페이지, 광고 이미지.',
+  fizz:'직접 그린 캐릭터로 라벨과 영상까지 만든 오렌지 음료 광고.'
+};
 const u=s=>BASE+s;
 const esc=s=>String(s).replace(/"/g,'&quot;');
 const Z=(s,label,cls='')=>`<button class="zoom ${cls}" data-full="${u(s)}" aria-label="${esc(label)} 크게 보기"><img src="${u(s)}" alt="" loading="lazy"></button>`;
@@ -334,7 +347,7 @@ function render(){
   <nav class="index" aria-label="매체 목차">${P.order.map((m,i)=>`<a href="#${id}-${m}" data-to="${id}-${m}"><span>${String(i+1).padStart(2,'0')}</span>${MEDIA[m].ko}</a>`).join('')}</nav>
   ${P.order.map((m,mi)=>`
   <section class="medium" id="${id}-${m}">
-    <div class="m-label"><div class="m-en">${MEDIA[m].en}</div><h2>${MEDIA[m].ko}</h2></div>
+    <div class="m-label"><div class="m-en">${MEDIA[m].en}</div><h2>${MEDIA[m].ko}</h2>${SHORT[m]?`<p>${SHORT[m]}</p>`:''}</div>
     <div class="works">${P.items.filter(i=>i.m===m).map(it=>`
       <article class="work ${it.kind==='minis'||it.kind==='adetail'||(it.kind==='avideo'&&it.ratio==='9/16')?'center':''}">
         <div class="w-head"><h3>${it.title}</h3>${it.sub&&it.kind!=='adetail'?`<p>${subOf(it)}</p>`:''}</div>
@@ -354,14 +367,18 @@ function render(){
   bindRing();
   alignLabels();
 }
-/* 왼쪽 매체 이름의 아래선을 오른쪽 첫 작업 제목의 아래선에 맞춤 (두 칸일 때만) */
+/* 왼쪽 매체 이름의 글자 윗선을 오른쪽 첫 작업 제목의 글자 윗선에 맞춤 (두 칸일 때만)
+   스크롤 중 붙어 있는(sticky) 상태에서 재면 값이 틀어지므로 잠깐 풀고 잰다 */
+const glyphTop=el=>{const r=el.getBoundingClientRect(),cs=getComputedStyle(el),fs=parseFloat(cs.fontSize),lh=parseFloat(cs.lineHeight)||fs*1.2;return r.top+(lh-fs)/2+fs*.09};
 function alignLabels(){
   document.querySelectorAll('.medium').forEach(sec=>{
     const lab=sec.querySelector('.m-label'),h2=lab.querySelector('h2'),h3=sec.querySelector('.w-head h3');
-    lab.style.marginTop='0px';
-    if(!h3||lab.offsetWidth>=sec.clientWidth*.6)return;
-    const d=h2.getBoundingClientRect().bottom-h3.getBoundingClientRect().bottom;
-    lab.style.marginTop=(-d)+'px';
+    lab.style.marginTop='0px';lab.style.position='static';
+    if(h3&&lab.offsetWidth<sec.clientWidth*.6){
+      const d=glyphTop(h2)-glyphTop(h3);
+      lab.style.marginTop=(-d)+'px';
+    }
+    lab.style.position='';
   });
 }
 addEventListener('resize',alignLabels);
