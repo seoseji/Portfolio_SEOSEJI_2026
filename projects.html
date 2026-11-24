@@ -47,8 +47,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 /* 목차 */
 .index{position:sticky;top:calc(var(--tbH,54px) + env(safe-area-inset-top,0px));z-index:15;background:var(--bg);border-top:1px solid var(--fg);border-bottom:1px solid var(--line);
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-inline:calc(-1 * var(--gx)) calc(-1 * var(--gxr));padding-inline:var(--gx) var(--gxr)}
-.index a{display:flex;gap:10px;align-items:baseline;padding:14px 12px 14px 0;text-decoration:none;font-size:15px;font-weight:500;color:var(--muted);transition:padding .25s,color .25s}
+  display:flex;justify-content:space-between;gap:16px;margin-inline:calc(-1 * var(--gx)) calc(-1 * var(--gxr));padding-inline:var(--gx) var(--gxr)}
+.index a{display:flex;gap:10px;align-items:baseline;padding:14px 0;white-space:nowrap;text-decoration:none;font-size:15px;font-weight:500;color:var(--muted);transition:padding .25s,color .25s}
 .index a.on,.index a:hover{color:var(--fg)}
 .index a.on span{color:var(--cursor)}
 .index{transition:background-color .3s,border-color .3s}
@@ -152,7 +152,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--cursor);outline-off
   .medium{grid-template-columns:1fr}
   .m-label{position:static}
   .m-label p{max-width:none}
-  .index{display:flex;overflow-x:auto;scrollbar-width:none;gap:22px}
+  .index{display:flex;justify-content:flex-start;overflow-x:auto;scrollbar-width:none;gap:22px}
   .index::-webkit-scrollbar{display:none}
   .index a{flex:0 0 auto;padding:12px 0;font-size:14px;white-space:nowrap}
   .g.c6{grid-template-columns:repeat(3,minmax(0,1fr))}
