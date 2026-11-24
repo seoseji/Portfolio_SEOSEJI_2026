@@ -118,6 +118,9 @@ figure{margin:0;min-width:0}
 .long .inner>img{width:100%;height:auto}
 .long .gif{position:absolute;object-fit:cover}
 .long-hint{font-size:12.5px;color:var(--muted);margin-top:10px}
+.dgrid{display:grid;grid-template-columns:repeat(2,minmax(0,360px));gap:clamp(14px,2vw,28px)}
+.dgrid .long{width:100%}
+.dgrid figure{min-width:0}
 
 /* 다음 */
 .next{display:flex;justify-content:space-between;align-items:end;gap:24px;padding-block:clamp(64px,12vh,140px) clamp(40px,6vh,64px)}
@@ -161,6 +164,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--cursor);outline-off
   .title{font-size:min(48px,10.8vw)}
   .g.c3,.g.c4{grid-template-columns:repeat(2,minmax(0,1fr))}
   .g.c2.flyers,.g.c2.cards,.g.c2.stickers{grid-template-columns:1fr}
+  .dgrid{grid-template-columns:1fr}
   .row{flex-wrap:wrap}.row figure{flex-basis:100%}
   .next{flex-direction:column;align-items:flex-start}
 }
@@ -194,7 +198,7 @@ const MEDIA={
 };
 const PARTS={
   archive:{ch:'CH 01',k:'CH 01 · Client Work',name:'실무 프로젝트',lead:'실제 현업에 적용된 실무 디자인 결과물입니다.',
-    order:['outdoor','banner','flyer','poster','insta','blog','print'],
+    order:['outdoor','banner','flyer','poster','insta','blog','detail','print'],
     items:[
       {m:'outdoor',kind:'stand',title:'노모어피자 스탠드 배너',sub:'물통 X배너 4종 · 양면 윈드배너 4종',
         units:[['x','assets/outdoor/xbanner-01.jpg'],['x','assets/outdoor/xbanner-02.jpg'],['x','assets/outdoor/xbanner-03.jpg'],['x','assets/outdoor/xbanner-04.jpg'],
@@ -253,6 +257,12 @@ const PARTS={
       {m:'poster',kind:'posters',title:'봉천동매운떡볶이 포스터',sub:'매장 포스터 4종',
         imgs:[1,2,3,4].map(n=>`assets/poster/bm-0${n}.jpg`),
         tool:'Illustrator, Photoshop',time:'건당 3시간',point:'오픈 반값 · 학생 혜택 · 수능 이벤트처럼 대상에 맞춘 카피와 일러스트로, 매장 안에서 바로 혜택이 읽히게 구성'},
+      {m:'detail',kind:'details',title:'한수 프로모션 페이지',
+        pages:[['assets/detail/hansu-scholar.jpg','2026 한수 장학생 공개 페이지'],['assets/detail/hansu-ebs.jpg','2027 한수 EBS 스페셜 패키지']],
+        tool:'Photoshop',point:'장학생 후기와 성적 변화는 사람별 카드로, 패키지 구성과 가격은 표로 정리해 긴 페이지에서도 원하는 정보를 바로 찾을 수 있게 구성'},
+      {m:'detail',kind:'details',title:'제품 상세페이지',
+        pages:[['assets/detail/wonchik-mist.jpg','원칙 퍼퓸 바디미스트'],['assets/detail/nko-humidifier.jpg','nko 무지개 가습기']],
+        tool:'Photoshop',point:'첫 화면에 무료배송 · 특가 같은 혜택을 두고, 사용 장면 → 제품 특징 → 제품 정보 순서로 이어지게 구성'},
       {m:'print',kind:'cards',title:'명함',sub:'4종, 모두 앞뒷면 — 누르면 크게 보기',
         cards:[{t:'키오 명함',f:'assets/etc/card-kio-1f.jpg',b:'assets/etc/card-kio-1b.jpg'},
                {t:'키오컴퍼니 명함 · 박람회용',f:'assets/etc/card-kio-2f.jpg',b:'assets/etc/card-kio-2b.jpg'},
@@ -303,6 +313,7 @@ const SHORT={
   poster:'매장 벽에 붙이는 메뉴, 이벤트 포스터.',
   insta:'브랜드 계정에 올린 피드와 릴스 썸네일.',
   blog:'블로그 글 목록에 보이는 썸네일.',
+  detail:'이벤트 페이지와 제품 상세페이지.',
   print:'명함, 냉장고 스티커, 미니배너.',
   padding:'에어로젤 소재 패딩의 영상, 상세페이지, 광고 이미지.',
   still:'남성 올인원 로션 STILL.의 영상, 상세페이지,<br>광고 이미지.',
@@ -338,6 +349,7 @@ function gallery(it){
     case 'minis':return `<div class="g minis">${it.imgs.map((s,i)=>Z(s,n(i))).join('')}</div>`;
     case 'avideo':{const v=it.ratio==='9/16';
       return `<div class="vid ${v?'vert':''}"><video controls playsinline preload="metadata" poster="${u(it.poster)}" aria-label="${esc(it.title)}"><source src="${u(it.src)}" type="video/mp4"></video></div>`}
+    case 'details':return `<div class="dgrid">${it.pages.map(([s,l])=>`<figure><div class="long tall" tabindex="0" aria-label="${esc(l)}, 위아래로 스크롤해서 보기"><div class="inner"><img src="${u(s)}" alt="${esc(l)}" loading="lazy"></div></div><figcaption class="cap">${l}</figcaption></figure>`).join('')}</div><p class="long-hint">상자 안을 위아래로 스크롤해 보세요 · 이미지를 누르면 크게 보기</p>`;
     case 'adetail':{const g=it.gif;
       return `<div class="long" tabindex="0" aria-label="${esc(it.title)}, 위아래로 스크롤해서 보기"><div class="inner"><img src="${u(it.img)}" alt="${esc(it.title)}" loading="lazy">${g?`<img class="gif" src="${u(g.src)}" alt="" loading="lazy" style="left:${g.x/g.W*100}%;top:${g.y/g.H*100}%;width:${g.w/g.W*100}%;height:${g.h/g.H*100}%">`:''}</div></div><p class="long-hint">상자 안을 위아래로 스크롤해 보세요 · 이미지를 누르면 크게 보기</p>`}
     case 'agal':return `<div class="row">${it.imgs.map(([s,l,r])=>`<figure style="--r:${r.toFixed(3)}">${Z(s,it.title+' '+l)}<figcaption class="cap">${l}</figcaption></figure>`).join('')}</div>`;
@@ -376,10 +388,24 @@ function render(){
     <a href="#${pg.other}"><small>Next · ${OP.name}</small><span class="big">${O.title} →</span></a>
     <a class="back" href="./">← 인트로로 돌아가기</a>
   </section>`;
-  document.querySelectorAll('[data-to]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();document.getElementById(a.dataset.to).scrollIntoView()}));
+  document.querySelectorAll('[data-to]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();goTo(a.dataset.to)}));
   bindRing();
   alignLabels();
 }
+/* 목차 이동: 위쪽 이미지가 늦게 로드되며 높이가 바뀌어 엉뚱한 곳에 멈추던 문제를 막음.
+   위쪽 구간 이미지를 바로 불러오고, 이미지가 로드될 때마다 4초 동안 목표 위치로 다시 맞춤(사용자가 직접 스크롤하면 중단) */
+let jumpTarget=null,jumpUntil=0;
+function goTo(id){
+  const el=document.getElementById(id);if(!el)return;
+  document.querySelectorAll('.medium').forEach(m=>{if(m!==el&&(m.compareDocumentPosition(el)&Node.DOCUMENT_POSITION_FOLLOWING))
+    m.querySelectorAll('img[loading="lazy"]').forEach(i=>i.loading='eager')});
+  jumpTarget=el;jumpUntil=performance.now()+4000;
+  el.scrollIntoView({behavior:'instant',block:'start'});
+}
+document.addEventListener('load',e=>{
+  if(jumpTarget&&e.target.tagName==='IMG'&&performance.now()<jumpUntil)jumpTarget.scrollIntoView({behavior:'instant',block:'start'});
+},true);
+['wheel','touchstart','keydown','mousedown'].forEach(t=>addEventListener(t,ev=>{if(!ev.target.closest||!ev.target.closest('.index'))jumpTarget=null},{passive:true}));
 /* 왼쪽 매체 이름의 글자 윗선을 오른쪽 첫 작업 제목의 글자 윗선에 맞춤 (두 칸일 때만)
    스크롤 중 붙어 있는(sticky) 상태에서 재면 값이 틀어지므로 잠깐 풀고 잰다 */
 const glyphTop=el=>{const r=el.getBoundingClientRect(),cs=getComputedStyle(el),fs=parseFloat(cs.fontSize),lh=parseFloat(cs.lineHeight)||fs*1.2;return r.top+(lh-fs)/2+fs*.09};
