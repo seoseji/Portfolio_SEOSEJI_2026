@@ -8,8 +8,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300..700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
-/* Layout: editorial index. Big uppercase title with a short lead on the right, a numbered media index,
-   then each medium as a two-column band (sticky label left, works right). Same two colours as the intro. */
+/* 실무(#work) · AI(#ai) 프로젝트 페이지
+   상단 바 → 큰 타이틀 + 소개 → 목차(스크롤하면 상단 바 밑에 붙고 어두워짐)
+   → 매체별 구간(왼쪽: 매체 이름, 오른쪽: 작업물 · TOOL · TIME · POINT) → 다음 페이지 링크.
+   인트로와 같은 색 · 글꼴, 밝은 테마 하나만 사용 */
 :root{
   --bg:#fbfbfb;--fg:#1e212d;--cursor:#ffa73e;--cream:#f9f3cf;
   --muted:rgba(30,33,45,.56);--line:rgba(30,33,45,.14);--soft:#f1f1ef;
@@ -26,10 +28,12 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-
 img,video{max-width:100%;display:block}
 a{color:inherit}
 button{font:inherit;color:inherit}
+figure{margin:0;min-width:0}
 .gx{padding-left:var(--gx);padding-right:var(--gxr)}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+a:focus-visible,button:focus-visible{outline:2px solid var(--cursor);outline-offset:3px}
 
-/* 상단 바 */
+/* ---------- 상단 바 ---------- */
 .topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(251,251,251,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:16px;border-bottom:1px solid transparent;transition:border-color .3s}
 .topbar.scrolled{border-bottom-color:var(--line)}
@@ -39,46 +43,47 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .switch a.on,.switch a:hover{color:var(--fg)}
 .switch a.on::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:1.5px;background:var(--fg)}
 
-/* 타이틀 */
+/* ---------- 타이틀 ---------- */
 .hero{display:grid;grid-template-columns:1fr minmax(0,330px);align-items:end;gap:24px 48px;padding-block:clamp(56px,11vh,120px) clamp(40px,7vh,72px)}
-.eyebrow{font-family:var(--display);font-size:clamp(13px,1.05vw,16px);letter-spacing:.02em;text-transform:uppercase;color:var(--muted);margin:0 0 .2em .04em}
 .title{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:clamp(48px,9.6vw,158px);line-height:.84;letter-spacing:.005em;margin:0;white-space:nowrap}
 .lead{margin:0 0 .5em;font-size:15px;line-height:1.6;color:rgba(30,33,45,.8);text-wrap:pretty}
 
-/* 목차 */
+/* ---------- 목차: 상단 바(--tbH) 밑에 붙음, 붙으면 .stuck(어두운 배경), 보고 있는 매체는 .on ---------- */
 .index{position:sticky;top:calc(var(--tbH,54px) + env(safe-area-inset-top,0px));z-index:15;background:var(--bg);border-top:1px solid var(--fg);border-bottom:1px solid var(--line);
-  display:flex;justify-content:space-between;gap:16px;margin-inline:calc(-1 * var(--gx)) calc(-1 * var(--gxr));padding-inline:var(--gx) var(--gxr)}
+  display:flex;justify-content:space-between;gap:16px;margin-inline:calc(-1 * var(--gx)) calc(-1 * var(--gxr));padding-inline:var(--gx) var(--gxr);
+  transition:background-color .3s,border-color .3s}
 .index a{display:flex;gap:10px;align-items:baseline;padding:14px 0;white-space:nowrap;text-decoration:none;font-size:15px;font-weight:500;color:var(--muted);transition:padding .25s,color .25s}
+.index a span{font-family:var(--display);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;font-weight:400}
+.index a:hover{padding-left:6px}
 .index a.on,.index a:hover{color:var(--fg)}
 .index a.on span{color:var(--cursor)}
-.index{transition:background-color .3s,border-color .3s}
 .index.stuck{background:rgba(30,33,45,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top-color:transparent;border-bottom-color:transparent}
 .index.stuck a{color:rgba(251,251,251,.62)}
 .index.stuck a span{color:rgba(251,251,251,.42)}
 .index.stuck a.on,.index.stuck a:hover{color:var(--bg)}
 .index.stuck a.on span{color:var(--cursor)}
-.index a span{font-family:var(--display);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;font-weight:400}
-.index a:hover{padding-left:6px}
 
-/* 매체 구간 */
+/* ---------- 매체 구간: 왼쪽 이름(붙어서 따라옴) · 오른쪽 작업물 ---------- */
 .medium{display:grid;grid-template-columns:minmax(0,26%) minmax(0,1fr);gap:28px clamp(24px,4vw,64px);padding-block:clamp(56px,9vh,96px) 8px;border-bottom:1px solid var(--line);scroll-margin-top:calc(var(--tbH,54px) + var(--ixH,50px))}
 .m-label{align-self:start;position:sticky;top:calc(var(--tbH,54px) + var(--ixH,50px) + 24px + env(safe-area-inset-top,0px))}
-.work.center .g,.work.center .vid,.work.center .long{margin-inline:auto}
-.work.center .long-hint{text-align:center}
-.m-no{font-family:var(--display);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.04em}
 .m-en{font-family:var(--display);font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:0}
-.spec.no-time{grid-template-columns:minmax(0,1.1fr) minmax(0,3.1fr)}
 .m-label h2{font-size:clamp(34px,3.4vw,52px);font-weight:700;letter-spacing:-.03em;line-height:1.08;margin:4px 0 0 -.05em}
-.work .w-head h3{line-height:1.2}
 .m-label p{margin:14px 0 0;color:var(--muted);font-size:14.5px;word-break:keep-all}
 .works{min-width:0}
 .work{padding-bottom:clamp(48px,7vh,80px)}
 .work+.work{padding-top:clamp(40px,6vh,64px);border-top:1px solid var(--line)}
+.work.center .g,.work.center .vid,.work.center .long{margin-inline:auto}
+.work.center .long-hint{text-align:center}
 .w-head{display:flex;align-items:center;gap:18px;margin-bottom:20px}
-.w-head h3{margin:0;font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.35;flex:none;max-width:80%}.spec{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.7fr) minmax(0,2.4fr);gap:16px 28px;margin:26px 0 0;padding-top:18px;border-top:1px solid var(--line)}
+.w-head h3{margin:0;font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.2;flex:none;max-width:80%}
+
+/* TOOL · TIME · POINT (TIME이 없으면 .no-time 두 칸) */
+.spec{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.7fr) minmax(0,2.4fr);gap:16px 28px;margin:26px 0 0;padding-top:18px;border-top:1px solid var(--line)}
+.spec.no-time{grid-template-columns:minmax(0,1.1fr) minmax(0,3.1fr)}
 .spec div{min-width:0}
 .spec dt{font-family:var(--display);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .spec dd{margin:0;font-size:14.5px;line-height:1.6}
+
 /* TOOL 공식 로고 아이콘: 마우스를 올리면(휴대폰은 누르면) 이름 */
 .tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding-top:2px}
 .tic{width:28px;height:28px;display:grid;place-items:center;position:relative;flex:none;cursor:default}
@@ -89,21 +94,20 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .tic:hover::after,.tic:focus-visible::after,.tic.show::after{opacity:1;transform:translate(-50%,0)}
 .tic:focus-visible{outline:2px solid var(--cursor);outline-offset:3px}
 
-/* 갤러리 */
+/* ---------- 갤러리 ---------- */
 .g{display:grid;gap:clamp(8px,1vw,14px)}
+.g.c2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g.c6{grid-template-columns:repeat(6,minmax(0,1fr))}
+.g.c8{grid-template-columns:repeat(8,minmax(0,1fr));align-items:end}
+.g.end{align-items:end}
+.g .full{grid-column:1/-1}
 .zoom{display:block;width:100%;padding:0;border:0;background:var(--soft);cursor:zoom-in;overflow:hidden;position:relative}
 .zoom img{width:100%;height:auto;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
 .zoom:hover img{transform:scale(1.025)}
 .zoom:focus-visible{outline:2px solid var(--cursor);outline-offset:3px}
 .cap{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.45}
-figure{margin:0;min-width:0}
-.g.c2{grid-template-columns:repeat(2,minmax(0,1fr))}
-.g.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
-.g.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
-.g.c6{grid-template-columns:repeat(6,minmax(0,1fr))}
-.g.end{align-items:end}
-.g.c8{grid-template-columns:repeat(8,minmax(0,1fr));align-items:end}
-.g .full{grid-column:1/-1}
 .crop45 img{aspect-ratio:4/5;object-fit:cover}
 .crop11 img{aspect-ratio:1;object-fit:cover}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}
@@ -113,6 +117,7 @@ figure{margin:0;min-width:0}
 .vid{background:#000}
 .vid video{width:100%;height:auto}
 .vid.vert{max-width:380px}
+/* 긴 이미지(상세페이지): 상자 안에서 위아래 스크롤 */
 .long{width:min(400px,100%);height:min(680px,78vh);overflow-y:auto;border:1px solid var(--line);background:var(--soft);position:relative;overscroll-behavior:contain}
 .long .inner{position:relative}
 .long .inner>img{width:100%;height:auto}
@@ -121,9 +126,8 @@ figure{margin:0;min-width:0}
 .dgrid{display:grid;grid-template-columns:repeat(2,minmax(0,360px));justify-content:center;gap:clamp(14px,2vw,28px)}
 .dgrid+.long-hint{text-align:center}
 .dgrid .long{width:100%}
-.dgrid figure{min-width:0}
 
-/* 다음 */
+/* ---------- 다음 페이지 ---------- */
 .next{display:flex;justify-content:space-between;align-items:end;gap:24px;padding-block:clamp(64px,12vh,140px) clamp(40px,6vh,64px)}
 .next a{text-decoration:none;display:block}
 .next small{display:block;font-family:var(--display);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
@@ -132,20 +136,18 @@ figure{margin:0;min-width:0}
 .next .back{font-size:14px;color:var(--muted);text-decoration:none;white-space:nowrap}
 .next .back:hover{color:var(--fg)}
 
-/* 크게 보기 */
+/* ---------- 크게 보기 ---------- */
 #lb[hidden]{display:none}
 #lb{position:fixed;inset:0;z-index:50;background:rgba(251,251,251,.97);display:grid;place-items:center;padding:clamp(16px,4vw,56px);cursor:zoom-out}
 #lb img{max-height:calc(100vh - 2*clamp(16px,4vw,56px));width:auto;max-width:100%;object-fit:contain;box-shadow:0 20px 60px rgba(30,33,45,.12)}
 #lb button{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:calc(var(--gxr));border:0;background:var(--fg);color:var(--bg);font-size:13px;padding:8px 14px;cursor:pointer}
 
-/* 커서 (노란 번짐 없이 점과 테두리만) */
+/* ---------- 커서 (점과 테두리만, 마우스 기기만) ---------- */
 .cur,.ring{position:fixed;left:0;top:0;z-index:60;pointer-events:none;border-radius:50%;opacity:0}
 .cur{width:9px;height:9px;margin:-4.5px 0 0 -4.5px;background:var(--cursor)}
 .ring{width:34px;height:34px;margin:-17px 0 0 -17px;border:1.5px solid var(--cursor);transition:width .25s,height .25s,margin .25s}
 .ring.big{width:58px;height:58px;margin:-29px 0 0 -29px}
 @media (hover:hover) and (pointer:fine){html,a,button,.zoom{cursor:none}.cur,.ring{opacity:1}}
-
-a:focus-visible,button:focus-visible{outline:2px solid var(--cursor);outline-offset:3px}
 
 @media (max-width:900px){
   .hero{grid-template-columns:1fr}
@@ -180,22 +182,25 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--cursor);outline-off
 <div id="lb" hidden role="dialog" aria-modal="true" aria-label="작업물 크게 보기"><img alt=""><button type="button" id="lb-close">닫기 ✕</button></div>
 <div class="cur" id="cur"></div><div class="ring" id="ring"></div>
 <script>
+(()=>{
+'use strict';
+/* 이미지 · 영상 경로 앞에 붙는 값. GitHub 배포 스크립트가 이 줄을 그대로 찾으므로 형식을 바꾸지 말 것 */
 const BASE='';
-/* ---------- 데이터 (기존 포트폴리오와 같은 내용) ---------- */
+/* ---------- 데이터 ----------
+   MEDIA: 매체 키 → 이름(ko) · 영문 라벨(en, AI 페이지 구간 윗글씨)
+   PARTS: 페이지별 목차 순서(order)와 작업(items). 작업의 sub 값은 현재 화면에 표시하지 않음 */
 const MEDIA={
-  outdoor:{ko:'옥외배너',en:'On the street',desc:'멀리서, 몇 초 안에 읽혀야 하는 매체.'},
-  banner:{ko:'배너',en:'On the web',desc:'페이지의 정체성이나 핵심 메시지를 직관적으로 알려 주는 시각적 매체.'},
-  poster:{ko:'포스터',en:'On the wall',desc:'매장 안에서 오래 머무는 시선을 붙잡는 매체.'},
-  flyer:{ko:'전단지',en:'In hand',desc:'손에 쥐고 가까이서 읽는 인쇄 매체.'},
-  insta:{ko:'인스타그램 이미지',en:'In the feed',desc:'엄지가 스크롤을 멈추게 해야 하는 매체.'},
-  blog:{ko:'블로그 썸네일',en:'In search',desc:'검색 결과 목록에서 옆 글과 비교되는 매체.'},
-  detail:{ko:'상세페이지',en:'Before buying',desc:'구매 직전, 끝까지 읽혀야 하는 매체.'},
-  video:{ko:'광고영상',en:'On screen',desc:'짧은 시간 안에 제품을 기억시키는 영상 광고.'},
-  padding:{ko:'신소재 패딩 광고',en:'Project 01',desc:'에어로젤 소재를 앞세운 겨울 패딩의 영상 · 상세페이지 · 이미지 작업.'},
-  still:{ko:'남성 올인원 로션 광고',en:'Project 02',desc:'남성 올인원 스킨 로션의 영상 · 상세페이지 · 이미지 작업.'},
-  fizz:{ko:'오렌지 음료 광고',en:'Project 03',desc:'직접 디자인한 캐릭터와 라벨로 만든 오렌지 음료의 영상 · 이미지 작업.'},
-  print:{ko:'기타 인쇄물',en:'Up close',desc:'명함 · 매장 스티커 · 미니배너처럼 가까이서 보는 소형 인쇄물.'},
-  image:{ko:'광고 이미지',en:'Key visual',desc:'하나의 콘셉트를 여러 장의 광고 컷으로 확장한 작업.'}
+  outdoor:{ko:'옥외배너',en:'On the street'},
+  banner:{ko:'배너',en:'On the web'},
+  poster:{ko:'포스터',en:'On the wall'},
+  flyer:{ko:'전단지',en:'In hand'},
+  insta:{ko:'인스타그램 이미지',en:'In the feed'},
+  blog:{ko:'블로그 썸네일',en:'In search'},
+  detail:{ko:'상세페이지',en:'Before buying'},
+  print:{ko:'기타 인쇄물',en:'Up close'},
+  padding:{ko:'신소재 패딩 광고',en:'Project 01'},
+  still:{ko:'남성 올인원 로션 광고',en:'Project 02'},
+  fizz:{ko:'오렌지 음료 광고',en:'Project 03'}
 };
 const PARTS={
   archive:{ch:'CH 01',k:'CH 01 · Client Work',name:'실무 프로젝트',lead:'실제 현업에 적용된 실무 디자인 결과물입니다.',
@@ -301,10 +306,10 @@ const PARTS={
         tool:'Higgsfield, Firefly, Suno, Photoshop, Claude',point:'캐릭터 → 라벨 → 병 연출 컷 순서로 이어, 직접 만든 캐릭터가 라벨에서 실물 연출까지 같은 모습으로 나오게 구성'}
     ]}
 };
-/* ---------- 화면 ---------- */
+/* 페이지 설정: 주소 해시(#work · #ai) → 데이터 키 · 타이틀 · 반대편 페이지 */
 const PAGES={
-  work:{key:'archive',eyebrow:'CH 01 · Client Work',title:'Client Work',other:'ai'},
-  ai:{key:'ailab',eyebrow:'CH 02 · AI Lab',title:'AI Lab',other:'work'}
+  work:{key:'archive',title:'Client Work',other:'ai'},
+  ai:{key:'ailab',title:'AI Lab',other:'work'}
 };
 /* 매체 이름 밑 짧은 설명 */
 const SHORT={
@@ -320,62 +325,70 @@ const SHORT={
   still:'남성 올인원 로션 STILL.의 영상, 상세페이지,<br>광고 이미지.',
   fizz:'직접 그린 캐릭터로 라벨과 영상까지 만든<br>오렌지 음료 광고.'
 };
-const u=s=>BASE+s;
-/* TOOL 이름 → 공식 로고 파일 (이 페이지 옆 icons 폴더) */
+/* TOOL 이름 → 공식 로고 파일(icons 폴더). 목록에 없는 도구는 글자로 표시 */
 const TOOL_ICON={'Photoshop':'photoshop.svg','Illustrator':'illustrator.svg','Premiere Pro':'premiere.svg','Figma':'figma-color.svg',
   'Firefly':'firefly.svg','Higgsfield':'higgsfield.png','Suno':'suno.svg','Claude':'claude.svg'};
-const toolIcons=t=>t?`<div class="tools">${t.split(',').map(s=>s.trim()).map(n=>TOOL_ICON[n]
-  ?`<span class="tic" tabindex="0" role="img" aria-label="${n}" data-name="${n}"><img src="icons/${TOOL_ICON[n]}" alt=""></span>`
-  :`<span>${n}</span>`).join('')}</div>`:'-';
-const esc=s=>String(s).replace(/"/g,'&quot;');
-const Z=(s,label,cls='')=>`<button class="zoom ${cls}" data-full="${u(s)}" aria-label="${esc(label)} 크게 보기"><img src="${u(s)}" alt="" loading="lazy"></button>`;
-const fig=(s,label,cap)=>`<figure>${Z(s,label)}${cap?`<figcaption class="cap">${cap}</figcaption>`:''}</figure>`;
+/* 정렬 · 타이밍 상수 */
+const JUMP_SETTLE_MS=4000;      // 목차 이동 후 이미지 로드에 맞춰 위치를 다시 맞추는 시간
+const GLYPH_TOP_RATIO=.09;      // 한글 글자 윗선이 글자 상자 위에서 떨어진 비율(Noto Sans KR 기준)
+const TWO_COLUMN_LIMIT=.6;      // 왼쪽 이름 칸이 구간 폭의 60% 미만이면 두 칸 배치로 판단
 
-function gallery(it){
-  const n=(i)=>`${it.title} ${i+1}`;
-  switch(it.kind){
-    case 'stand':{const c=it.units.length>=8?'c8':'c4';
-      return `<div class="g ${c}">${it.units.map(([,s],i)=>Z(s,n(i))).join('')}</div>`}
-    case 'hang':
-      if(it.layout==='mix')return `<div class="row">${it.hangs.map(h=>`<figure style="--r:${h.r}">${Z(h.s,h.label)}<figcaption class="cap">${h.label}</figcaption></figure>`).join('')}</div>`;
-      return `<div class="g c2 end">${it.hangs.map(h=>`<figure class="${h.r>3?'full':''}">${Z(h.s,h.label)}<figcaption class="cap">${h.label}</figcaption></figure>`).join('')}</div>`;
-    case 'site':return `<div class="g c2">${it.slides.map((s,i)=>Z(s,`롤링배너 ${i+1}`)).join('')}</div>`;
-    case 'popup':return `<div class="g c3">${it.slides.map((s,i)=>Z(s,`팝업배너 ${i+1}`)).join('')}</div>`;
-    case 'flyers':return `<div class="g c2 flyers">${it.flyers.map(x=>`<figure class="${x.cls==='wide'?'full':''}"><div class="pair">${Z(x.f,x.t+' 앞면')}${Z(x.b,x.t+' 뒷면')}</div><figcaption class="cap">${x.t} · 앞면 / 뒷면</figcaption></figure>`).join('')}</div>`;
-    case 'feed':return `<div class="g c6">${it.imgs.map((s,i)=>Z(s,n(i),'crop45')).join('')}</div>`;
-    case 'thumbs':return `<div class="g c6">${it.imgs.map((s,i)=>Z(s,n(i),'crop11')).join('')}</div>`;
-    case 'posters':return `<div class="g c4">${it.imgs.map((s,i)=>Z(s,n(i))).join('')}</div>`;
-    case 'cards':return `<div class="g c2 cards">${it.cards.map(c=>`<figure><div class="pair">${Z(c.f,c.t+' 앞면')}${Z(c.b,c.t+' 뒷면')}</div><figcaption class="cap">${c.t}</figcaption></figure>`).join('')}</div>`;
-    case 'stickers':return `<div class="g c2 stickers">${it.imgs.map((s,i)=>Z(s,n(i))).join('')}</div>`;
-    case 'minis':return `<div class="g minis">${it.imgs.map((s,i)=>Z(s,n(i))).join('')}</div>`;
-    case 'avideo':{const v=it.ratio==='9/16';
-      return `<div class="vid ${v?'vert':''}"><video controls playsinline preload="metadata" poster="${u(it.poster)}" aria-label="${esc(it.title)}"><source src="${u(it.src)}" type="video/mp4"></video></div>`}
-    case 'details':return `<div class="dgrid">${it.pages.map(([s,l])=>`<figure><div class="long tall" tabindex="0" aria-label="${esc(l)}, 위아래로 스크롤해서 보기"><div class="inner"><img src="${u(s)}" alt="${esc(l)}" loading="lazy"></div></div><figcaption class="cap">${l}</figcaption></figure>`).join('')}</div><p class="long-hint">상자 안을 위아래로 스크롤해 보세요 · 이미지를 누르면 크게 보기</p>`;
-    case 'adetail':{const g=it.gif;
-      return `<div class="long" tabindex="0" aria-label="${esc(it.title)}, 위아래로 스크롤해서 보기"><div class="inner"><img src="${u(it.img)}" alt="${esc(it.title)}" loading="lazy">${g?`<img class="gif" src="${u(g.src)}" alt="" loading="lazy" style="left:${g.x/g.W*100}%;top:${g.y/g.H*100}%;width:${g.w/g.W*100}%;height:${g.h/g.H*100}%">`:''}</div></div><p class="long-hint">상자 안을 위아래로 스크롤해 보세요 · 이미지를 누르면 크게 보기</p>`}
-    case 'agal':return `<div class="row">${it.imgs.map(([s,l,r])=>`<figure style="--r:${r.toFixed(3)}">${Z(s,it.title+' '+l)}<figcaption class="cap">${l}</figcaption></figure>`).join('')}</div>`;
-  }
-  return '';
-}
-const subOf=it=>(it.sub||'').replace(/\s*—\s*.*$/,'');
+/* ---------- DOM 참조 ---------- */
+const $=id=>document.getElementById(id);
+const page=$('page'),topbar=$('topbar'),lightbox=$('lb'),lightboxImg=lightbox.querySelector('img'),lightboxClose=$('lb-close');
+const cursorDot=$('cur'),cursorRing=$('ring');
+
+/* ---------- 템플릿 ---------- */
+const assetUrl=path=>BASE+path;
+const escAttr=s=>String(s).replace(/"/g,'&quot;');
+const zoomButton=(src,label,cls='')=>`<button class="zoom ${cls}" data-full="${assetUrl(src)}" aria-label="${escAttr(label)} 크게 보기"><img src="${assetUrl(src)}" alt="" loading="lazy" decoding="async"></button>`;
+const toolIcons=tools=>tools?`<div class="tools">${tools.split(',').map(s=>s.trim()).map(name=>TOOL_ICON[name]
+  ?`<span class="tic" tabindex="0" role="img" aria-label="${name}" data-name="${name}"><img src="icons/${TOOL_ICON[name]}" alt="" decoding="async"></span>`
+  :`<span>${name}</span>`).join('')}</div>`:'-';
+const LONG_HINT='<p class="long-hint">상자 안을 위아래로 스크롤해 보세요 · 이미지를 누르면 크게 보기</p>';
+
+/* 작업 종류(kind) → 갤러리 HTML. 새 종류는 여기에 항목만 추가 */
+const RENDERERS={
+  stand:it=>`<div class="g ${it.units.length>=8?'c8':'c4'}">${it.units.map(([,s],i)=>zoomButton(s,`${it.title} ${i+1}`)).join('')}</div>`,
+  hang:it=>it.layout==='mix'
+    ?`<div class="row">${it.hangs.map(h=>`<figure style="--r:${h.r}">${zoomButton(h.s,h.label)}<figcaption class="cap">${h.label}</figcaption></figure>`).join('')}</div>`
+    :`<div class="g c2 end">${it.hangs.map(h=>`<figure class="${h.r>3?'full':''}">${zoomButton(h.s,h.label)}<figcaption class="cap">${h.label}</figcaption></figure>`).join('')}</div>`,
+  site:it=>`<div class="g c2">${it.slides.map((s,i)=>zoomButton(s,`롤링배너 ${i+1}`)).join('')}</div>`,
+  popup:it=>`<div class="g c3">${it.slides.map((s,i)=>zoomButton(s,`팝업배너 ${i+1}`)).join('')}</div>`,
+  flyers:it=>`<div class="g c2 flyers">${it.flyers.map(x=>`<figure class="${x.cls==='wide'?'full':''}"><div class="pair">${zoomButton(x.f,x.t+' 앞면')}${zoomButton(x.b,x.t+' 뒷면')}</div><figcaption class="cap">${x.t} · 앞면 / 뒷면</figcaption></figure>`).join('')}</div>`,
+  feed:it=>`<div class="g c6">${it.imgs.map((s,i)=>zoomButton(s,`${it.title} ${i+1}`,'crop45')).join('')}</div>`,
+  thumbs:it=>`<div class="g c6">${it.imgs.map((s,i)=>zoomButton(s,`${it.title} ${i+1}`,'crop11')).join('')}</div>`,
+  posters:it=>`<div class="g c4">${it.imgs.map((s,i)=>zoomButton(s,`${it.title} ${i+1}`)).join('')}</div>`,
+  cards:it=>`<div class="g c2 cards">${it.cards.map(c=>`<figure><div class="pair">${zoomButton(c.f,c.t+' 앞면')}${zoomButton(c.b,c.t+' 뒷면')}</div><figcaption class="cap">${c.t}</figcaption></figure>`).join('')}</div>`,
+  stickers:it=>`<div class="g c2 stickers">${it.imgs.map((s,i)=>zoomButton(s,`${it.title} ${i+1}`)).join('')}</div>`,
+  minis:it=>`<div class="g minis">${it.imgs.map((s,i)=>zoomButton(s,`${it.title} ${i+1}`)).join('')}</div>`,
+  avideo:it=>`<div class="vid ${it.ratio==='9/16'?'vert':''}"><video controls playsinline preload="metadata" poster="${assetUrl(it.poster)}" aria-label="${escAttr(it.title)}"><source src="${assetUrl(it.src)}" type="video/mp4"></video></div>`,
+  details:it=>`<div class="dgrid">${it.pages.map(([s,l])=>`<figure><div class="long" tabindex="0" aria-label="${escAttr(l)}, 위아래로 스크롤해서 보기"><div class="inner"><img src="${assetUrl(s)}" alt="${escAttr(l)}" loading="lazy" decoding="async"></div></div><figcaption class="cap">${l}</figcaption></figure>`).join('')}</div>${LONG_HINT}`,
+  adetail:it=>{const g=it.gif;
+    return `<div class="long" tabindex="0" aria-label="${escAttr(it.title)}, 위아래로 스크롤해서 보기"><div class="inner"><img src="${assetUrl(it.img)}" alt="${escAttr(it.title)}" loading="lazy" decoding="async">${g?`<img class="gif" src="${assetUrl(g.src)}" alt="" loading="lazy" decoding="async" style="left:${g.x/g.W*100}%;top:${g.y/g.H*100}%;width:${g.w/g.W*100}%;height:${g.h/g.H*100}%">`:''}</div></div>${LONG_HINT}`},
+  agal:it=>`<div class="row">${it.imgs.map(([s,l,r])=>`<figure style="--r:${r.toFixed(3)}">${zoomButton(s,it.title+' '+l)}<figcaption class="cap">${l}</figcaption></figure>`).join('')}</div>`
+};
+const gallery=it=>RENDERERS[it.kind]?RENDERERS[it.kind](it):'';
+/* 가운데 정렬하는 작업: 미니배너 · 상세페이지(AI) · 세로 영상 */
+const isCentered=it=>it.kind==='minis'||it.kind==='adetail'||(it.kind==='avideo'&&it.ratio==='9/16');
+const pad2=n=>String(n).padStart(2,'0');
 
 function render(){
-  const id=location.hash.slice(1)==='ai'?'ai':'work',pg=PAGES[id],P=PARTS[pg.key],O=PAGES[pg.other],OP=PARTS[O.key];
-  document.title=`SEOSEJI ${pg.title}`;
-  document.getElementById('sw-work').classList.toggle('on',id==='work');
-  document.getElementById('sw-ai').classList.toggle('on',id==='ai');
-  const tot=String(P.order.length).padStart(2,'0');
-  document.getElementById('page').innerHTML=`
+  const pageId=location.hash.slice(1)==='ai'?'ai':'work',pageCfg=PAGES[pageId],part=PARTS[pageCfg.key],otherPage=PAGES[pageCfg.other],otherPart=PARTS[otherPage.key];
+  document.title=`SEOSEJI ${pageCfg.title}`;
+  $('sw-work').classList.toggle('on',pageId==='work');
+  $('sw-ai').classList.toggle('on',pageId==='ai');
+  page.innerHTML=`
   <section class="hero">
-    <div><h1 class="title">${pg.title}</h1></div>
-    <p class="lead">${P.lead}</p>
+    <div><h1 class="title">${pageCfg.title}</h1></div>
+    <p class="lead">${part.lead}</p>
   </section>
-  <nav class="index" aria-label="매체 목차">${P.order.map((m,i)=>`<a href="#${id}-${m}" data-to="${id}-${m}"><span>${String(i+1).padStart(2,'0')}</span>${MEDIA[m].ko}</a>`).join('')}</nav>
-  ${P.order.map((m,mi)=>`
-  <section class="medium" id="${id}-${m}">
-    <div class="m-label"><div class="m-en">${id==='work'?`Project ${String(mi+1).padStart(2,'0')}`:MEDIA[m].en}</div><h2>${MEDIA[m].ko}</h2>${SHORT[m]?`<p>${SHORT[m]}</p>`:''}</div>
-    <div class="works">${P.items.filter(i=>i.m===m).map(it=>`
-      <article class="work ${it.kind==='minis'||it.kind==='adetail'||(it.kind==='avideo'&&it.ratio==='9/16')?'center':''}">
+  <nav class="index" aria-label="매체 목차">${part.order.map((m,i)=>`<a href="#${pageId}-${m}" data-to="${pageId}-${m}"><span>${pad2(i+1)}</span>${MEDIA[m].ko}</a>`).join('')}</nav>
+  ${part.order.map((m,mi)=>`
+  <section class="medium" id="${pageId}-${m}">
+    <div class="m-label"><div class="m-en">${pageId==='work'?`Project ${pad2(mi+1)}`:MEDIA[m].en}</div><h2>${MEDIA[m].ko}</h2>${SHORT[m]?`<p>${SHORT[m]}</p>`:''}</div>
+    <div class="works">${part.items.filter(i=>i.m===m).map(it=>`
+      <article class="work ${isCentered(it)?'center':''}">
         <div class="w-head"><h3>${it.title}</h3></div>
         ${gallery(it)}
         <dl class="spec${it.time?'':' no-time'}">
@@ -386,89 +399,118 @@ function render(){
       </article>`).join('')}</div>
   </section>`).join('')}
   <section class="next">
-    <a href="#${pg.other}"><small>Next · ${OP.name}</small><span class="big">${O.title} →</span></a>
+    <a href="#${pageCfg.other}"><small>Next · ${otherPart.name}</small><span class="big">${otherPage.title} →</span></a>
     <a class="back" href="./">← 인트로로 돌아가기</a>
   </section>`;
-  document.querySelectorAll('[data-to]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();goTo(a.dataset.to)}));
-  bindRing();
+  page.querySelectorAll('[data-to]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();goTo(a.dataset.to)}));
+  bindRingHover();
   alignLabels();
 }
-/* 목차 이동: 위쪽 이미지가 늦게 로드되며 높이가 바뀌어 엉뚱한 곳에 멈추던 문제를 막음.
-   위쪽 구간 이미지를 바로 불러오고, 이미지가 로드될 때마다 4초 동안 목표 위치로 다시 맞춤(사용자가 직접 스크롤하면 중단) */
+
+/* ---------- 목차 이동 ----------
+   위쪽 이미지가 늦게 로드되면 높이가 바뀌어 엉뚱한 곳에 멈춤 → 위쪽 구간 이미지를 바로 불러오고,
+   이미지가 로드될 때마다 JUMP_SETTLE_MS 동안 목표 위치로 다시 맞춤(사용자가 직접 스크롤하면 중단) */
 let jumpTarget=null,jumpUntil=0;
 function goTo(id){
-  const el=document.getElementById(id);if(!el)return;
-  document.querySelectorAll('.medium').forEach(m=>{if(m!==el&&(m.compareDocumentPosition(el)&Node.DOCUMENT_POSITION_FOLLOWING))
-    m.querySelectorAll('img[loading="lazy"]').forEach(i=>i.loading='eager')});
-  jumpTarget=el;jumpUntil=performance.now()+4000;
-  el.scrollIntoView({behavior:'instant',block:'start'});
+  const target=$(id);if(!target)return;
+  document.querySelectorAll('.medium').forEach(m=>{
+    if(m!==target&&(m.compareDocumentPosition(target)&Node.DOCUMENT_POSITION_FOLLOWING))
+      m.querySelectorAll('img[loading="lazy"]').forEach(img=>img.loading='eager');
+  });
+  jumpTarget=target;jumpUntil=performance.now()+JUMP_SETTLE_MS;
+  target.scrollIntoView({behavior:'instant',block:'start'});
 }
 document.addEventListener('load',e=>{
   if(jumpTarget&&e.target.tagName==='IMG'&&performance.now()<jumpUntil)jumpTarget.scrollIntoView({behavior:'instant',block:'start'});
 },true);
-['wheel','touchstart','keydown','mousedown'].forEach(t=>addEventListener(t,ev=>{if(!ev.target.closest||!ev.target.closest('.index'))jumpTarget=null},{passive:true}));
-/* 왼쪽 매체 이름의 글자 윗선을 오른쪽 첫 작업 제목의 글자 윗선에 맞춤 (두 칸일 때만)
-   스크롤 중 붙어 있는(sticky) 상태에서 재면 값이 틀어지므로 잠깐 풀고 잰다 */
-const glyphTop=el=>{const r=el.getBoundingClientRect(),cs=getComputedStyle(el),fs=parseFloat(cs.fontSize),lh=parseFloat(cs.lineHeight)||fs*1.2;return r.top+(lh-fs)/2+fs*.09};
+['wheel','touchstart','keydown','mousedown'].forEach(type=>addEventListener(type,e=>{if(!e.target.closest||!e.target.closest('.index'))jumpTarget=null},{passive:true}));
+
+/* ---------- 왼쪽 매체 이름 정렬 ----------
+   두 칸 배치일 때 왼쪽 이름의 글자 윗선을 오른쪽 첫 작업 제목의 글자 윗선에 맞춤.
+   붙어 있는(sticky) 상태에서 재면 값이 틀어지므로 잠깐 풀고 잰다 */
+const glyphTop=el=>{const r=el.getBoundingClientRect(),cs=getComputedStyle(el),fs=parseFloat(cs.fontSize),lh=parseFloat(cs.lineHeight)||fs*1.2;return r.top+(lh-fs)/2+fs*GLYPH_TOP_RATIO};
 function alignLabels(){
-  document.querySelectorAll('.medium').forEach(sec=>{
-    const lab=sec.querySelector('.m-label'),h2=lab.querySelector('h2'),h3=sec.querySelector('.w-head h3');
-    lab.style.marginTop='0px';lab.style.position='static';
-    if(h3&&lab.offsetWidth<sec.clientWidth*.6){
-      const d=glyphTop(h2)-glyphTop(h3);
-      lab.style.marginTop=(-d)+'px';
+  document.querySelectorAll('.medium').forEach(section=>{
+    const label=section.querySelector('.m-label'),name=label.querySelector('h2'),firstTitle=section.querySelector('.w-head h3');
+    label.style.marginTop='0px';label.style.position='static';
+    if(firstTitle&&label.offsetWidth<section.clientWidth*TWO_COLUMN_LIMIT){
+      label.style.marginTop=(-(glyphTop(name)-glyphTop(firstTitle)))+'px';
     }
-    lab.style.position='';
+    label.style.position='';
   });
 }
-addEventListener('resize',alignLabels);
-document.fonts&&document.fonts.ready.then(alignLabels);
-addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(h==='work'||h==='ai'){render();scrollTo(0,0)}});
-render();
 
-/* 상단 바 선 */
-const tb=document.getElementById('topbar');
-/* 목차가 상단 바에 붙으면 어두운 배경으로 */
-const stick=()=>{tb.classList.toggle('scrolled',scrollY>8);const ix=document.querySelector('.index');
-  if(ix)ix.classList.toggle('stuck',ix.getBoundingClientRect().top<=tb.offsetHeight+1)};
-addEventListener('scroll',stick,{passive:true});addEventListener('hashchange',()=>setTimeout(stick,0));
-/* 상단 바 · 목차 높이 → 목차가 상단 바 바로 밑에 붙음 */
-const setH=()=>{const r=document.documentElement.style,ix=document.querySelector('.index');r.setProperty('--tbH',tb.offsetHeight+'px');if(ix)r.setProperty('--ixH',ix.offsetHeight+'px')};
-addEventListener('resize',setH);setH();
-/* 지금 보고 있는 매체를 목차에 표시 */
-let io=null;
-function watch(){
-  io&&io.disconnect();setH();
-  const links=[...document.querySelectorAll('.index a')];
-  io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('on',a.dataset.to===e.target.id))})},{rootMargin:'-45% 0px -50% 0px'});
-  document.querySelectorAll('.medium').forEach(s=>io.observe(s));
+/* ---------- 상단 바 · 목차 상태 ---------- */
+/* 상단 바 아래 선(스크롤 시) · 목차가 붙으면 어두운 배경(.stuck) */
+function updateStuck(){
+  topbar.classList.toggle('scrolled',scrollY>8);
+  const index=page.querySelector('.index');
+  if(index)index.classList.toggle('stuck',index.getBoundingClientRect().top<=topbar.offsetHeight+1);
 }
-watch();addEventListener('hashchange',()=>setTimeout(watch,0));
+/* 상단 바 · 목차 높이 → CSS 변수(목차가 상단 바 바로 밑에 붙고, 앵커 위치가 가려지지 않게) */
+function updateHeights(){
+  const style=document.documentElement.style,index=page.querySelector('.index');
+  style.setProperty('--tbH',topbar.offsetHeight+'px');
+  if(index)style.setProperty('--ixH',index.offsetHeight+'px');
+}
+/* 지금 보고 있는 매체를 목차에 표시(.on) */
+let sectionObserver=null;
+function watchSections(){
+  sectionObserver&&sectionObserver.disconnect();updateHeights();
+  const links=[...page.querySelectorAll('.index a')];
+  sectionObserver=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('on',a.dataset.to===e.target.id))})},{rootMargin:'-45% 0px -50% 0px'});
+  page.querySelectorAll('.medium').forEach(s=>sectionObserver.observe(s));
+}
 
-/* 크게 보기 */
-const lb=document.getElementById('lb'),lbImg=lb.querySelector('img');let lbFrom=null;
-const closeLb=()=>{lb.hidden=true;lbImg.removeAttribute('src');lbFrom&&lbFrom.focus()};
+/* ---------- 클릭 처리(한 곳에서): 크게 보기 열기/닫기 → 상세페이지 이미지 → 로고 툴팁 ---------- */
+let lightboxOpener=null;
+const closeLightbox=()=>{lightbox.hidden=true;lightboxImg.removeAttribute('src');lightboxOpener&&lightboxOpener.focus()};
 document.addEventListener('click',e=>{
-  const b=e.target.closest('[data-full]');
-  if(b){lbFrom=b;lbImg.src=b.dataset.full;lbImg.alt=b.getAttribute('aria-label')||'';lb.hidden=false;document.getElementById('lb-close').focus();return}
-  if(!lb.hidden&&e.target.closest('#lb'))closeLb();
+  const zoom=e.target.closest('[data-full]');
+  if(zoom){
+    lightboxOpener=zoom;lightboxImg.src=zoom.dataset.full;lightboxImg.alt=zoom.getAttribute('aria-label')||'';lightbox.hidden=false;lightboxClose.focus();
+  }else if(!lightbox.hidden&&e.target.closest('#lb')){
+    closeLightbox();
+  }
+  /* 상세페이지 상자 속 긴 이미지: 누르면 크게 */
+  const longImg=e.target.closest('.long .inner>img:not(.gif)');
+  if(longImg){lightboxOpener=longImg.closest('.long');lightboxImg.src=longImg.src;lightbox.hidden=false}
+  /* 휴대폰: 로고를 누르면 이름이 뜨고, 다른 곳을 누르면 사라짐 */
+  const tic=e.target.closest('.tic');
+  document.querySelectorAll('.tic.show').forEach(x=>{if(x!==tic)x.classList.remove('show')});
+  if(tic)tic.classList.toggle('show');
 });
-addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden)closeLb()});
-/* 상세페이지 상자: 누르면 크게 */
-document.addEventListener('click',e=>{const l=e.target.closest('.long .inner>img:not(.gif)');if(l){lbFrom=l.closest('.long');lbImg.src=l.src;lb.hidden=false}});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&!lightbox.hidden)closeLightbox()});
 
-/* 휴대폰: 로고를 누르면 이름이 뜨고, 다른 곳을 누르면 사라짐 */
-document.addEventListener('click',e=>{const t=e.target.closest('.tic');
-  document.querySelectorAll('.tic.show').forEach(x=>{if(x!==t)x.classList.remove('show')});
-  if(t)t.classList.toggle('show')});
-/* 커서 */
-const cur=document.getElementById('cur'),ring=document.getElementById('ring');
-let cx=-100,cy=-100,rx=-100,ry=-100;
-addEventListener('pointermove',e=>{cx=e.clientX;cy=e.clientY;cur.style.transform=`translate(${cx}px,${cy}px)`});
-(function loop(){rx+=(cx-rx)*.2;ry+=(cy-ry)*.2;ring.style.transform=`translate(${rx}px,${ry}px)`;requestAnimationFrame(loop)})();
-function bindRing(){document.querySelectorAll('a,button,video,.long').forEach(el=>{if(el.dataset.rb)return;el.dataset.rb=1;
-  el.addEventListener('pointerenter',()=>ring.classList.add('big'));el.addEventListener('pointerleave',()=>ring.classList.remove('big'))})}
-bindRing();
+/* ---------- 커서: 점은 바로, 링은 부드럽게 따라옴. 링크 · 버튼 · 영상 · 상세 상자 위에서 링 확대 ---------- */
+let pointerX=-100,pointerY=-100,ringX=-100,ringY=-100;
+addEventListener('pointermove',e=>{pointerX=e.clientX;pointerY=e.clientY;cursorDot.style.transform=`translate(${pointerX}px,${pointerY}px)`});
+(function followRing(){ringX+=(pointerX-ringX)*.2;ringY+=(pointerY-ringY)*.2;cursorRing.style.transform=`translate(${ringX}px,${ringY}px)`;requestAnimationFrame(followRing)})();
+function bindRingHover(){
+  document.querySelectorAll('a,button,video,.long').forEach(el=>{
+    if(el.dataset.rb)return;el.dataset.rb=1;
+    el.addEventListener('pointerenter',()=>cursorRing.classList.add('big'));
+    el.addEventListener('pointerleave',()=>cursorRing.classList.remove('big'));
+  });
+}
+
+/* ---------- 이벤트 연결 · 처음 실행 ---------- */
+/* 주소 해시 변경: #work ↔ #ai 전환이면 다시 그리고 맨 위로, 그다음 높이 · 목차 상태 갱신 */
+addEventListener('hashchange',()=>{
+  const hash=location.hash.slice(1);
+  if(hash==='work'||hash==='ai'){render();scrollTo(0,0)}
+  setTimeout(()=>{updateStuck();watchSections()},0);
+});
+/* 스크롤 · 창 크기 변경은 한 프레임에 한 번만 처리 */
+let scrollQueued=false,resizeQueued=false;
+addEventListener('scroll',()=>{if(scrollQueued)return;scrollQueued=true;requestAnimationFrame(()=>{scrollQueued=false;updateStuck()})},{passive:true});
+addEventListener('resize',()=>{if(resizeQueued)return;resizeQueued=true;requestAnimationFrame(()=>{resizeQueued=false;alignLabels();updateHeights()})});
+document.fonts&&document.fonts.ready.then(alignLabels);
+
+render();
+updateHeights();
+watchSections();
+})();
 </script>
 </body>
 </html>

@@ -7,69 +7,75 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100..900&family=Noto+Sans+KR:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100..900&family=Noto+Sans+KR:wght@400;500&display=swap">
 <style>
-/* Layout: one full-screen hero. Giant two-line name staggered left, small role note beside line one,
-   a living dot field behind, minimal nav on top, scroll cue at the bottom. Single light look by choice. */
+/* 인트로 구성
+   1) 로딩: 남색 화면에 "2026 PORTFOLIO" 타이핑 → 위로 걷힘
+   2) 첫 화면: 가운데 "Editorial Designer / SEO-SEJI" → 살짝 올라가며 입체 버튼 2개(실무 · AI)가 타이핑되며 등장
+   3) 배경: 점 물결(canvas) · 마우스 파문 · 글자 굵기(Dynamic Weight) 효과
+   4) 오른쪽 위 Profile 버튼 → 아래에서 올라오는 프로필 시트
+   한 가지 밝은 테마만 사용 */
 :root{
-  --bg:#fbfbfb;        /* 배경 */
-  --fg:#1e212d;        /* 글자 */
-  --cursor:#ffa73e;    /* 마우스 포인터 */
-  --cream:#f9f3cf;     /* 기타 포인트 */
+  --bg:#fbfbfb;                    /* 배경 */
+  --fg:#1e212d;                    /* 글자 */
+  --cursor:#ffa73e;                /* 마우스 포인터 · 강조 */
+  --cream:#f9f3cf;                 /* 포인터 주변 빛 · 선택 영역 */
+  --cream-0:rgba(249,243,207,0);   /* 빛 그라데이션 끝(투명) */
+  --dot:rgba(30,33,45,.32);        /* 배경 점 */
   --muted:rgba(30,33,45,.62);
   --display:"Inter Tight","Helvetica Neue",Arial,sans-serif;
   --body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
   color-scheme:light;
 }
 html,body{height:100%}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);overflow:hidden;-webkit-font-smoothing:antialiased}
 ::selection{background:var(--cream);color:var(--fg)}
 
-/* 로딩 */
+/* ---------- 로딩 ---------- */
 .loader{position:fixed;inset:0;z-index:50;background:var(--fg);display:grid;place-items:center;transition:transform .9s cubic-bezier(.77,0,.18,1)}
 .loader.out{transform:translateY(-100%)}
-.mark{width:26px;height:30px;background:var(--cream);position:relative;overflow:hidden}
-.mark::after{content:"";position:absolute;left:50%;top:-10%;width:3px;height:120%;background:var(--fg);transform:translateX(-50%) rotate(-14deg)}
 .loader .ltxt{color:var(--cream);font-family:var(--display);font-weight:500;font-size:clamp(22px,2.6vw,40px);letter-spacing:.32em;text-indent:.32em;white-space:nowrap}
-/* 타이핑 */
+
+/* ---------- 타이핑 (로딩 글씨 · 버튼 글씨 공통) ----------
+   .ghost가 최종 글자 폭을 미리 잡아 두고, .typed에 한 글자씩 추가 */
 .tw{position:relative;display:inline-block;text-indent:0}
 .tw .ghost{visibility:hidden}
 .tw .typed{position:absolute;left:0;top:0;white-space:nowrap}
 .tw .typed .c{display:inline-block;white-space:pre;animation:cin .32s ease-out both}
-@keyframes cin{from{opacity:0;transform:translateY(.25em)}}
 .tw .typed::after{content:"";display:inline-block;width:2px;height:1em;margin-left:2px;vertical-align:-.14em;background:currentColor;animation:caret .9s steps(1) infinite}
 .tw.done .typed::after{animation:fadeout .4s .5s forwards}
+@keyframes cin{from{opacity:0;transform:translateY(.25em)}}
 @keyframes caret{50%{opacity:0}}
 @keyframes fadeout{to{opacity:0}}
-@keyframes blink{50%{opacity:.25}}
 
-/* 상단 */
-.top{position:fixed;inset:0 0 auto;z-index:5;display:flex;justify-content:space-between;align-items:center;
-  padding-top:calc(22px + env(safe-area-inset-top,0px));
-  padding-left:max(16px,env(safe-area-inset-left,0px),2.2vw);padding-right:max(16px,env(safe-area-inset-right,0px),2.2vw)}
-.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:-.02em;color:var(--fg);text-decoration:none}
-.brand .mark{width:16px;height:19px;background:var(--fg)}
-.brand .mark::after{width:2px;background:var(--cream)}
-nav{display:flex;gap:clamp(14px,2vw,24px)}
-nav a{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--fg);text-decoration:none;position:relative;padding:4px 0}
-nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--cream);transform:scaleX(0);transform-origin:left;transition:transform .35s ease;z-index:-1}
-nav a:hover::after,nav a:focus-visible::after{transform:scaleX(1)}
-nav a:focus-visible,.brand:focus-visible{outline:2px solid var(--cursor);outline-offset:4px}
-
-/* 히어로 */
+/* ---------- 첫 화면 ---------- */
 .hero{position:relative;height:100%;overflow:hidden;touch-action:none}
+#field{position:absolute;inset:0;width:100%;height:100%;display:block}
 .center{position:absolute;z-index:2;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));top:50%;
   transform:translateY(-58%);transition:transform 1.1s cubic-bezier(.2,.8,.15,1)}
 .center.up{transform:translateY(calc(-58% - clamp(36px,7vh,80px)))}
+
+/* 이름 */
+.name{text-align:center;font-family:var(--display);font-weight:500;line-height:.9;margin:0}
+.name .l{display:block;overflow:hidden;padding:.04em 0 .1em;font-size:clamp(40px,12vw,210px);letter-spacing:.06em;text-indent:.06em;white-space:nowrap}
+.name .l>span{display:inline-block;transform:translateY(105%);transition:transform 1.1s cubic-bezier(.2,.8,.15,1)}
+.name .ch{display:inline-block;font-variation-settings:'wght' 400}
+.eyebrow{display:block;overflow:hidden;line-height:1.5;padding-bottom:.15em;font-size:clamp(13px,1.15vw,18px);letter-spacing:.32em;text-indent:.32em;font-weight:500;margin-bottom:clamp(6px,1.2vw,18px)}
+.eyebrow>span{display:inline-block;transform:translateY(105%);transition:transform .9s .25s cubic-bezier(.2,.8,.15,1)}
+.ready .name .l>span,.ready .eyebrow>span{transform:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* 입장 버튼 묶음 */
 .enter{position:absolute;left:0;right:0;top:calc(100% + clamp(36px,7vh,76px));display:flex;justify-content:center;flex-wrap:wrap;gap:clamp(14px,3vw,40px);
   opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s;pointer-events:none}
 .enter.show{opacity:1;transform:none;pointer-events:auto}
-.enter-btn{display:inline-block;background:var(--fg);color:var(--bg);font-family:var(--body);font-weight:500;font-size:clamp(14px,1.1vw,17px);letter-spacing:.02em;
-  padding:13px clamp(18px,1.8vw,26px);text-decoration:none;border-radius:0;transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
-/* 입체 버튼: 선으로 그린 옆면 (마우스를 올리면 반쯤, 누르면 끝까지 눌림) */
+
+/* 입체 버튼: 선으로 그린 옆면(--d 두께). 마우스를 올리면 반쯤, 누르면 끝까지 눌림.
+   사선이 되는 테두리는 √2배(--td)로 두껍게 해서 모든 선의 굵기를 같게 보이게 함 */
 @property --d{syntax:"<length>";inherits:true;initial-value:7px}
-.enter-btn{position:relative;--d:7px;--t:1.4px;--td:calc(var(--t) * 1.4142);
+.enter-btn{position:relative;display:inline-block;background:var(--fg);color:var(--bg);font-family:var(--body);font-weight:500;font-size:clamp(14px,1.1vw,17px);letter-spacing:.02em;
+  padding:13px clamp(18px,1.8vw,26px);text-decoration:none;border-radius:0;
+  --d:7px;--t:1.4px;--td:calc(var(--t) * 1.4142);
   transform:translate(calc(7px - var(--d)),calc(7px - var(--d)));transition:--d .16s cubic-bezier(.3,.7,.4,1),transform .16s cubic-bezier(.3,.7,.4,1)}
 .enter-btn::before,.enter-btn::after{content:"";position:absolute;box-sizing:border-box;background:var(--bg);border:0 solid var(--fg);pointer-events:none;transition:opacity .1s}
 .enter-btn::before{left:100%;top:0;width:var(--d);height:100%;transform:skewY(45deg);transform-origin:0 0;border-right-width:var(--t);border-top-width:var(--td);border-bottom-width:var(--td)}
@@ -78,37 +84,8 @@ nav a:focus-visible,.brand:focus-visible{outline:2px solid var(--cursor);outline
 .enter-btn:active{--d:0px}
 .enter-btn:active::before,.enter-btn:active::after{opacity:0}
 .enter-btn:focus-visible{outline:2px solid var(--fg);outline-offset:11px}
-#field{position:absolute;inset:0;width:100%;height:100%;display:block}
-.name{text-align:center;
-  font-family:var(--display);font-weight:500;line-height:.9;margin:0}
-.name .l{display:block;overflow:hidden;padding:.04em 0 .1em;font-size:clamp(40px,12vw,210px);letter-spacing:.06em;text-indent:.06em;white-space:nowrap}
-.name .l>span{display:inline-block;transform:translateY(105%);transition:transform 1.1s cubic-bezier(.2,.8,.15,1)}
-.eyebrow{display:block;overflow:hidden;line-height:1.5;padding-bottom:.15em;font-size:clamp(13px,1.15vw,18px);letter-spacing:.32em;text-indent:.32em;font-weight:500;margin-bottom:clamp(6px,1.2vw,18px)}
-.eyebrow>span{display:inline-block;transform:translateY(105%);transition:transform .9s .25s cubic-bezier(.2,.8,.15,1)}
-.ready .eyebrow>span{transform:none}
-.name .ch{display:inline-block;font-variation-settings:'wght' 400}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.ready .name .l>span{transform:none}
-.row1{display:flex;align-items:flex-end;gap:clamp(10px,1.2vw,20px)}
-.role{font-family:var(--body);font-size:clamp(14px,1.15vw,18px);line-height:1.38;letter-spacing:-.01em;font-weight:500;
-  padding-bottom:.9em;white-space:nowrap;opacity:0;transform:translateY(8px);transition:opacity .8s .55s,transform .8s .55s}
-.role em{font-style:normal;background:linear-gradient(transparent 52%,var(--cream) 52%);padding:0 2px}
-.ready .role{opacity:1;transform:none}
 
-.cue{position:absolute;z-index:2;left:50%;bottom:calc(9vh + env(safe-area-inset-bottom,0px));transform:translateX(-50%);
-  font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--muted);white-space:nowrap;
-  background:var(--bg);padding:4px 8px;opacity:0;transition:opacity .8s .9s}
-.ready .cue{opacity:1}
-.cue b{font-weight:400;display:inline-block;animation:nudge 1.8s ease-in-out infinite}
-@keyframes nudge{50%{transform:translateY(3px)}}
-
-.meta{position:absolute;z-index:2;bottom:calc(22px + env(safe-area-inset-bottom,0px));
-  left:max(16px,env(safe-area-inset-left,0px),2.2vw);right:max(16px,env(safe-area-inset-right,0px),2.2vw);
-  display:flex;justify-content:space-between;gap:16px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted)}
-.meta span{background:var(--bg);padding:2px 4px}
-.meta .ko{font-family:var(--body);letter-spacing:0;font-size:12px}
-
-/* 커서 */
+/* ---------- 커서 (마우스 기기만) ---------- */
 .cur,.ring{position:fixed;left:0;top:0;z-index:60;pointer-events:none;border-radius:50%;opacity:0}
 .cur{width:10px;height:10px;margin:-5px 0 0 -5px;background:var(--cursor)}
 .ring{width:38px;height:38px;margin:-19px 0 0 -19px;border:1.5px solid var(--cursor);transition:width .25s,height .25s,margin .25s,background .25s}
@@ -117,16 +94,13 @@ nav a:focus-visible,.brand:focus-visible{outline:2px solid var(--cursor);outline
 
 @media (max-width:700px){
   .name .l{letter-spacing:.05em;text-indent:.05em}
-  nav a.hide-sm{display:none}
-  .meta span:last-child{display:none}
 }
 @media (prefers-reduced-motion:reduce){
   .loader{transition:opacity .45s}
-  .name .l>span,.eyebrow>span,.cue{transform:none!important;opacity:1!important;transition:none}
-  .cue b{animation:none}
+  .name .l>span,.eyebrow>span{transform:none!important;opacity:1!important;transition:none}
 }
 
-/* ---------- Profile (인트로 오른쪽 위 버튼 → 아래에서 올라오는 프로필 화면) ---------- */
+/* ---------- Profile (오른쪽 위 버튼 → 아래에서 올라오는 프로필 시트) ---------- */
 .pf-btn{position:fixed;z-index:30;top:calc(18px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px),2.6vw);
   border:1px solid var(--fg);border-radius:999px;background:transparent;color:var(--fg);font-family:var(--display);font-weight:500;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
   padding:9px 16px 9px 14px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .25s,color .25s,opacity .6s .4s;opacity:0;pointer-events:none}
@@ -159,6 +133,7 @@ nav a:focus-visible,.brand:focus-visible{outline:2px solid var(--cursor);outline
 .pf-tool:hover{transform:translateY(-4px)}
 .pf-tool img{width:40px;height:40px;object-fit:contain}
 .pf-tool span{font-size:13px;font-weight:500;white-space:nowrap}
+/* 시트가 열리면 --i 순서대로 아래에서 떠오름 */
 .pf-rise{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .8s cubic-bezier(.2,.8,.15,1)}
 .pf-sheet.open .pf-rise{opacity:1;transform:none;transition-delay:calc(.55s + var(--i,0) * 90ms)}
 .pf-sheet.open .pf-tool:hover{transform:translateY(-4px);transition-delay:0s}
@@ -205,15 +180,15 @@ nav a:focus-visible,.brand:focus-visible{outline:2px solid var(--cursor);outline
     <div class="pf-row">
       <div class="pf-label pf-rise" style="--i:7"><div class="en">Tools</div><h3>사용 가능 툴</h3></div>
       <div class="pf-tools">
-        <div class="pf-tool pf-rise" style="--i:8"><img src="icons/photoshop.svg" alt=""><span>Photoshop</span></div>
-        <div class="pf-tool pf-rise" style="--i:9"><img src="icons/illustrator.svg" alt=""><span>Illustrator</span></div>
-        <div class="pf-tool pf-rise" style="--i:10"><img src="icons/premiere.svg" alt=""><span>Premiere Pro</span></div>
-        <div class="pf-tool pf-rise" style="--i:11"><img src="icons/figma-color.svg" alt=""><span>Figma</span></div>
-        <div class="pf-tool pf-rise" style="--i:12"><img src="icons/firefly.svg" alt=""><span>Firefly</span></div>
-        <div class="pf-tool pf-rise" style="--i:13"><img src="icons/higgsfield.png" alt=""><span>Higgsfield</span></div>
-        <div class="pf-tool pf-rise" style="--i:14"><img src="icons/suno.svg" alt=""><span>Suno</span></div>
-        <div class="pf-tool pf-rise" style="--i:15"><img src="icons/claude.svg" alt=""><span>Claude</span></div>
-        <div class="pf-tool pf-rise" style="--i:16"><img src="icons/mcp.svg" alt=""><span>MCP</span></div>
+        <div class="pf-tool pf-rise" style="--i:8"><img src="icons/photoshop.svg" alt="" decoding="async"><span>Photoshop</span></div>
+        <div class="pf-tool pf-rise" style="--i:9"><img src="icons/illustrator.svg" alt="" decoding="async"><span>Illustrator</span></div>
+        <div class="pf-tool pf-rise" style="--i:10"><img src="icons/premiere.svg" alt="" decoding="async"><span>Premiere Pro</span></div>
+        <div class="pf-tool pf-rise" style="--i:11"><img src="icons/figma-color.svg" alt="" decoding="async"><span>Figma</span></div>
+        <div class="pf-tool pf-rise" style="--i:12"><img src="icons/firefly.svg" alt="" decoding="async"><span>Firefly</span></div>
+        <div class="pf-tool pf-rise" style="--i:13"><img src="icons/higgsfield.png" alt="" decoding="async"><span>Higgsfield</span></div>
+        <div class="pf-tool pf-rise" style="--i:14"><img src="icons/suno.svg" alt="" decoding="async"><span>Suno</span></div>
+        <div class="pf-tool pf-rise" style="--i:15"><img src="icons/claude.svg" alt="" decoding="async"><span>Claude</span></div>
+        <div class="pf-tool pf-rise" style="--i:16"><img src="icons/mcp.svg" alt="" decoding="async"><span>MCP</span></div>
       </div>
     </div>
   </div>
@@ -222,144 +197,223 @@ nav a:focus-visible,.brand:focus-visible{outline:2px solid var(--cursor);outline
 
 <script>
 (()=>{
-  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  'use strict';
+  const $=id=>document.getElementById(id);
   const root=document.documentElement;
-  const loader=document.getElementById('loader');
-  const wait=ms=>new Promise(r=>setTimeout(r,ms));
-  const typeInto=(el,text,speed)=>new Promise(res=>{let i=0;const step=()=>{
-    if(i>=text.length){el.parentNode.classList.add('done');return res()}
-    const s=document.createElement('span');s.className='c';s.textContent=text[i++];el.appendChild(s);setTimeout(step,speed)};step()});
-  const enter=document.getElementById('enter'),center=document.getElementById('center');
-  (async()=>{
-    if(reduce){
-      /* '동작 줄이기'가 켜진 기기: 타이핑 대신 글씨를 바로 보여 주고 부드럽게 사라짐 */
-      const lt=document.getElementById('ltyped');lt.textContent='2026 PORTFOLIO';lt.parentNode.classList.add('done');
-      await wait(1300);loader.style.opacity='0';await wait(450);loader.remove();
-      root.classList.add('ready');center.classList.add('up');enter.classList.add('show');
-      enter.querySelectorAll('.typed').forEach(t=>{t.textContent=t.dataset.text;t.parentNode.classList.add('done')});return}
-    await wait(250);await typeInto(document.getElementById('ltyped'),'2026 PORTFOLIO',85);
-    await wait(550);loader.classList.add('out');await wait(250);root.classList.add('ready');
-    await wait(700);center.classList.add('up');
-    await wait(300);enter.classList.add('show');
-    await Promise.all([...enter.querySelectorAll('.typed')].map((t,i)=>wait(i*120).then(()=>typeInto(t,t.dataset.text,38))));
-  })();
+  const prefersReducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const hasFinePointer=matchMedia('(hover:hover) and (pointer:fine)').matches;
+  const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 
-  /* 점 무늬 */
-  const cv=document.getElementById('field'),ctx=cv.getContext('2d');
-  const css=getComputedStyle(root);
-  const FG=css.getPropertyValue('--fg').trim(),CREAM=css.getPropertyValue('--cream').trim(),ORANGE=css.getPropertyValue('--cursor').trim();
-  let W=0,H=0,dpr=1,gap=9;
-  const mouse={x:-999,y:-999,tx:-999,ty:-999,on:false};
-  function size(){dpr=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);gap=W<700?12:15}
-  addEventListener('resize',size);size();
+  /* 화면 전체 공유 상태 */
+  const pointer={x:-100,y:-100,lastTouchAt:0};         // 실제 포인터(화면 좌표)
+  const glow={x:-999,y:-999,targetX:-999,targetY:-999,on:false}; // 점 무늬용 포인터(캔버스 좌표, 부드럽게 따라감)
+  let profileCovering=false;                           // 프로필 시트가 화면을 완전히 덮은 동안 true → 보이지 않는 그리기 생략
 
-  function hash(i,j){let h=Math.imul(i,374761393)+Math.imul(j,668265263)|0;h=Math.imul(h^(h>>>13),1274126177);return ((h^(h>>>16))>>>0)/4294967295}
-  function vn(x,y){const i=Math.floor(x),j=Math.floor(y),fx=x-i,fy=y-j,u=fx*fx*(3-2*fx),v=fy*fy*(3-2*fy);
-    const a=hash(i,j),b=hash(i+1,j),c=hash(i,j+1),d=hash(i+1,j+1);return a+(b-a)*u+(c-a)*v+(a-b-c+d)*u*v}
-  const ss=(a,b,x)=>{x=Math.min(1,Math.max(0,(x-a)/(b-a)));return x*x*(3-2*x)};
+  /* 커서 링: 링크 · 버튼에 올리면 커짐 */
+  const ring=$('ring');
+  const bindRingHover=elements=>elements.forEach(el=>{
+    el.addEventListener('pointerenter',()=>ring.classList.add('big'));
+    el.addEventListener('pointerleave',()=>ring.classList.remove('big'));
+  });
 
-  let t=0;
-  const rip=[],RV=240,RW=20,RL=2.8;let lastRip=0,lrx=-999,lry=-999;
-  const addRip=(x,y,a)=>{rip.push({x,y,a,t:performance.now()/1000});if(rip.length>10)rip.shift()};
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    mouse.x+=(mouse.tx-mouse.x)*.12;mouse.y+=(mouse.ty-mouse.y)*.12;
-    const R=W<700?110:160;
-    if(mouse.on){
-      const g=ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,R*1.15);
-      g.addColorStop(0,CREAM);g.addColorStop(1,'rgba(249,243,207,0)');
-      ctx.fillStyle=g;ctx.beginPath();ctx.arc(mouse.x,mouse.y,R*1.15,0,Math.PI*2);ctx.fill();
+  /* ---------- 1. 로딩 → 첫 화면 등장 순서 ---------- */
+  function runIntroSequence(){
+    const loader=$('loader'),loaderText=$('ltyped'),center=$('center'),enter=$('enter');
+    const LOADER_TEXT='2026 PORTFOLIO';
+    const typeInto=(el,text,msPerChar)=>new Promise(resolve=>{
+      let i=0;
+      const step=()=>{
+        if(i>=text.length){el.parentNode.classList.add('done');return resolve()}
+        const ch=document.createElement('span');ch.className='c';ch.textContent=text[i++];el.appendChild(ch);
+        setTimeout(step,msPerChar);
+      };
+      step();
+    });
+    const buttonLabels=()=>[...enter.querySelectorAll('.typed')];
+
+    if(prefersReducedMotion){
+      /* '동작 줄이기' 기기: 타이핑 없이 글씨를 바로 보여 주고 부드럽게 사라짐 */
+      return (async()=>{
+        loaderText.textContent=LOADER_TEXT;loaderText.parentNode.classList.add('done');
+        await wait(1300);loader.style.opacity='0';await wait(450);loader.remove();
+        root.classList.add('ready');center.classList.add('up');enter.classList.add('show');
+        buttonLabels().forEach(t=>{t.textContent=t.dataset.text;t.parentNode.classList.add('done')});
+      })();
     }
-    const near=[];
-    const now=performance.now()/1000;
-    for(let i=rip.length-1;i>=0;i--)if(now-rip[i].t>RL)rip.splice(i,1);
-    ctx.fillStyle='rgba(30,33,45,.32)';
-    for(let y=gap*.5;y<H;y+=gap){
-      const fade=ss(H*.3,H*.62,y);
-      for(let x=gap*.5;x<W;x+=gap){
-        /* 좁은 화면: 무늬를 가운데 기준 좌우 대칭으로 펼쳐서 한쪽으로 치우치지 않게 */
-        const nx=W<700?Math.abs(x-W/2)*2.6+300:x;
-        let wv=0,rdx=0,rdy=0;
-        for(let j=0;j<rip.length;j++){const r=rip[j],age=now-r.t,dx=x-r.x,dy=y-r.y,d=Math.hypot(dx,dy)||1,e=(d-age*RV)/RW;
-          if(e<-2.6||e>2.6)continue;const a=Math.exp(-e*e)*(1-age/RL)*r.a;wv+=a;rdx+=dx/d*a;rdy+=dy/d*a}
-        let show=false;
-        if(fade>0){
-          const wave=y*.011+Math.sin(nx*.0052+t*.55)*1.3+Math.sin(nx*.012-t*.35+y*.004)*.45+vn(nx*.004+t*.05,y*.006)*.9;
-          const band=((wave%1)+1)%1;
-          const mask=W<700?.85:ss(.28,.55,vn(x*.0018+t*.02+40,y*.0026));
-          show=band<.32*fade*mask;
-        }
-        if(!show&&wv<.4)continue;
-        let px=x+rdx*9,py=y+rdy*9,s=show?1.6+Math.min(wv,1)*1.4:1.1+Math.min(wv,1)*1.3;
-        if(mouse.on){
-          const dx=x-mouse.x,dy=y-mouse.y,d=Math.hypot(dx,dy);
-          if(d<R){const k=(1-d/R)**2;px+=dx/(d||1)*k*16;py+=dy/(d||1)*k*16;s+=k*1.6;if(k>.35){near.push(px,py,s);continue}}
-        }
-        ctx.fillRect(px-s/2,py-s/2,s,s);
-      }
-    }
-    if(near.length){ctx.fillStyle=ORANGE;for(let i=0;i<near.length;i+=3){const s=near[i+2];ctx.fillRect(near[i]-s/2,near[i+1]-s/2,s,s)}}
-    if(!reduce){t+=.016;requestAnimationFrame(draw)}
+    return (async()=>{
+      await wait(250);await typeInto(loaderText,LOADER_TEXT,85);
+      await wait(550);loader.classList.add('out');await wait(250);root.classList.add('ready');
+      await wait(700);center.classList.add('up');
+      await wait(300);enter.classList.add('show');
+      await Promise.all(buttonLabels().map((t,i)=>wait(i*120).then(()=>typeInto(t,t.dataset.text,38))));
+    })();
   }
-  draw();
 
-  /* 커서 */
-  const cur=document.getElementById('cur'),ring=document.getElementById('ring');
-  let rx=-100,ry=-100,cx=-100,cy=-100,touchT=0;
-  const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
-  addEventListener('pointermove',e=>{
-    cx=e.clientX;cy=e.clientY;mouse.on=true;if(e.pointerType!=='mouse')touchT=performance.now();
-    const r=cv.getBoundingClientRect();mouse.tx=cx-r.left;mouse.ty=cy-r.top;
-    if(mouse.x<-500){mouse.x=mouse.tx;mouse.y=mouse.ty}
-    const nw=performance.now();
-    if(!reduce&&nw-lastRip>260&&Math.hypot(mouse.tx-lrx,mouse.ty-lry)>36){lastRip=nw;lrx=mouse.tx;lry=mouse.ty;addRip(mouse.tx,mouse.ty,1)}
-    cur.style.transform=`translate(${cx}px,${cy}px)`;
-    if(reduce)draw();
-  });
-  document.addEventListener('pointerleave',()=>{mouse.on=false;if(reduce)draw()});
-  addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse')dispatchEvent(new PointerEvent('pointermove',{clientX:e.clientX,clientY:e.clientY,pointerType:e.pointerType}))});
-  (function loop(){rx+=(cx-rx)*.18;ry+=(cy-ry)*.18;ring.style.transform=`translate(${rx}px,${ry}px)`;requestAnimationFrame(loop)})();
-  document.querySelectorAll('a').forEach(a=>{
-    a.addEventListener('pointerenter',()=>ring.classList.add('big'));
-    a.addEventListener('pointerleave',()=>ring.classList.remove('big'));
-  });
+  /* ---------- 2. 배경 점 물결 (canvas) ---------- */
+  function initDotField(){
+    const canvas=$('field'),ctx=canvas.getContext('2d');
+    const css=getComputedStyle(root),cssVar=name=>css.getPropertyValue(name).trim();
+    const COLOR={dot:cssVar('--dot'),glow:cssVar('--cream'),glowEdge:cssVar('--cream-0'),near:cssVar('--cursor')};
+    const NARROW_WIDTH=700;
+    const RIPPLE_SPEED=240,RIPPLE_WIDTH=20,RIPPLE_LIFE=2.8,MAX_RIPPLES=10; // px/초, px, 초
+    const RIPPLE_MIN_INTERVAL=260,RIPPLE_MIN_DISTANCE=36;                // ms, px
+    let width=0,height=0,gap=9,time=0;
+    const ripples=[];let lastRippleAt=0,lastRippleX=-999,lastRippleY=-999;
+    const isNarrow=()=>width<NARROW_WIDTH;
 
-  /* Dynamic Weight: 커서에 가까운 글자일수록 굵게 (Originkit dynamic-weight 방식) */
-  const nameEl=document.querySelector('.name .l>span');
-  const label=nameEl.textContent;
-  nameEl.innerHTML='<span class="sr">'+label+'</span>'+[...label].map(c=>'<span class="ch" aria-hidden="true">'+c+'</span>').join('');
-  const chars=[...nameEl.querySelectorAll('.ch')],fac=chars.map(()=>0),FROM=400,TO=900;
-  let fs=parseFloat(getComputedStyle(nameEl).fontSize),lastF=0;
-  addEventListener('resize',()=>{fs=parseFloat(getComputedStyle(nameEl).fontSize)});
-  if(!reduce)(function weights(nowT){
-    const dt=Math.min(.1,Math.max(0,(nowT-(lastF||nowT))/1000));lastF=nowT;
-    const a=1-Math.exp(-dt/.3),reach=Math.max(200,fs*1.6);
-    let qx=cx,qy=cy;
-    /* 터치 기기: 손가락을 떼면 가상의 포인터가 이름 위를 천천히 오가며 효과를 보여 줌 */
-    if(!fine&&root.classList.contains('ready')&&performance.now()-touchT>1500){
-      const b=nameEl.getBoundingClientRect(),ph=nowT/1000;
-      qx=b.left+b.width*(.5+.5*Math.sin(ph*.8));qy=b.top+b.height*.5;
-      const rc=cv.getBoundingClientRect();mouse.on=true;mouse.tx=qx-rc.left;mouse.ty=qy-rc.top;
+    /* 값 노이즈 (해시 기반, 0~1) */
+    const hash=(i,j)=>{let h=Math.imul(i,374761393)+Math.imul(j,668265263)|0;h=Math.imul(h^(h>>>13),1274126177);return ((h^(h>>>16))>>>0)/4294967295};
+    const valueNoise=(x,y)=>{const i=Math.floor(x),j=Math.floor(y),fx=x-i,fy=y-j,u=fx*fx*(3-2*fx),v=fy*fy*(3-2*fy);
+      const a=hash(i,j),b=hash(i+1,j),c=hash(i,j+1),d=hash(i+1,j+1);return a+(b-a)*u+(c-a)*v+(a-b-c+d)*u*v};
+    const smoothstep=(a,b,x)=>{x=Math.min(1,Math.max(0,(x-a)/(b-a)));return x*x*(3-2*x)};
+
+    function resize(){
+      const dpr=Math.min(devicePixelRatio||1,2);
+      width=canvas.clientWidth;height=canvas.clientHeight;
+      canvas.width=width*dpr;canvas.height=height*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+      gap=isNarrow()?12:15;
     }
-    for(let i=0;i<chars.length;i++){
-      const r=chars[i].getBoundingClientRect(),d=Math.hypot(qx-(r.left+r.width/2),qy-(r.top+r.height/2));
-      const tg=Math.min(Math.max(1-d/reach,0),1);fac[i]+=(tg-fac[i])*a;
-      chars[i].style.fontVariationSettings="'wght' "+Math.round(FROM+(TO-FROM)*fac[i]);
+    const addRipple=(x,y,strength)=>{ripples.push({x,y,a:strength,t:performance.now()/1000});if(ripples.length>MAX_RIPPLES)ripples.shift()};
+
+    function draw(){
+      if(profileCovering&&!prefersReducedMotion){requestAnimationFrame(draw);return}
+      ctx.clearRect(0,0,width,height);
+      glow.x+=(glow.targetX-glow.x)*.12;glow.y+=(glow.targetY-glow.y)*.12;
+      const radius=isNarrow()?110:160;
+      if(glow.on){
+        const g=ctx.createRadialGradient(glow.x,glow.y,0,glow.x,glow.y,radius*1.15);
+        g.addColorStop(0,COLOR.glow);g.addColorStop(1,COLOR.glowEdge);
+        ctx.fillStyle=g;ctx.beginPath();ctx.arc(glow.x,glow.y,radius*1.15,0,Math.PI*2);ctx.fill();
+      }
+      const nearDots=[];                               // 포인터 가까이 밀려난 점(주황으로 따로 그림): [x,y,size,...]
+      const now=performance.now()/1000;
+      for(let i=ripples.length-1;i>=0;i--)if(now-ripples[i].t>RIPPLE_LIFE)ripples.splice(i,1);
+      ctx.fillStyle=COLOR.dot;
+      for(let y=gap*.5;y<height;y+=gap){
+        const fade=smoothstep(height*.3,height*.62,y); // 화면 아래쪽일수록 점이 많아짐
+        for(let x=gap*.5;x<width;x+=gap){
+          /* 좁은 화면: 무늬를 가운데 기준 좌우 대칭으로 펼쳐서 한쪽으로 치우치지 않게 */
+          const nx=isNarrow()?Math.abs(x-width/2)*2.6+300:x;
+          /* 파문: 퍼져 나가는 고리 근처의 점을 바깥쪽으로 밀어냄 */
+          let wave=0,pushX=0,pushY=0;
+          for(let j=0;j<ripples.length;j++){
+            const r=ripples[j],age=now-r.t,dx=x-r.x,dy=y-r.y,d=Math.hypot(dx,dy)||1,e=(d-age*RIPPLE_SPEED)/RIPPLE_WIDTH;
+            if(e<-2.6||e>2.6)continue;
+            const a=Math.exp(-e*e)*(1-age/RIPPLE_LIFE)*r.a;wave+=a;pushX+=dx/d*a;pushY+=dy/d*a;
+          }
+          /* 물결 띠 */
+          let inBand=false;
+          if(fade>0){
+            const w=y*.011+Math.sin(nx*.0052+time*.55)*1.3+Math.sin(nx*.012-time*.35+y*.004)*.45+valueNoise(nx*.004+time*.05,y*.006)*.9;
+            const band=((w%1)+1)%1;
+            const mask=isNarrow()?.85:smoothstep(.28,.55,valueNoise(x*.0018+time*.02+40,y*.0026));
+            inBand=band<.32*fade*mask;
+          }
+          if(!inBand&&wave<.4)continue;
+          let px=x+pushX*9,py=y+pushY*9,size=inBand?1.6+Math.min(wave,1)*1.4:1.1+Math.min(wave,1)*1.3;
+          /* 포인터 주변: 점을 밀어내고 키움 */
+          if(glow.on){
+            const dx=x-glow.x,dy=y-glow.y,d=Math.hypot(dx,dy);
+            if(d<radius){const k=(1-d/radius)**2;px+=dx/(d||1)*k*16;py+=dy/(d||1)*k*16;size+=k*1.6;if(k>.35){nearDots.push(px,py,size);continue}}
+          }
+          ctx.fillRect(px-size/2,py-size/2,size,size);
+        }
+      }
+      if(nearDots.length){ctx.fillStyle=COLOR.near;for(let i=0;i<nearDots.length;i+=3){const s=nearDots[i+2];ctx.fillRect(nearDots[i]-s/2,nearDots[i+1]-s/2,s,s)}}
+      if(!prefersReducedMotion){time+=.016;requestAnimationFrame(draw)}
     }
-    requestAnimationFrame(weights);
-  })(performance.now());
-})();
-</script>
-<script>
-/* Profile 열고 닫기 */
-(()=>{
-  const sheet=document.getElementById('pfSheet'),btn=document.getElementById('pfBtn'),close=document.getElementById('pfClose');
-  const ring=document.getElementById('ring');
-  btn.addEventListener('click',()=>{sheet.classList.add('open');sheet.scrollTop=0});
-  close.addEventListener('click',()=>sheet.classList.remove('open'));
-  document.getElementById('pfHome').addEventListener('click',()=>sheet.classList.remove('open'));
-  addEventListener('keydown',e=>{if(e.key==='Escape'&&sheet.classList.contains('open'))sheet.classList.remove('open')});
-  [btn,close].forEach(b=>{b.addEventListener('pointerenter',()=>ring&&ring.classList.add('big'));b.addEventListener('pointerleave',()=>ring&&ring.classList.remove('big'))});
+
+    /* 포인터 → 캔버스 좌표 · 파문 */
+    function onPointerMove(clientX,clientY){
+      const rect=canvas.getBoundingClientRect();
+      glow.on=true;glow.targetX=clientX-rect.left;glow.targetY=clientY-rect.top;
+      if(glow.x<-500){glow.x=glow.targetX;glow.y=glow.targetY}
+      const nowMs=performance.now();
+      if(!prefersReducedMotion&&nowMs-lastRippleAt>RIPPLE_MIN_INTERVAL&&Math.hypot(glow.targetX-lastRippleX,glow.targetY-lastRippleY)>RIPPLE_MIN_DISTANCE){
+        lastRippleAt=nowMs;lastRippleX=glow.targetX;lastRippleY=glow.targetY;addRipple(glow.targetX,glow.targetY,1);
+      }
+      if(prefersReducedMotion)draw();
+    }
+    function onPointerLeave(){glow.on=false;if(prefersReducedMotion)draw()}
+
+    resize();draw();
+    return {resize,onPointerMove,onPointerLeave,canvas};
+  }
+
+  /* ---------- 3. 커서 (점은 바로, 링은 부드럽게 따라옴) ---------- */
+  function initCursor(dotField){
+    const dot=$('cur');
+    let ringX=-100,ringY=-100;
+    addEventListener('pointermove',e=>{
+      pointer.x=e.clientX;pointer.y=e.clientY;
+      if(e.pointerType!=='mouse')pointer.lastTouchAt=performance.now();
+      dotField.onPointerMove(e.clientX,e.clientY);
+      dot.style.transform=`translate(${pointer.x}px,${pointer.y}px)`;
+    });
+    document.addEventListener('pointerleave',dotField.onPointerLeave);
+    /* 터치: 누르는 순간도 이동으로 처리 */
+    addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse')dispatchEvent(new PointerEvent('pointermove',{clientX:e.clientX,clientY:e.clientY,pointerType:e.pointerType}))});
+    (function followRing(){ringX+=(pointer.x-ringX)*.18;ringY+=(pointer.y-ringY)*.18;ring.style.transform=`translate(${ringX}px,${ringY}px)`;requestAnimationFrame(followRing)})();
+    bindRingHover(document.querySelectorAll('a'));
+  }
+
+  /* ---------- 4. Dynamic Weight: 포인터에 가까운 글자일수록 굵게 (Originkit dynamic-weight 방식) ---------- */
+  function initDynamicWeight(dotField){
+    const nameEl=document.querySelector('.name .l>span');
+    const label=nameEl.textContent;
+    nameEl.innerHTML='<span class="sr">'+label+'</span>'+[...label].map(c=>'<span class="ch" aria-hidden="true">'+c+'</span>').join('');
+    const chars=[...nameEl.querySelectorAll('.ch')],weightFactor=chars.map(()=>0);
+    const WEIGHT_FROM=400,WEIGHT_TO=900,EASE_SECONDS=.3,TOUCH_IDLE_MS=1500;
+    let fontSize=parseFloat(getComputedStyle(nameEl).fontSize),lastFrame=0;
+    if(prefersReducedMotion)return {resize(){fontSize=parseFloat(getComputedStyle(nameEl).fontSize)}};
+
+    (function update(now){
+      const dt=Math.min(.1,Math.max(0,(now-(lastFrame||now))/1000));lastFrame=now;
+      if(profileCovering){requestAnimationFrame(update);return}
+      const ease=1-Math.exp(-dt/EASE_SECONDS),reach=Math.max(200,fontSize*1.6);
+      let qx=pointer.x,qy=pointer.y;
+      /* 터치 기기: 손가락을 떼고 잠시 지나면 가상의 포인터가 이름 위를 천천히 오가며 효과를 보여 줌 */
+      if(!hasFinePointer&&root.classList.contains('ready')&&performance.now()-pointer.lastTouchAt>TOUCH_IDLE_MS){
+        const b=nameEl.getBoundingClientRect(),phase=now/1000;
+        qx=b.left+b.width*(.5+.5*Math.sin(phase*.8));qy=b.top+b.height*.5;
+        const rc=dotField.canvas.getBoundingClientRect();glow.on=true;glow.targetX=qx-rc.left;glow.targetY=qy-rc.top;
+      }
+      for(let i=0;i<chars.length;i++){
+        const r=chars[i].getBoundingClientRect(),d=Math.hypot(qx-(r.left+r.width/2),qy-(r.top+r.height/2));
+        const target=Math.min(Math.max(1-d/reach,0),1);weightFactor[i]+=(target-weightFactor[i])*ease;
+        chars[i].style.fontVariationSettings="'wght' "+Math.round(WEIGHT_FROM+(WEIGHT_TO-WEIGHT_FROM)*weightFactor[i]);
+      }
+      requestAnimationFrame(update);
+    })(performance.now());
+    return {resize(){fontSize=parseFloat(getComputedStyle(nameEl).fontSize)}};
+  }
+
+  /* ---------- 5. Profile 시트 열고 닫기 ---------- */
+  function initProfile(){
+    const sheet=$('pfSheet'),openBtn=$('pfBtn'),closeBtn=$('pfClose');
+    const open=()=>{sheet.classList.add('open');sheet.scrollTop=0};
+    const close=()=>{sheet.classList.remove('open');profileCovering=false};
+    openBtn.addEventListener('click',open);
+    closeBtn.addEventListener('click',close);
+    $('pfHome').addEventListener('click',close);
+    addEventListener('keydown',e=>{if(e.key==='Escape'&&sheet.classList.contains('open'))close()});
+    /* 올라오는 동작이 끝나 화면을 다 덮은 뒤에만 배경 그리기를 멈춤 */
+    sheet.addEventListener('transitionend',e=>{if(e.target===sheet&&e.propertyName==='transform')profileCovering=sheet.classList.contains('open')});
+    bindRingHover([openBtn,closeBtn]);
+  }
+
+  /* ---------- 실행 ---------- */
+  runIntroSequence();
+  const dotField=initDotField();
+  initCursor(dotField);
+  const dynamicWeight=initDynamicWeight(dotField);
+  initProfile();
+  /* 창 크기 변경: 한 프레임에 한 번만 처리 */
+  let resizeQueued=false;
+  addEventListener('resize',()=>{
+    if(resizeQueued)return;resizeQueued=true;
+    requestAnimationFrame(()=>{resizeQueued=false;dotField.resize();dynamicWeight.resize()});
+  });
 })();
 </script>
 </body>
