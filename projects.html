@@ -118,7 +118,8 @@ figure{margin:0;min-width:0}
 .long .inner>img{width:100%;height:auto}
 .long .gif{position:absolute;object-fit:cover}
 .long-hint{font-size:12.5px;color:var(--muted);margin-top:10px}
-.dgrid{display:grid;grid-template-columns:repeat(2,minmax(0,360px));gap:clamp(14px,2vw,28px)}
+.dgrid{display:grid;grid-template-columns:repeat(2,minmax(0,360px));justify-content:center;gap:clamp(14px,2vw,28px)}
+.dgrid+.long-hint{text-align:center}
 .dgrid .long{width:100%}
 .dgrid figure{min-width:0}
 
